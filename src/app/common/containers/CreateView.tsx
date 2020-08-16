@@ -22,6 +22,7 @@ interface OuterProps {
   Form: ComponentType<InjectedFormProps>
   onCreate: () => void
   handleCreate?: (form: object) => void
+  initialValues?: any
 }
 
 type Props = StateProps & DispatchProps & OuterProps
@@ -48,12 +49,12 @@ class CreateView extends Component<Props> {
   }
 
   render() {
-    const {resource, Form, isLoading} = this.props
+    const {resource, Form, isLoading, initialValues} = this.props
 
     return <div className={styles.form}>
       <h1>Create new {resource.name}</h1>
       {isLoading ? <div>Processing...</div> : null}
-      <Form onSubmit={this.handleSubmit} disabled={isLoading} />
+      <Form onSubmit={this.handleSubmit} disabled={isLoading} initialValues={initialValues} />
     </div>
   }
 }
