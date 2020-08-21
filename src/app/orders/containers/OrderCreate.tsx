@@ -20,7 +20,11 @@ const OrderCreate = (props: Props) => {
     onCreate={() => {
       props.reset("orderForm")
     }}
-    initialValues={{order: {order_type: "delivery", for_time: "2020-07-24 00:13:14"}}}
+    initialValues={{order: {
+      order_type: "delivery", 
+      for_time: "2020-07-24 00:13:14",
+      kitchen_id: 1
+    }}}
   />
 }
 
