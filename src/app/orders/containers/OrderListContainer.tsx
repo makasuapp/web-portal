@@ -13,7 +13,7 @@ import OrderList from '../components/OrderList';
 import { Resource } from 'app/common/ResourceHelper';
 
 interface DispatchProps {
-  fetchOrders: (kitchenId: number) => void
+  fetchOrders: (kitchenId: number, showAll: boolean) => void
   fetch: (resource: Resource) => void
 }
 
@@ -32,7 +32,7 @@ class OrderListContainer extends React.Component<Props> {
     if (!this.props.hasFetched) {
       //want want to have both models fetching states
       this.props.fetch(RecipeResource);
-      this.props.fetchOrders(1);
+      this.props.fetchOrders(1, true);
     }
   }
 

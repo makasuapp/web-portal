@@ -12,10 +12,11 @@ interface OuterProps {
 
 const OrderList = ({orders, recipesMap}: OuterProps) => {
   const [orderFilter, setOrderFilter] = useState("current")
-  const filteredOrders = orders.filter((order) => orderFilter === "current" ? order.state !== "done" : order.state === "done")
+  const filteredOrders = orders.filter((order) => orderFilter === "current" ? 
+    order.state !== "delivered" : order.state === "delivered")
   const orderItems = filteredOrders.map((order) => <OrderCard order={order} recipesMap={recipesMap} />)
 
-  const orderFilterBtn = (state: "current" | "done", text: string) =>
+  const orderFilterBtn = (state: "current" | "delivered", text: string) =>
     <div 
       className={classnames(state === orderFilter ? styles.selectedFilter : null, styles.orderFilterBtn)} 
       onClick={() => setOrderFilter(state)}
@@ -24,7 +25,7 @@ const OrderList = ({orders, recipesMap}: OuterProps) => {
   return <div>
     <div className={styles.filters}>
       {orderFilterBtn("current", "Remaining Orders")}
-      {orderFilterBtn("done", "Completed Orders")}
+      {orderFilterBtn("delivered", "Completed Orders")}
     </div>
 
     {orderItems}
