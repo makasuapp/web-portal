@@ -5,7 +5,7 @@ import {reset} from 'redux-form';
 
 import CreateView from 'app/common/containers/CreateView';
 import OrderForm from './OrderForm';
-import { OrderResource } from './resource';
+import { OrderResource } from '../resource';
 
 interface DispatchProps {
   reset: (formName: string) => void
@@ -14,6 +14,7 @@ interface DispatchProps {
 type Props = DispatchProps & RouteComponentProps
 
 const OrderCreate = (props: Props) => {
+    //TODO(kitchenId): use actual kitchen id
   return <CreateView 
     resource={OrderResource} 
     Form={OrderForm} 

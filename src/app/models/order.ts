@@ -4,6 +4,7 @@ export type OrderState = "new" | "started" | "done" | "delivered"
 
 export interface Order {
     id: number
+    order_id: string
     order_type: OrderType
     created_at: number
     for_time?: number

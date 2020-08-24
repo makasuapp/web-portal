@@ -7,7 +7,7 @@ import { ReduxState } from 'reducers';
 import { connect } from 'react-redux';
 import { Resource } from 'app/common/ResourceHelper';
 import { fetch } from 'app/common/duck/actions';
-import { RecipeResource } from 'app/recipes/containers/resource';
+import { RecipeResource } from 'app/recipes/resource';
 import OrderItemForm from './OrderItemForm';
 
 const formName = "orderForm"

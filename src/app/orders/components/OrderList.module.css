@@ -1,0 +1,15 @@
+.filters {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+}
+
+.selectedFilter {
+  text-decoration: underline;
+}
+
+.orderFilterBtn {
+  cursor: pointer;
+  margin-right: 15px;
+}

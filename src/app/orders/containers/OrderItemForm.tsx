@@ -3,7 +3,7 @@ import { SelectField, TextField } from 'redux-form-fields-lib';
 import { Recipe } from 'app/models/recipe';
 import { ReduxState } from 'reducers';
 import { connect } from 'react-redux';
-import { RecipeResource } from 'app/recipes/containers/resource';
+import { RecipeResource } from 'app/recipes/resource';
 
 const OrderItemForm = ({ recipes, fields, meta: { error, submitFailed } }) => {
   const shownRecipes = (recipes as Recipe[]).filter((recipe) => recipe.publish)
