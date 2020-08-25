@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react'
-import { Resource, ResourceRecord } from '../ResourceHelper';
+import { Resource, ResourceRecord, Params } from '../ResourceHelper';
 
 import LoadingPage from 'app/common/LoadingPage';
 import {ReduxState} from "reducers";
@@ -14,7 +14,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  fetch: (resource: Resource) => void
+  fetch: (resource: Resource, params?: Params) => void
 }
 
 interface OuterProps {
@@ -22,6 +22,7 @@ interface OuterProps {
   topBarItems?: ReactNode[]
   fetchResources?: () => void
   children: ReactElement<{data?: ResourceRecord[]}> 
+  params?: Params
 }
 
 type Props = StateProps & DispatchProps & OuterProps
@@ -32,7 +33,7 @@ class IndexView extends React.Component<Props> {
       if (this.props.fetchResources !== undefined) {
         this.props.fetchResources()
       } else {
-        this.props.fetch(this.props.resource)
+        this.props.fetch(this.props.resource, this.props.params)
       }
     }
   }

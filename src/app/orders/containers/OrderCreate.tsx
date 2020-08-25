@@ -4,7 +4,7 @@ import {RouteComponentProps} from 'react-router-dom'
 import {reset} from 'redux-form';
 
 import CreateView from 'app/common/containers/CreateView';
-import OrderForm from './OrderForm';
+import OrderForm, { OrderFormData } from './OrderForm';
 import { OrderResource } from '../resource';
 
 interface DispatchProps {
@@ -12,6 +12,22 @@ interface DispatchProps {
 }
 
 type Props = DispatchProps & RouteComponentProps
+
+const formatData = (form: OrderFormData) => {
+  const {order} = form
+  const updatedOrderItems = (order.order_items ||  []).map((item) =>
+    Object.assign({}, item, {price_cents: parseFloat(item.price_cents) * 100})
+  )
+  //TODO(kitchenId): once we use actual kitchen, change asap time to now
+  const updatedTime = order.for_type === "asap" ? "2020-07-24 00:13:14" : order.for_time
+  const updatedOrder = Object.assign({}, order, {
+    order_items: updatedOrderItems, 
+    for_type: undefined,
+    for_time: updatedTime
+  })
+
+  return Object.assign({}, form, {order: updatedOrder})
+}
 
 const OrderCreate = (props: Props) => {
     //TODO(kitchenId): use actual kitchen id
@@ -21,11 +37,18 @@ const OrderCreate = (props: Props) => {
     onCreate={() => {
       props.reset("orderForm")
     }}
-    initialValues={{order: {
-      order_type: "delivery", 
-      for_time: "2020-07-24 00:13:14",
-      kitchen_id: 1
-    }}}
+    formatData={formatData}
+    initialValues={{
+      order: {
+        order_type: "delivery", 
+        for_type: "asap",
+        kitchen_id: 1
+      },
+      customer: {
+        //a bit hacky but need something to init customer with everything optional
+        first_name: "" 
+      }
+    }}
   />
 }
 

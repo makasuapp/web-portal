@@ -16,14 +16,20 @@ export interface ResourceRecord {
   id: number
 }
 
+export type Params = {[key: string]: any}
+export const paramStr = (params?: Params): string => 
+  params && Object.keys(params).length > 0 ?
+    `?${Object.keys(params).map((key) => `${key}=${params[key]}`).join("&")}` :
+    ""
+
 export interface Resource {
   name: string
   capital: string
   plural: string
   pluralCapital: string
   createUrl: string
-  indexUrl: string
-  showUrl: (id: number) => string
+  indexUrl: (params?: Params) => string
+  showUrl: (id: number, params?: Params) => string
   editUrl: (id: number) => string
   newPath: string
   indexPath: string
@@ -39,8 +45,8 @@ export const mkResource = (name: string, overrides: any = {}): Resource => {
     plural,
     pluralCapital: capitalize(plural),
     createUrl: overrides.createUrl || `/${plural}`,
-    indexUrl: overrides.indexUrl || `/${plural}`,
-    showUrl: (id: number)  => (overrides.showUrl && overrides.showUrl(id)) || `/${plural}/${id}`,
+    indexUrl: (params?: Params) => (overrides.indexUrl && overrides.indexUrl(params)) || `/${plural}${paramStr(params)}`,
+    showUrl: (id: number, params?: Params)  => (overrides.showUrl && overrides.showUrl(id, params)) || `/${plural}/${id}${paramStr(params)}`,
     editUrl: (id: number)  => (overrides.editUrl && overrides.editUrl(id)) || `/${plural}/${id}`,
     newPath: overrides.newPath || `/${plural}/new`,
     indexPath: overrides.indexPath || `/${plural}`,

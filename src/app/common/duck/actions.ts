@@ -1,7 +1,7 @@
 import * as types from './types'
 
 import { ResourceActionTypes } from "./types";
-import { Resource, ResourceRecord, defaultError, mkFormData } from "../ResourceHelper";
+import { Resource, ResourceRecord, defaultError, mkFormData, Params } from "../ResourceHelper";
 
 import {AnyAction} from "redux";
 import {ThunkDispatch} from "redux-thunk";
@@ -86,12 +86,12 @@ export const registerResource = (resourceName: string) => {
   }
 }
 
-export const fetch = (resource: Resource) => {
+export const fetch = (resource: Resource, params?: Params) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch(fetchCall(resource.name))
 
     return apiCall({
-      path: resource.indexUrl,
+      path: resource.indexUrl(params),
       method: "GET",
     }).then((response) => {
       dispatch(replaceResources(resource.name, response))

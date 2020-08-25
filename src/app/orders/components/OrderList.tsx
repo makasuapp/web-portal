@@ -11,21 +11,27 @@ interface OuterProps {
 }
 
 const OrderList = ({orders, recipesMap}: OuterProps) => {
+  const [currentOrders, deliveredOrders] = orders.reduce(([current, delivered]: [Order[], Order[]], order) =>
+    order.state === "delivered" ? 
+      [current, delivered.concat(order)] :
+      [current.concat(order), delivered]
+  , [[], []])
+
   const [orderFilter, setOrderFilter] = useState("current")
-  const filteredOrders = orders.filter((order) => orderFilter === "current" ? 
-    order.state !== "delivered" : order.state === "delivered")
-  const orderItems = filteredOrders.map((order) => <OrderCard order={order} recipesMap={recipesMap} />)
+  const selectedOrders = orderFilter === "current" ? currentOrders : deliveredOrders 
+  const orderItems = selectedOrders.map((order) => <OrderCard key={order.id} order={order} recipesMap={recipesMap} />)
 
   const orderFilterBtn = (state: "current" | "delivered", text: string) =>
     <div 
+      key={state}
       className={classnames(state === orderFilter ? styles.selectedFilter : null, styles.orderFilterBtn)} 
       onClick={() => setOrderFilter(state)}
     >{text}</div>
 
   return <div>
     <div className={styles.filters}>
-      {orderFilterBtn("current", "Remaining Orders")}
-      {orderFilterBtn("delivered", "Completed Orders")}
+      {orderFilterBtn("current", `Remaining Orders (${currentOrders.length})`)}
+      {orderFilterBtn("delivered", `Completed Orders (${deliveredOrders.length})`)}
     </div>
 
     {orderItems}

@@ -21,7 +21,8 @@ interface OuterProps {
   resource: Resource
   Form: ComponentType<InjectedFormProps>
   onCreate: () => void
-  handleCreate?: (form: object) => void
+  handleCreate?: (form: any) => void
+  formatData?: (form: any) => any
   initialValues?: any
 }
 
@@ -40,11 +41,14 @@ class CreateView extends Component<Props> {
     }
   }
 
-  handleSubmit = (form: object) => {
-    if (this.props.handleCreate !== undefined) {
-      this.props.handleCreate(form)
+  handleSubmit = (form: any) => {
+    const {handleCreate, create, formatData, resource} = this.props
+    const formattedData = formatData ? formatData(form) : form
+
+    if (handleCreate !== undefined) {
+      handleCreate(formattedData)
     } else {
-      this.props.create(this.props.resource, form)
+      create(resource, formattedData)
     }
   }
 

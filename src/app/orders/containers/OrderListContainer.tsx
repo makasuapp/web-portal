@@ -10,11 +10,9 @@ import { fetch } from 'app/common/duck/actions';
 import { Order } from 'app/models/order';
 import { Recipe }  from 'app/models/recipe';
 import OrderList from '../components/OrderList';
-import { Resource } from 'app/common/ResourceHelper';
 
 interface DispatchProps {
   fetchOrders: (kitchenId: number, showAll: boolean) => void
-  fetch: (resource: Resource) => void
 }
 
 interface StateProps {
@@ -31,7 +29,6 @@ class OrderListContainer extends React.Component<Props> {
     //TODO(kitchenId): use actual kitchen id
     if (!this.props.hasFetched) {
       //want want to have both models fetching states
-      this.props.fetch(RecipeResource);
       this.props.fetchOrders(1, true);
     }
   }
