@@ -1,8 +1,8 @@
 import { Route } from 'react-router-dom'
 
 import {ApiReducerState} from './duck/reducers'
-import Layout from "./Layout";
-import LoadingPage from './LoadingPage';
+import Layout from "./components/Layout";
+import LoadingPage from './components/LoadingPage';
 import React from 'react'
 import {ReduxState} from "reducers";
 import { connect } from 'react-redux';

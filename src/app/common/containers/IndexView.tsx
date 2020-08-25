@@ -1,11 +1,10 @@
 import React, { ReactElement, ReactNode } from 'react'
 import { Resource, ResourceRecord, Params } from '../ResourceHelper';
 
-import LoadingPage from 'app/common/LoadingPage';
+import LoadingPage from 'app/common/components/LoadingPage';
 import {ReduxState} from "reducers";
 import { connect } from 'react-redux';
 import { fetch } from '../duck/actions';
-import styles from './Index.module.css'
 
 interface StateProps {
   isFetching: boolean
@@ -19,8 +18,7 @@ interface DispatchProps {
 
 interface OuterProps {
   resource: Resource
-  topBarItems?: ReactNode[]
-  fetchResources?: () => void
+  fetchResources?: (params?: Params) => void
   children: ReactElement<{data?: ResourceRecord[]}> 
   params?: Params
 }
@@ -31,7 +29,7 @@ class IndexView extends React.Component<Props> {
   componentDidMount() {
     if (!this.props.hasFetched) {
       if (this.props.fetchResources !== undefined) {
-        this.props.fetchResources()
+        this.props.fetchResources(this.props.params)
       } else {
         this.props.fetch(this.props.resource, this.props.params)
       }
@@ -39,7 +37,7 @@ class IndexView extends React.Component<Props> {
   }
 
   render() {
-    const {data, isFetching, resource, children, topBarItems = []} = this.props
+    const {data, isFetching, resource, children} = this.props
 
     let list
     if (isFetching) {
@@ -51,10 +49,6 @@ class IndexView extends React.Component<Props> {
     }
 
     return <div>
-      <div className={styles.topBar}>
-        {topBarItems}
-      </div>
-
       <h1>{resource.pluralCapital}</h1>
       {list}
     </div>

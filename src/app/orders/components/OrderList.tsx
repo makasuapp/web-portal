@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
+import classnames from 'classnames';
+
 import {Order} from 'app/models/order';
 import {Recipe} from 'app/models/recipe';
+import { ResourceRecord } from 'app/common/ResourceHelper';
 import OrderCard from './OrderCard';
-import classnames from 'classnames';
 import styles from './OrderList.module.css';
 
 interface OuterProps {
-  orders: Order[]
+  data?: ResourceRecord[]
   recipesMap: {[key: number]: Recipe}
 }
 
-const OrderList = ({orders, recipesMap}: OuterProps) => {
+const OrderList = ({data = [], recipesMap}: OuterProps) => {
+  const orders = data as Order[]
   const [currentOrders, deliveredOrders] = orders.reduce(([current, delivered]: [Order[], Order[]], order) =>
     order.state === "delivered" ? 
       [current, delivered.concat(order)] :

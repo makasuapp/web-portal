@@ -4,13 +4,14 @@ import apiCall from "app/utils/apiCall";
 import {fetchCall, replaceResources, fetchCallError} from '../../common/duck/actions';
 import {OrderResource} from '../resource'
 import { RecipeResource } from "app/recipes/resource";
+import { Params } from "app/common/ResourceHelper";
 
-export const fetchOrders = (kitchenId: number, showAll: boolean) => {
+export const fetchOrders = (params?: Params) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch(fetchCall(OrderResource.name))
 
     return apiCall({
-      path: OrderResource.indexUrl({env: "dev", kitchen_id: kitchenId, all: showAll}),
+      path: OrderResource.indexUrl(params),
       method: "GET",
     }).then((response) => {
       const {orders, recipes} = response

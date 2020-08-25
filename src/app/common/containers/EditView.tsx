@@ -3,7 +3,7 @@ import { Resource, ResourceRecord } from 'app/common/ResourceHelper';
 import {edit, show} from "../../common/duck/actions";
 
 import { InjectedFormProps } from 'redux-form'
-import LoadingPage from 'app/common/LoadingPage';
+import LoadingPage from 'app/common/components/LoadingPage';
 import {ReduxState} from "reducers";
 import { connect } from 'react-redux';
 import styles from './Form.module.css'
