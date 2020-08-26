@@ -51,7 +51,6 @@ class OrderForm extends React.Component<Props> {
   render() {
     const {handleSubmit, disabled, selectTime} = this.props;
 
-    //TODO(forms): make date picker a date/time picker and make it required. make it send up date correctly
     return <form onSubmit={handleSubmit}>
       <SelectField name="order.order_type" label="Order Type" isRequired
         customclasses={{input: "form-control", field: styles.shortField}} 
@@ -70,7 +69,11 @@ class OrderForm extends React.Component<Props> {
       />
 
       {selectTime ? 
-        <DatePickerField name="order.for_time" />
+        <DatePickerField 
+          name="order.for_time" 
+          customclasses={{field: styles.shortField}}
+          showTimeSelect isRequired 
+          dateFormat="MM/d/yyyy h:mm aa" />
       : null}
 
       <h3>Customer Info</h3>

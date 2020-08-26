@@ -19,7 +19,7 @@ const formatData = (form: OrderFormData) => {
     Object.assign({}, item, {price_cents: parseFloat(item.price_cents) * 100})
   )
   //TODO(kitchenId): once we use actual kitchen, change asap time to now
-  const updatedTime = order.for_type === "asap" ? "2020-07-24 00:13:14" : order.for_time
+  const updatedTime = order.for_type === "asap" ? "1595549594000" : order.for_time
   const updatedOrder = Object.assign({}, order, {
     order_items: updatedOrderItems, 
     for_type: undefined,
@@ -30,7 +30,7 @@ const formatData = (form: OrderFormData) => {
 }
 
 const OrderCreate = (props: Props) => {
-    //TODO(kitchenId): use actual kitchen id
+  //TODO(kitchenId): use actual kitchen id
   return <CreateView 
     resource={OrderResource} 
     Form={OrderForm} 

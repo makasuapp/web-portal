@@ -56,7 +56,7 @@ class CreateView extends Component<Props> {
     const {resource, Form, isLoading, initialValues} = this.props
 
     return <div className={styles.form}>
-      <h1>Create new {resource.name}</h1>
+      <h1>Create new {resource.capital}</h1>
       {isLoading ? <div>Processing...</div> : null}
       <Form onSubmit={this.handleSubmit} disabled={isLoading} initialValues={initialValues} />
     </div>
