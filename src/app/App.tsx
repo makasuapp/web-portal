@@ -7,7 +7,7 @@ import NotFound from '../NotFound';
 import LandingPage from './LandingPage';
 import OrderCreate from './orders/containers/OrderCreate';
 import OrderIndex from './orders/containers/OrderIndex';
-import PredictedOrdersIndex from './predicted_orders/components/PredictedOrdersIndex';
+import PredictedOrdersIndex from './predicted_orders/containers/PredictedOrdersIndex';
 
 export default class App extends Component {
   render () {
@@ -19,7 +19,8 @@ export default class App extends Component {
         <AppRoute path='/orders/new' exact component={OrderCreate} resourceNames={["recipe", "order"]} />
 
         <AppRoute path='/predicted_orders' exact component={PredictedOrdersIndex} resourceNames={["predicted_order"]} />
-        <AppRoute path='/predicted_orders/new' exact component={OrderCreate} resourceNames={["predicted_order"]} />
+        <AppRoute path='/predicted_orders/new' exact component={OrderCreate} resourceNames={["recipe", "predicted_order"]} />
+        <AppRoute path='/predicted_orders/:date/edit' exact component={OrderCreate} resourceNames={["recipe", "predicted_order"]} />
 
         <AppRoute component={NotFound} />
       </Switch>

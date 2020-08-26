@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { OrderResource } from '../resource';
 import { RecipeResource } from '../../recipes/resource';
 import { fetchOrders } from '../duck/actions';
-import { fetch } from 'app/common/duck/actions';
 import { Order } from 'app/models/order';
 import { Recipe }  from 'app/models/recipe';
 import OrderList from '../components/OrderList';
@@ -35,6 +34,7 @@ class OrderIndex extends React.Component<Props> {
     return <div>
       <TopBar items={[
         <Link 
+          key="new"
           className={"btn btn-primary"}
           to={"/orders/new"}>
             New Order
@@ -58,4 +58,4 @@ const mapStateToProps = (state: ReduxState) => {
   }
 };
 
-export default connect(mapStateToProps, {fetchOrders, fetch})(OrderIndex)
+export default connect(mapStateToProps, {fetchOrders})(OrderIndex)

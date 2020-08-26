@@ -1,0 +1,20 @@
+.range {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.text {
+  margin-right: 5px;
+  line-height: 28px;
+}
+
+.text:last-of-type {
+  margin-left: 10px;
+}
+
+.submitButton {
+  margin-left: 15px;
+  height: 31px;
+  line-height: 20px;
+}

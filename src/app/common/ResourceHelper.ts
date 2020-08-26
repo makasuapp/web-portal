@@ -41,9 +41,9 @@ export const mkResource = (name: string, overrides: any = {}): Resource => {
   const plural = overrides.plural || pluralize(name)
   return {
     name,
-    capital: capitalize(name),
+    capital: overrides.capital || capitalize(name),
     plural,
-    pluralCapital: capitalize(plural),
+    pluralCapital: overrides.pluralCapital || capitalize(plural),
     createUrl: overrides.createUrl || `/${plural}`,
     indexUrl: (params?: Params) => (overrides.indexUrl && overrides.indexUrl(params)) || `/${plural}${paramStr(params)}`,
     showUrl: (id: number, params?: Params)  => (overrides.showUrl && overrides.showUrl(id, params)) || `/${plural}/${id}${paramStr(params)}`,

@@ -5,7 +5,7 @@ import { ReduxState } from 'reducers';
 import { connect } from 'react-redux';
 
 import { Recipe } from 'app/models/recipe';
-import { Resource } from 'app/common/ResourceHelper';
+import { Resource, Params } from 'app/common/ResourceHelper';
 import { fetch } from 'app/common/duck/actions';
 import { RecipeResource } from 'app/recipes/resource';
 import OrderItemForm, { OrderItemFormData } from './OrderItemForm';
@@ -35,7 +35,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  fetch: (resource: Resource) => void
+  fetch: (resource: Resource, params?: Params) => void
 }
 
 type Props = InjectedFormProps<OrderFormData> & StateProps & DispatchProps

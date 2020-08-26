@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react'
+import React, { ReactElement } from 'react'
 import { Resource, ResourceRecord, Params } from '../ResourceHelper';
 
 import LoadingPage from 'app/common/components/LoadingPage';
