@@ -8,7 +8,7 @@ import LandingPage from './LandingPage';
 import OrderCreate from './orders/containers/OrderCreate';
 import OrderIndex from './orders/containers/OrderIndex';
 import PredictedOrdersIndex from './predicted_orders/containers/PredictedOrdersIndex';
-import PredictedOrdersCreate from './predicted_orders/components/PredictedOrdersCreate';
+import PredictedOrdersCreate from './predicted_orders/containers/PredictedOrdersCreate';
 
 export default class App extends Component {
   render () {

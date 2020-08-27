@@ -1,0 +1,14 @@
+.quantityField {
+  max-width: 200px;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.dollarInput {
+  display: flex;
+}
+
+.dollarSign {
+  line-height: 35px;
+  margin-right: 3px;
+}

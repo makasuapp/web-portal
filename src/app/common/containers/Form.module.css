@@ -6,3 +6,25 @@
   box-shadow: 0 7px 14px 0 rgba(60,66,87, 0.12), 0 3px 6px 0 rgba(0,0,0, 0.12);
   border-radius: 5px;
 }
+
+.inlineFields {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.inlineField {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.inlineField:last-child {
+  margin-right: 0;
+}
+
+.shortField {
+  max-width: 300px;
+}
+
+.trash {
+  max-height: 45px;
+}

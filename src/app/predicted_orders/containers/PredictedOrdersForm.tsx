@@ -1,5 +1,5 @@
 import React from 'react'
-import { SelectField, TextField, DatePickerField } from 'redux-form-fields-lib';
+import { DatePickerField } from 'redux-form-fields-lib';
 import { FieldArray, InjectedFormProps, reduxForm } from 'redux-form'
 import { ReduxState } from 'reducers';
 import { connect } from 'react-redux';
@@ -8,11 +8,14 @@ import { fetch } from 'app/common/duck/actions';
 import {Recipe} from 'app/models/recipe';
 import { Resource, Params } from 'app/common/ResourceHelper';
 import { RecipeResource } from 'app/recipes/resource';
+import PredictedOrderForm, {PredictedOrderFormData} from './PredictedOrderForm';
 
-const formName = "predictedOrderCreateForm"
+export const formName = "predictedOrderCreateForm"
 
-interface PredictedOrderFormData {
-
+interface PredictedOrdersFormData {
+  date_ms: number,
+  predicted_orders: PredictedOrderFormData[],
+  kitchen_id: number
 }
 
 interface StateProps {
@@ -23,7 +26,7 @@ interface DispatchProps {
   fetch: (resource: Resource, params?: Params) => void
 }
 
-type Props = InjectedFormProps<PredictedOrderFormData> & StateProps & DispatchProps
+type Props = InjectedFormProps<PredictedOrdersFormData> & StateProps & DispatchProps
 
 class PredictedOrdersForm extends React.Component<Props> {
   componentDidMount() {
@@ -34,9 +37,18 @@ class PredictedOrdersForm extends React.Component<Props> {
   }
 
   render() {
-    const {handleSubmit, disabled} = this.props;
+    const {handleSubmit, disabled, recipes} = this.props;
 
     return <form onSubmit={handleSubmit}>
+      <DatePickerField 
+        name="date_ms" 
+        label="Date"
+        isRequired 
+        dateFormat="MM/d/yyyy" />
+
+      <h3>Predicted Orders</h3>
+      <FieldArray name="predicted_orders" recipes={recipes}
+        component={PredictedOrderForm} />
 
       <button className="btn btn-primary" type="submit" disabled={disabled}>Submit</button>
     </form>

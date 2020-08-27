@@ -12,9 +12,3 @@
 .text:last-of-type {
   margin-left: 10px;
 }
-
-.submitButton {
-  margin-left: 15px;
-  height: 31px;
-  line-height: 20px;
-}

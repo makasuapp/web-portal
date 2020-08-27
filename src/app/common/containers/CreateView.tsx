@@ -24,6 +24,7 @@ interface OuterProps {
   handleCreate?: (form: any) => void
   formatData?: (form: any) => any
   initialValues?: any
+  hideHeader?: boolean
 }
 
 type Props = StateProps & DispatchProps & OuterProps
@@ -53,10 +54,10 @@ class CreateView extends Component<Props> {
   }
 
   render() {
-    const {resource, Form, isLoading, initialValues} = this.props
+    const {resource, Form, isLoading, initialValues, hideHeader} = this.props
 
     return <div className={styles.form}>
-      <h1>Create new {resource.capital}</h1>
+      {hideHeader ? null : <h1>Create new {resource.capital}</h1>}
       {isLoading ? <div>Processing...</div> : null}
       <Form onSubmit={this.handleSubmit} disabled={isLoading} initialValues={initialValues} />
     </div>

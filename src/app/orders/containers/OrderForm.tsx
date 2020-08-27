@@ -9,7 +9,7 @@ import { Resource, Params } from 'app/common/ResourceHelper';
 import { fetch } from 'app/common/duck/actions';
 import { RecipeResource } from 'app/recipes/resource';
 import OrderItemForm, { OrderItemFormData } from './OrderItemForm';
-import styles from './OrderForm.module.css'
+import formStyles from 'app/common/containers/Form.module.css'
 
 const formName = "orderForm"
 
@@ -49,11 +49,11 @@ class OrderForm extends React.Component<Props> {
   }
 
   render() {
-    const {handleSubmit, disabled, selectTime} = this.props;
+    const {handleSubmit, disabled, selectTime, recipes} = this.props;
 
     return <form onSubmit={handleSubmit}>
       <SelectField name="order.order_type" label="Order Type" isRequired
-        customclasses={{input: "form-control", field: styles.shortField}} 
+        customclasses={{input: "form-control", field: formStyles.shortField}} 
         options={[
           {value: "delivery", label: "Delivery"}, 
           {value: "pickup", label: "Pickup"},
@@ -61,7 +61,7 @@ class OrderForm extends React.Component<Props> {
       />
 
       <SelectField name="order.for_type" label="For" isRequired
-        customclasses={{input: "form-control", field: styles.shortField}} 
+        customclasses={{input: "form-control", field: formStyles.shortField}} 
         options={[
           {value: "asap", label: "ASAP"}, 
           {value: "select", label: "Select Time"},
@@ -71,23 +71,24 @@ class OrderForm extends React.Component<Props> {
       {selectTime ? 
         <DatePickerField 
           name="order.for_time" 
-          customclasses={{field: styles.shortField}}
+          customclasses={{field: formStyles.shortField}}
           showTimeSelect isRequired 
           dateFormat="MM/d/yyyy h:mm aa" />
       : null}
 
       <h3>Customer Info</h3>
-      <div className={styles.inlineFields}>
-        <TextField name="customer.first_name" label="First Name" customclasses={{field: styles.inlineField}} />
-        <TextField name="customer.last_name" label="Last Name" customclasses={{field: styles.inlineField}} />
+      <div className={formStyles.inlineFields}>
+        <TextField name="customer.first_name" label="First Name" customclasses={{field: formStyles.inlineField}} />
+        <TextField name="customer.last_name" label="Last Name" customclasses={{field: formStyles.inlineField}} />
       </div>
-      <div className={styles.inlineFields}>
-        <TextField name="customer.email" label="Email" customclasses={{field: styles.inlineField}} />
-        <TextField name="customer.phone_number" label="Phone Number" customclasses={{field: styles.inlineField}} />
+      <div className={formStyles.inlineFields}>
+        <TextField name="customer.email" label="Email" customclasses={{field: formStyles.inlineField}} />
+        <TextField name="customer.phone_number" label="Phone Number" customclasses={{field: formStyles.inlineField}} />
       </div>
 
       <h3>Order Items</h3>
-      <FieldArray name="order.order_items" component={OrderItemForm} />
+      <FieldArray name="order.order_items" recipes={recipes} 
+        component={OrderItemForm} />
 
       <button className="btn btn-primary" type="submit" disabled={disabled}>Submit</button>
     </form>

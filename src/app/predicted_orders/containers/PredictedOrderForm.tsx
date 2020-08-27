@@ -4,16 +4,15 @@ import { SelectField, TextField } from 'redux-form-fields-lib';
 import classnames from 'classnames'
 
 import { Recipe } from 'app/models/recipe';
-import styles from './OrderItemForm.module.css'
 import formStyles from 'app/common/containers/Form.module.css'
+import styles from './PredictedOrderForm.module.css'
 
-export interface OrderItemFormData {
+export interface PredictedOrderFormData {
   quantity: string,
-  recipe_id: string,
-  price_cents: string
+  recipe_id: string
 }
 
-const OrderItemForm = ({ recipes, fields, meta: { error, submitFailed } }) => {
+const PredictedOrderForm = ({ recipes, fields, meta: { error, submitFailed } }) => {
   const shownRecipes = (recipes as Recipe[]).filter((recipe) => recipe.publish)
   const options = shownRecipes.map((recipe) => {
     return {label: recipe.name, value: recipe.id.toString()}
@@ -37,9 +36,6 @@ const OrderItemForm = ({ recipes, fields, meta: { error, submitFailed } }) => {
             <FaTrashAlt /> 
           </button>
         </div>
-        <TextField name={`${item}.price_cents`} isRequired isNumber 
-          label="Price" pretext="$"
-          customclasses={{field: formStyles.shortField, inputWrapper: styles.dollarInput, pretext: styles.dollarSign}} />
       </div>
     })}
     <br/>
@@ -53,4 +49,4 @@ const OrderItemForm = ({ recipes, fields, meta: { error, submitFailed } }) => {
   </div>
 }
 
-export default OrderItemForm
+export default PredictedOrderForm

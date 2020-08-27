@@ -1,6 +1,5 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import classnames from 'classnames'
 import styles from './DateRangeSelector.module.css'
 
 interface Props {
@@ -8,11 +7,10 @@ interface Props {
   endDate: Date
   onStartChange: (date: Date) => void
   onEndChange: (date: Date) => void
-  onSubmit: () => void
 }
 
 const DateRangeSelector = ({
-  startDate, endDate, onStartChange, onEndChange, onSubmit
+  startDate, endDate, onStartChange, onEndChange
 }: Props) => {
   return <div className={styles.range}>
     <span className={styles.text}>From</span>
@@ -32,12 +30,6 @@ const DateRangeSelector = ({
       endDate={endDate}
       minDate={startDate}
     />
-    <button 
-      onClick={onSubmit}
-      className={classnames(styles.submitButton, "btn btn-primary")}
-    >
-      Go
-    </button>
   </div>
 }
 
