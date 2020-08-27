@@ -12,7 +12,7 @@ import PredictedOrderForm, {PredictedOrderFormData} from './PredictedOrderForm';
 
 export const formName = "predictedOrderCreateForm"
 
-interface PredictedOrdersFormData {
+export interface PredictedOrdersFormData {
   date_ms: number,
   predicted_orders: PredictedOrderFormData[],
   kitchen_id: number
@@ -26,7 +26,13 @@ interface DispatchProps {
   fetch: (resource: Resource, params?: Params) => void
 }
 
-type Props = InjectedFormProps<PredictedOrdersFormData> & StateProps & DispatchProps
+interface OuterProps {
+  dateDisabled?: boolean
+  disabled?: boolean
+}
+
+type Props = InjectedFormProps<PredictedOrdersFormData, OuterProps> & StateProps 
+  & DispatchProps & OuterProps
 
 class PredictedOrdersForm extends React.Component<Props> {
   componentDidMount() {
@@ -37,13 +43,14 @@ class PredictedOrdersForm extends React.Component<Props> {
   }
 
   render() {
-    const {handleSubmit, disabled, recipes} = this.props;
+    const {handleSubmit, disabled, recipes, dateDisabled} = this.props;
 
     return <form onSubmit={handleSubmit}>
       <DatePickerField 
         name="date_ms" 
         label="Date"
         isRequired 
+        disabled={dateDisabled}
         dateFormat="MM/d/yyyy" />
 
       <h3>Predicted Orders</h3>
@@ -64,8 +71,8 @@ const mapStateToProps = (state: ReduxState) => {
   }
 };
 
-const PredictedOrdersReduxForm = reduxForm({
-  form: formName
-})(PredictedOrdersForm);
+const ConnectedPredictedOrdersForm = connect(mapStateToProps, {fetch})(PredictedOrdersForm)
 
-export default connect(mapStateToProps, {fetch})(PredictedOrdersReduxForm)
+export default reduxForm<PredictedOrdersFormData, OuterProps>({
+  form: formName
+})(ConnectedPredictedOrdersForm);

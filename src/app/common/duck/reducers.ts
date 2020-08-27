@@ -65,6 +65,7 @@ export const ResourceReducer = (state = resourceInitialState, action: ResourceAc
       return {
         ...state,
         isFetching: false,
+        isLoading: false,
         hasFetched: true,
         error: undefined,
         data: action.resources,
@@ -79,6 +80,7 @@ export const ResourceReducer = (state = resourceInitialState, action: ResourceAc
       return {
         ...state,
         isLoading: false,
+        isFetching: false,
         error: undefined,
         data: state.data.concat(action.resource),
         byId

@@ -33,9 +33,9 @@ const OrderItemForm = ({ recipes, fields, meta: { error, submitFailed } }) => {
             customclasses={{input: "form-control", field: formStyles.inlineField}} 
             options={options} 
           />
-          <button className={classnames("btn btn-danger", formStyles.trash)} onClick={removeItem}>
+          <span className={classnames("btn btn-danger", formStyles.trash)} onClick={removeItem}>
             <FaTrashAlt /> 
-          </button>
+          </span>
         </div>
         <TextField name={`${item}.price_cents`} isRequired isNumber 
           label="Price" pretext="$"

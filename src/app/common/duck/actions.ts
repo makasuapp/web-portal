@@ -1,4 +1,5 @@
 import * as types from './types'
+import {ID} from './types'
 
 import { ResourceActionTypes } from "./types";
 import { Resource, ResourceRecord, defaultError, mkFormData, Params } from "../ResourceHelper";
@@ -26,7 +27,7 @@ export const addResource = (resourceName: string, resource: ResourceRecord): Res
   }
 }
 
-export const updateResource = (resourceName: string, id: number, resource: ResourceRecord): ResourceActionTypes => {
+export const updateResource = (resourceName: string, id: ID, resource: ResourceRecord): ResourceActionTypes => {
   return {
     type: types.UPDATE_RESOURCE,
     meta: {
@@ -102,7 +103,7 @@ export const fetch = (resource: Resource, params?: Params) => {
   }
 }
 
-export const show = (resource: Resource, id: number) => {
+export const show = (resource: Resource, id: ID) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch(fetchCall(resource.name))
 
@@ -138,7 +139,7 @@ export const create = (resource: Resource, formData: object) => {
   }
 };
 
-export const edit = (resource: Resource, id: number, formData: object) => {
+export const edit = (resource: Resource, id: ID, formData: object) => {
   return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch(makeApiCall(resource.name));
 

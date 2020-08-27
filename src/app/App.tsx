@@ -9,6 +9,7 @@ import OrderCreate from './orders/containers/OrderCreate';
 import OrderIndex from './orders/containers/OrderIndex';
 import PredictedOrdersIndex from './predicted_orders/containers/PredictedOrdersIndex';
 import PredictedOrdersCreate from './predicted_orders/containers/PredictedOrdersCreate';
+import PredictedOrdersEdit from './predicted_orders/containers/PredictedOrdersEdit';
 
 export default class App extends Component {
   render () {
@@ -21,7 +22,7 @@ export default class App extends Component {
 
         <AppRoute path='/predicted_orders' exact component={PredictedOrdersIndex} resourceNames={["predicted_order"]} />
         <AppRoute path='/predicted_orders/new' exact component={PredictedOrdersCreate} resourceNames={["recipe", "predicted_order"]} />
-        <AppRoute path='/predicted_orders/:date/edit' exact component={PredictedOrdersCreate} resourceNames={["recipe", "predicted_order"]} />
+        <AppRoute path='/predicted_orders/:date/edit' exact component={PredictedOrdersEdit} resourceNames={["recipe", "predicted_order"]} />
 
         <AppRoute component={NotFound} />
       </Switch>

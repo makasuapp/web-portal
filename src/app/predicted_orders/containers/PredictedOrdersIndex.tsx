@@ -8,7 +8,7 @@ import LoadingPage from 'app/common/components/LoadingPage';
 import {ReduxState} from "reducers";
 import { fetch } from 'app/common/duck/actions';
 import TopBar from 'app/common/components/TopBar'
-import {PredictedOrderResource} from '../resource';
+import {PredictedOrderResource, dateFormat} from '../resource';
 import PredictedOrderList from '../components/PredictedOrderList';
 import DateRangeSelector from '../components/DateRangeSelector';
 import { Resource, Params } from 'app/common/ResourceHelper';
@@ -32,7 +32,6 @@ interface State {
 }
 
 const today = new Date()
-const dateFormat = "D/M/y"
 class PredictedOrdersIndex extends React.Component<Props, State> {
   state: State = {startDate: today, endDate: today}
 
@@ -70,6 +69,7 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
   dateStr = (date: Date) => moment(date).format(dateFormat)
 
   endpointParams = () => {
+    //TODO(kitchenId)
     return {
       kitchen_id: 1, 
       start: this.dateStr(this.state.startDate),

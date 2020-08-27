@@ -1,4 +1,5 @@
 import { RouteComponentProps } from "react-router-dom"
+import { ID } from "./duck/types"
 
 const pluralize = (name: string) => {
   return `${name}s`
@@ -13,7 +14,7 @@ export const idFromUrl = (props: RouteComponentProps<{id: string}>) => {
 }
 
 export interface ResourceRecord {
-  id: number
+  id: ID
 }
 
 export type Params = {[key: string]: any}
@@ -29,12 +30,12 @@ export interface Resource {
   pluralCapital: string
   createUrl: string
   indexUrl: (params?: Params) => string
-  showUrl: (id: number, params?: Params) => string
-  editUrl: (id: number) => string
+  showUrl: (id: ID, params?: Params) => string
+  editUrl: (id: ID) => string
   newPath: string
   indexPath: string
-  showPath: (id: number) => string
-  editPath: (id: number) => string
+  showPath: (id: ID) => string
+  editPath: (id: ID) => string
 }
 
 export const mkResource = (name: string, overrides: any = {}): Resource => {
@@ -46,12 +47,12 @@ export const mkResource = (name: string, overrides: any = {}): Resource => {
     pluralCapital: overrides.pluralCapital || capitalize(plural),
     createUrl: overrides.createUrl || `/${plural}`,
     indexUrl: (params?: Params) => (overrides.indexUrl && overrides.indexUrl(params)) || `/${plural}${paramStr(params)}`,
-    showUrl: (id: number, params?: Params)  => (overrides.showUrl && overrides.showUrl(id, params)) || `/${plural}/${id}${paramStr(params)}`,
-    editUrl: (id: number)  => (overrides.editUrl && overrides.editUrl(id)) || `/${plural}/${id}`,
+    showUrl: (id: ID, params?: Params)  => (overrides.showUrl && overrides.showUrl(id, params)) || `/${plural}/${id}${paramStr(params)}`,
+    editUrl: (id: ID)  => (overrides.editUrl && overrides.editUrl(id)) || `/${plural}/${id}`,
     newPath: overrides.newPath || `/${plural}/new`,
     indexPath: overrides.indexPath || `/${plural}`,
-    showPath: (id: number)  => (overrides.showPath && overrides.showPath(id)) || `/${plural}/${id}`,
-    editPath: (id: number)  => (overrides.editPath && overrides.editPath(id)) || `/${plural}/${id}/edit`,
+    showPath: (id: ID)  => (overrides.showPath && overrides.showPath(id)) || `/${plural}/${id}`,
+    editPath: (id: ID)  => (overrides.editPath && overrides.editPath(id)) || `/${plural}/${id}/edit`,
   }
 }
 

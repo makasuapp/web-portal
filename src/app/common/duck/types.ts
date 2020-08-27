@@ -1,5 +1,7 @@
 import { ResourceRecord } from "../ResourceHelper"
 
+export type ID = string | number
+
 export const REGISTER_RESOURCE = "REGISTER_RESOURCE"
 interface RegisterResourceAction {
   type: typeof REGISTER_RESOURCE,
@@ -31,7 +33,7 @@ interface UpdateResourceAction {
   meta: {
     resourceName: string,
   },
-  id: number,
+  id: ID,
   resource: ResourceRecord
 }
 

@@ -8,6 +8,7 @@ import {ReduxState} from "reducers";
 import { connect } from 'react-redux';
 import styles from './Form.module.css'
 import { toast } from 'react-toastify';
+import { ID } from '../duck/types';
 
 interface StateProps {
   isFetching: boolean
@@ -17,18 +18,18 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  edit: (resource: Resource, id: number, formData: object) => void
-  show: (resource: Resource, id: number) => void
+  edit: (resource: Resource, id: ID, formData: object) => void
+  show: (resource: Resource, id: ID) => void
 }
 
 interface OuterProps {
-  id: number
+  id: ID
   resource: Resource
   Form: ComponentType<InjectedFormProps>
   onEdit: () => void
   getInitialValues: (datum: ResourceRecord) => object
-  handleEdit?: (form: object) => void
-  fetchResource?: (id: number) => void
+  handleEdit?: (form: any) => void
+  fetchResource?: (id: ID) => void
 }
 
 type Props = StateProps & DispatchProps & OuterProps
@@ -57,7 +58,7 @@ class EditView extends Component<Props> {
     }
   }
 
-  handleSubmit = (form: object) => {
+  handleSubmit = (form: any) => {
     const {resource, id, handleEdit, edit} = this.props
     if (handleEdit !== undefined) {
       handleEdit(form)

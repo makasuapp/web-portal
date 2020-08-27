@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import CreateView from 'app/common/containers/CreateView';
-import { PredictedOrderResource } from '../resource';
+import { PredictedOrderResource, dateFormat } from '../resource';
 import PredictedOrdersForm, {formName} from './PredictedOrdersForm';
 
 interface StateProps {
@@ -37,7 +37,7 @@ const PredictedOrdersCreate = (props: Props) => {
 const selector = formValueSelector(formName)
 const mapStateToProps = (state: ReduxState) => {  
   const dateMs = selector(state, "date_ms")
-  const date = dateMs ? moment(parseInt(dateMs)).format("D/M/y") : undefined
+  const date = dateMs ? moment(parseInt(dateMs)).format(dateFormat) : undefined
 
   return {
     selectedDate: date,

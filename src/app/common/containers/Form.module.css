@@ -26,5 +26,6 @@
 }
 
 .trash {
-  max-height: 45px;
+  max-height: 42px;
+  cursor: pointer;
 }
