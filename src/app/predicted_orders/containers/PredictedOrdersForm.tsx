@@ -8,7 +8,8 @@ import { fetch } from 'app/common/duck/actions';
 import {Recipe} from 'app/models/recipe';
 import { Resource, Params } from 'app/common/ResourceHelper';
 import { RecipeResource } from 'app/recipes/resource';
-import PredictedOrderForm, {PredictedOrderFormData} from './PredictedOrderForm';
+import PredictedOrderForm, {PredictedOrderFormData} from '../components/PredictedOrderForm';
+import { Kitchen } from 'app/models/user';
 
 export const formName = "predictedOrderCreateForm"
 
@@ -20,6 +21,8 @@ export interface PredictedOrdersFormData {
 
 interface StateProps {
   recipes: Recipe[]
+  currentKitchen?: Kitchen
+  hasFetched: boolean
 }
 
 interface DispatchProps {
@@ -36,9 +39,9 @@ type Props = InjectedFormProps<PredictedOrdersFormData, OuterProps> & StateProps
 
 class PredictedOrdersForm extends React.Component<Props> {
   componentDidMount() {
-    if (!this.props.hasFetched) {
-      //TODO(kitchenId)
-      this.props.fetch(RecipeResource, {kitchen_id: 1})
+    const {hasFetched, currentKitchen} = this.props
+    if (!hasFetched && currentKitchen) {
+      this.props.fetch(RecipeResource, {kitchen_id: currentKitchen.id})
     }
   }
 
@@ -62,12 +65,14 @@ class PredictedOrdersForm extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => {  
+const mapStateToProps = (state: ReduxState): StateProps => {  
   const resourceState = state.api[RecipeResource.name]
   const recipes = resourceState.data as Recipe[]
 
   return {
-    recipes
+    recipes,
+    currentKitchen: state.auth.currentKitchen,
+    hasFetched: resourceState.hasFetched
   }
 };
 

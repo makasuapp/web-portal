@@ -6,20 +6,26 @@ import {reset} from 'redux-form';
 import CreateView from 'app/common/containers/CreateView';
 import OrderForm, { OrderFormData } from './OrderForm';
 import { OrderResource } from '../resource';
+import { ReduxState } from 'reducers';
+import { Kitchen } from 'app/models/user';
 
 interface DispatchProps {
   reset: (formName: string) => void
 }
 
-type Props = DispatchProps & RouteComponentProps
+interface StateProps {
+  currentKitchen?: Kitchen
+}
+
+type Props = DispatchProps & RouteComponentProps & StateProps
 
 const formatData = (form: OrderFormData) => {
   const {order} = form
   const updatedOrderItems = (order.order_items ||  []).map((item) =>
     Object.assign({}, item, {price_cents: parseFloat(item.price_cents) * 100})
   )
-  //TODO(kitchenId): once we use actual kitchen, change asap time to now
-  const updatedTime = order.for_type === "asap" ? "1595549594000" : order.for_time
+
+  const updatedTime = order.for_type === "asap" ? new Date().getTime() : order.for_time
   const updatedOrder = Object.assign({}, order, {
     order_items: updatedOrderItems, 
     for_type: undefined,
@@ -30,7 +36,12 @@ const formatData = (form: OrderFormData) => {
 }
 
 const OrderCreate = (props: Props) => {
-  //TODO(kitchenId): use actual kitchen id
+  const {currentKitchen} = props
+
+  if (currentKitchen === undefined) {
+    return <div>No kitchen selected</div>
+  }
+
   return <CreateView 
     resource={OrderResource} 
     Form={OrderForm} 
@@ -42,7 +53,7 @@ const OrderCreate = (props: Props) => {
       order: {
         order_type: "delivery", 
         for_type: "asap",
-        kitchen_id: 1
+        kitchen_id: currentKitchen.id
       },
       customer: {
         //a bit hacky but need something to init customer with everything optional
@@ -52,4 +63,10 @@ const OrderCreate = (props: Props) => {
   />
 }
 
-export default connect(null, {reset})(OrderCreate)
+const mapStateToProps = (state: ReduxState): StateProps => {
+  return {
+    currentKitchen: state.auth.currentKitchen
+  }
+};
+
+export default connect(mapStateToProps, {reset})(OrderCreate)

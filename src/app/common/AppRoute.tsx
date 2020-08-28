@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 
 import {ApiReducerState} from './duck/reducers'
 import Layout from "./components/Layout";
@@ -7,9 +7,11 @@ import React from 'react'
 import {ReduxState} from "reducers";
 import { connect } from 'react-redux';
 import { registerResource } from './duck/actions';
+import { isOwner, UserState } from 'app/models/user';
 
 interface StateProps {
   resources: ApiReducerState
+  user: UserState
 }
 
 interface DispatchProps {
@@ -21,9 +23,35 @@ interface OuterProps {
   path?: string
   component: any
   exact?: boolean
+  protection?: ProtectionType
 }
 
 type Props = StateProps & OuterProps & DispatchProps
+
+export enum ProtectionType {
+  Authenticated,
+  Owner,
+}
+
+//TODO: something isn't going right with auth, refresh is making it redirect
+//TODO(test)
+const AuthCheck = (pathDef: string, path: string, user: UserState, protection?: ProtectionType): boolean => {
+  if (protection !== undefined) {
+    if (user !== undefined) {
+      switch (protection) {
+        case ProtectionType.Authenticated:
+          return user !== null 
+        case ProtectionType.Owner:
+          return !!isOwner(user)
+      } 
+    } else {
+      //still loading, pass auth for now
+      return true
+    }
+  } else {
+    return true
+  }
+}
 
 class AppRoute extends React.Component<Props> {
   componentDidMount() {
@@ -60,6 +88,11 @@ class AppRoute extends React.Component<Props> {
     }
   }
 
+  isAuthed(pathDef: string): boolean {
+    const {protection, user} = this.props
+    return AuthCheck(pathDef, window.location.pathname, user, protection)
+  }
+
   render() {
     const {path, exact} = this.props
 
@@ -71,17 +104,26 @@ class AppRoute extends React.Component<Props> {
       )} />
     }
 
-    return <Route path={path} exact={exact} render={props => (
-      <Layout {...props}>
-        {this.mkComponent(props)} 
-      </Layout>
-    )} />
+    if (this.isAuthed(path)) {
+      return <Route path={path} exact={exact} render={props => (
+        <Layout {...props}>
+          {this.mkComponent(props)} 
+        </Layout>
+      )} />
+    } else {
+      return <Route path={path} exact={exact} render={props => (
+        <Layout {...props}>
+          <div>Unauthorized to view this page. If this is unexpected, try logging in with a different account or contact support.</div>
+        </Layout>
+      )} />
+    }
   }
 }
 
 const mapStateToProps = (state: ReduxState) => {
   return {
-    resources: state.api
+    resources: state.api,
+    user: state.auth.currentUser
   }
 };
 

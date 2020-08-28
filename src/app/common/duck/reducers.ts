@@ -3,13 +3,23 @@ import * as types from './types';
 import {ResourceActionTypes} from "./types";
 
 import { ResourceRecord } from '../ResourceHelper';
+import { SetKitchenAction, AuthSuccessAction, SET_KITCHEN, AUTHENTICATION_SUCCESS } from 'app/auth/duck/types';
+import { resetResource } from './actions';
 
 export interface ApiReducerState {
   [key: string]: ResourceReducerState
 }
 
-export const ApiReducer = (state = {}, action: ResourceActionTypes): ApiReducerState => {
-  if (action.meta && action.meta.resourceName) {
+export const ApiReducer = (state: ApiReducerState = {}, action: 
+  ResourceActionTypes | SetKitchenAction | AuthSuccessAction): ApiReducerState => {
+  //reset all the resources if we change kitchens or re-auth
+  if (action.type === SET_KITCHEN || action.type === AUTHENTICATION_SUCCESS) {
+    return Object.entries(state).reduce((newState, [key, resourceState]) => {
+      newState[key] = ResourceReducer(resourceState, resetResource(key))
+      return newState
+    }, {})
+    
+  } else if (action.meta && action.meta.resourceName) {
     const prevState = state[action.meta.resourceName]
     const newState = ResourceReducer(prevState, action)
     return Object.assign({}, state, {
@@ -120,6 +130,9 @@ export const ResourceReducer = (state = resourceInitialState, action: ResourceAc
         isFetching: false,
         error: action.error
       }
+
+    case types.RESET_RESOURCE:
+      return resourceInitialState;
 
     default:
       return state

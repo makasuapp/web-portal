@@ -66,7 +66,7 @@ export const fetchCallError = (resourceName: string, error: string): ResourceAct
   }
 }
 
-export const replaceResources = (resourceName: string, resources: ResourceRecord[]) => {
+export const replaceResources = (resourceName: string, resources: ResourceRecord[]): ResourceActionTypes => {
   return {
     type: types.REPLACE_RESOURCES,
     meta: {
@@ -76,14 +76,21 @@ export const replaceResources = (resourceName: string, resources: ResourceRecord
   }
 }
 
-export const registerResource = (resourceName: string) => {
-  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    dispatch({
-      type: types.REGISTER_RESOURCE,
-      meta: {
-        resourceName
-      }
-    });
+export const registerResource = (resourceName: string): ResourceActionTypes => {
+  return {
+    type: types.REGISTER_RESOURCE,
+    meta: {
+      resourceName
+    }
+  };
+}
+
+export const resetResource = (resourceName: string): ResourceActionTypes => {
+  return {
+    type: types.RESET_RESOURCE,
+    meta: {
+      resourceName
+    }
   }
 }
 

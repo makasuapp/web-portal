@@ -13,6 +13,7 @@ import styles from 'app/common/containers/Form.module.css'
 import { PredictedOrder } from 'app/models/predicted_order';
 import { Resource, Params } from 'app/common/ResourceHelper';
 import { editPredictedOrders } from '../duck/action';
+import { Kitchen } from 'app/models/user';
 
 interface UrlParams {
   date: string
@@ -23,6 +24,7 @@ interface StateProps {
   isLoading: boolean
   error?: string
   predictedOrders: PredictedOrder[]
+  currentKitchen?: Kitchen
 }
 
 interface DispatchProps {
@@ -34,13 +36,16 @@ type Props = RouteComponentProps<UrlParams> & StateProps & DispatchProps
 
 class PredictedOrdersEdit extends Component<Props> {
   componentDidMount() {
-    //TODO(kitchenId)
     const dateStr = this.getDate()
-    this.props.fetch(PredictedOrderResource, {
-      kitchen_id: 1, 
-      start: dateStr,
-      end: dateStr
-    })
+    const {currentKitchen, fetch} = this.props
+
+    if (currentKitchen) {
+      fetch(PredictedOrderResource, {
+        kitchen_id: currentKitchen.id, 
+        start: dateStr,
+        end: dateStr
+      })
+    }
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -73,14 +78,15 @@ class PredictedOrdersEdit extends Component<Props> {
   }
 
   render() {
-    const {isFetching, isLoading, predictedOrders} = this.props
+    const {isFetching, isLoading, predictedOrders, currentKitchen} = this.props
 
     if (isFetching) {
       return <LoadingPage />
     } else if (predictedOrders.length === 0) {
       return <div>Nothing to see here</div>
+    } else if (currentKitchen === undefined) {
+      return <div>No kitchen selected</div>
     } else {
-      //TODO(kitchenId)
       return <div className={styles.form}>
         <h1>Edit Predicted Orders</h1>
         {isLoading ? <div>Processing...</div> : null}
@@ -89,7 +95,7 @@ class PredictedOrdersEdit extends Component<Props> {
           disabled={isLoading} 
           dateDisabled={true}
           initialValues={{
-            kitchen_id: 1,
+            kitchen_id: currentKitchen.id,
             date_ms: moment(this.getDate(), dateFormat).valueOf(),
             predicted_orders: predictedOrders.map((predictedOrder) => {
               return {
@@ -103,16 +109,16 @@ class PredictedOrdersEdit extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (state: ReduxState): StateProps => {
   const resourceState = state.api[PredictedOrderResource.name]
   const predictedOrders = resourceState.data as PredictedOrder[]
 
   return {
     isLoading: resourceState.isLoading,
     isFetching: resourceState.isFetching,
-    hasFetched: resourceState.hasFetched,
     predictedOrders,
-    error: resourceState.error
+    error: resourceState.error,
+    currentKitchen: state.auth.currentKitchen
   }
 };
 

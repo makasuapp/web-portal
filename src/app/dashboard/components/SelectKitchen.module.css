@@ -1,0 +1,12 @@
+.kitchenCard {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  max-width: 500px;
+  padding: 20px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.kitchenCard:hover {
+  background: #ccc;
+}

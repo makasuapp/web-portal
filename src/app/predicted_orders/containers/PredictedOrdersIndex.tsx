@@ -13,6 +13,7 @@ import PredictedOrderList from '../components/PredictedOrderList';
 import DateRangeSelector from '../components/DateRangeSelector';
 import { Resource, Params } from 'app/common/ResourceHelper';
 import { PredictedOrder } from 'app/models/predicted_order';
+import { Kitchen } from 'app/models/user';
 
 interface DispatchProps {
   fetch: (resource: Resource, params?: Params) => void
@@ -20,8 +21,8 @@ interface DispatchProps {
 
 interface StateProps {
   isFetching: boolean
-  hasFetched: boolean
   predictedOrders: PredictedOrder[] 
+  currentKitchen?: Kitchen
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps
@@ -69,11 +70,15 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
   dateStr = (date: Date) => moment(date).format(dateFormat)
 
   endpointParams = () => {
-    //TODO(kitchenId)
-    return {
-      kitchen_id: 1, 
-      start: this.dateStr(this.state.startDate),
-      end: this.dateStr(this.state.endDate)
+    const {currentKitchen} = this.props
+    if (currentKitchen) {
+      return {
+        kitchen_id: currentKitchen.id, 
+        start: this.dateStr(this.state.startDate),
+        end: this.dateStr(this.state.endDate)
+      }
+    } else {
+      throw Error("no kitchen set")
     }
   }
 
@@ -124,8 +129,8 @@ const mapStateToProps = (state: ReduxState): StateProps => {
 
   return {
     isFetching: resourceState.isFetching,
-    hasFetched: resourceState.hasFetched,
-    predictedOrders
+    predictedOrders,
+    currentKitchen: state.auth.currentKitchen
   }
 };
 

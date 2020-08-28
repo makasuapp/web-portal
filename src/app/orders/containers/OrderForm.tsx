@@ -8,8 +8,9 @@ import { Recipe } from 'app/models/recipe';
 import { Resource, Params } from 'app/common/ResourceHelper';
 import { fetch } from 'app/common/duck/actions';
 import { RecipeResource } from 'app/recipes/resource';
-import OrderItemForm, { OrderItemFormData } from './OrderItemForm';
+import OrderItemForm, { OrderItemFormData } from '../components/OrderItemForm';
 import formStyles from 'app/common/containers/Form.module.css'
+import { Kitchen } from 'app/models/user';
 
 const formName = "orderForm"
 
@@ -32,6 +33,7 @@ export interface OrderFormData {
 interface StateProps {
   selectTime: boolean
   recipes: Recipe[]
+  currentKitchen?: Kitchen
 }
 
 interface DispatchProps {
@@ -42,9 +44,9 @@ type Props = InjectedFormProps<OrderFormData> & StateProps & DispatchProps
 
 class OrderForm extends React.Component<Props> {
   componentDidMount() {
-    if (!this.props.hasFetched) {
-      //TODO(kitchenId)
-      this.props.fetch(RecipeResource, {kitchen_id: 1})
+    const {hasFetched, currentKitchen} = this.props
+    if (!hasFetched && currentKitchen) {
+      this.props.fetch(RecipeResource, {kitchen_id: currentKitchen.id})
     }
   }
 
@@ -104,6 +106,7 @@ const mapStateToProps = (state: ReduxState) => {
   return {
     selectTime: forType === "select",
     recipes,
+    currentKitchen: state.auth.currentKitchen
   }
 };
 

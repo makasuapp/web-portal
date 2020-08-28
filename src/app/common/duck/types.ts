@@ -72,5 +72,13 @@ interface FetchCallErrorAction {
   error: string
 }
 
+export const RESET_RESOURCE = "RESET_RESOURCE"
+interface ResetResourceAction {
+  type: typeof RESET_RESOURCE,
+  meta: {
+    resourceName: string
+  }
+}
+
 export type ResourceActionTypes = MakeApiCallAction | AddResourceAction | ApiCallErrorAction | RegisterResourceAction |
-  FetchCallAction | ReplaceResourcesAction | FetchCallErrorAction | UpdateResourceAction
+  FetchCallAction | ReplaceResourcesAction | FetchCallErrorAction | UpdateResourceAction | ResetResourceAction

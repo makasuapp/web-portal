@@ -6,31 +6,32 @@ import { Link } from 'react-router-dom'
 import { OrderResource } from '../resource';
 import { RecipeResource } from '../../recipes/resource';
 import { fetchOrders } from '../duck/actions';
-import { Order } from 'app/models/order';
 import { Recipe }  from 'app/models/recipe';
 import OrderList from '../components/OrderList';
 import IndexView from 'app/common/containers/IndexView';
 import { Params } from 'app/common/ResourceHelper';
 import TopBar from 'app/common/components/TopBar';
+import { Kitchen } from 'app/models/user';
 
 interface DispatchProps {
   fetchOrders: (params?: Params) => void
 }
 
 interface StateProps {
-  isFetching: boolean
-  hasFetched: boolean
-  orders: Order[] 
   recipesMap: {[key: number]: Recipe}
+  currentKitchen?: Kitchen
 }
 
 type Props = StateProps & DispatchProps 
 
 class OrderIndex extends React.Component<Props> {
   render() {
-    const {recipesMap} = this.props
+    const {recipesMap, currentKitchen} = this.props
 
-    //TODO(kitchenId)
+    if (currentKitchen === undefined) {
+      return <div>No kitchen selected</div>
+    }
+
     return <div>
       <TopBar items={[
         <Link 
@@ -43,7 +44,7 @@ class OrderIndex extends React.Component<Props> {
       <IndexView
         resource={OrderResource}
         fetchResources={this.props.fetchOrders}
-        params={{kitchen_id: 1, all: true, env: "dev"}}
+        params={{kitchen_id: currentKitchen.id, all: true, env: "dev"}}
       >
         <OrderList recipesMap={recipesMap} />  
       </IndexView>
@@ -51,10 +52,11 @@ class OrderIndex extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => {
+const mapStateToProps = (state: ReduxState): StateProps => {
   const recipeState = state.api[RecipeResource.name]
   return {
-    recipesMap: recipeState.byId as {[key: number]: Recipe}
+    recipesMap: recipeState.byId as {[key: number]: Recipe},
+    currentKitchen: state.auth.currentKitchen
   }
 };
 
