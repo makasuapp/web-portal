@@ -84,14 +84,13 @@ class EditView extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ReduxState, props: OuterProps) => {
+const mapStateToProps = (state: ReduxState, props: OuterProps): StateProps => {
   const resourceState = state.api[props.resource.name]
   const datum = resourceState.byId[props.id]
 
   return {
     isLoading: resourceState.isLoading,
     isFetching: resourceState.isFetching,
-    hasFetched: resourceState.hasFetched,
     datum,
     error: resourceState.error
   }

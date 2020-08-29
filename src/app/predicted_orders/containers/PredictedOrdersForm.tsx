@@ -20,9 +20,9 @@ export interface PredictedOrdersFormData {
 }
 
 interface StateProps {
+  hasFetchedRecipes: boolean
   recipes: Recipe[]
   currentKitchen?: Kitchen
-  hasFetched: boolean
 }
 
 interface DispatchProps {
@@ -39,8 +39,9 @@ type Props = InjectedFormProps<PredictedOrdersFormData, OuterProps> & StateProps
 
 class PredictedOrdersForm extends React.Component<Props> {
   componentDidMount() {
-    const {hasFetched, currentKitchen} = this.props
-    if (!hasFetched && currentKitchen) {
+    //TODO: should redirect if no kitchen
+    const {currentKitchen, hasFetchedRecipes} = this.props
+    if (currentKitchen && !hasFetchedRecipes) {
       this.props.fetch(RecipeResource, {kitchen_id: currentKitchen.id})
     }
   }
@@ -49,6 +50,9 @@ class PredictedOrdersForm extends React.Component<Props> {
     const {handleSubmit, disabled, recipes, dateDisabled} = this.props;
 
     return <form onSubmit={handleSubmit}>
+      <div>Note: Predicted Orders set here overrides whatever existed for that date.</div>
+      <div>This will also reset the morning and prep checklists for the day, including any changes you may have made.</div>
+      <br/>
       <DatePickerField 
         name="date_ms" 
         label="Date"
@@ -71,8 +75,8 @@ const mapStateToProps = (state: ReduxState): StateProps => {
 
   return {
     recipes,
+    hasFetchedRecipes: resourceState.hasFetched,
     currentKitchen: state.auth.currentKitchen,
-    hasFetched: resourceState.hasFetched
   }
 };
 

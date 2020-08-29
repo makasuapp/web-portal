@@ -15,6 +15,7 @@ const SelectKitchen = (props: Props) => {
     return <div>User is not part of any kitchens. Please make sure you're logged into the right account or have been given access.</div>
   } 
 
+  //once we add permissions for only singular kitchens, will need to limit down the list
   return <div>
     <p>Select a Kitchen</p>
     {Object.values(uniqOrgs).map((org) => {

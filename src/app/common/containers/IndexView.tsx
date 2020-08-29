@@ -17,6 +17,7 @@ interface DispatchProps {
 }
 
 interface OuterProps {
+  headerOverride?: string
   resource: Resource
   fetchResources?: (params?: Params) => void
   children: ReactElement<{data?: ResourceRecord[]}> 
@@ -27,6 +28,7 @@ type Props = StateProps & DispatchProps & OuterProps
 
 class IndexView extends React.Component<Props> {
   componentDidMount() {
+    //do we actually only want to do this if hasn't fetched or would want to refresh still?
     if (!this.props.hasFetched) {
       if (this.props.fetchResources !== undefined) {
         this.props.fetchResources(this.props.params)
@@ -37,7 +39,7 @@ class IndexView extends React.Component<Props> {
   }
 
   render() {
-    const {data, isFetching, resource, children} = this.props
+    const {data, isFetching, resource, children, headerOverride} = this.props
 
     let list
     if (isFetching) {
@@ -48,8 +50,10 @@ class IndexView extends React.Component<Props> {
       list = React.cloneElement(children, {data})
     }
 
+    const headerText = headerOverride ?? resource.pluralCapital
+
     return <div>
-      <h1>{resource.pluralCapital}</h1>
+      <h1>{headerText}</h1>
       {list}
     </div>
   }

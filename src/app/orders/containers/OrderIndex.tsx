@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {ReduxState} from "reducers";
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import { OrderResource } from '../resource';
 import { RecipeResource } from '../../recipes/resource';
@@ -42,9 +43,10 @@ class OrderIndex extends React.Component<Props> {
         </Link>
       ]} />
       <IndexView
+        headerOverride={`Orders for ${moment().format("M/D/y")}`}
         resource={OrderResource}
         fetchResources={this.props.fetchOrders}
-        params={{kitchen_id: currentKitchen.id, all: true, env: "dev"}}
+        params={{kitchen_id: currentKitchen.id, all: true}}
       >
         <OrderList recipesMap={recipesMap} />  
       </IndexView>

@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import {ApiReducerState} from './duck/reducers'
 import Layout from "./components/Layout";
@@ -33,7 +33,7 @@ export enum ProtectionType {
   Owner,
 }
 
-//TODO: something isn't going right with auth, refresh is making it redirect
+//should also do kitchen check here?
 //TODO(test)
 const AuthCheck = (pathDef: string, path: string, user: UserState, protection?: ProtectionType): boolean => {
   if (protection !== undefined) {

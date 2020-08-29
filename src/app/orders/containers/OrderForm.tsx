@@ -31,6 +31,7 @@ export interface OrderFormData {
 }
 
 interface StateProps {
+  hasFetchedRecipes: boolean
   selectTime: boolean
   recipes: Recipe[]
   currentKitchen?: Kitchen
@@ -44,8 +45,9 @@ type Props = InjectedFormProps<OrderFormData> & StateProps & DispatchProps
 
 class OrderForm extends React.Component<Props> {
   componentDidMount() {
-    const {hasFetched, currentKitchen} = this.props
-    if (!hasFetched && currentKitchen) {
+    //TODO: should redirect if no kitchen
+    const {currentKitchen, hasFetchedRecipes} = this.props
+    if (currentKitchen && !hasFetchedRecipes) {
       this.props.fetch(RecipeResource, {kitchen_id: currentKitchen.id})
     }
   }
@@ -98,13 +100,14 @@ class OrderForm extends React.Component<Props> {
 };
 
 const selector = formValueSelector(formName)
-const mapStateToProps = (state: ReduxState) => {  
+const mapStateToProps = (state: ReduxState): StateProps => {  
   const resourceState = state.api[RecipeResource.name]
   const recipes = resourceState.data as Recipe[]
   const forType = selector(state, "order.for_type")
 
   return {
     selectTime: forType === "select",
+    hasFetchedRecipes: resourceState.hasFetched,
     recipes,
     currentKitchen: state.auth.currentKitchen
   }

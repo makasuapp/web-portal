@@ -39,6 +39,7 @@ class PredictedOrdersEdit extends Component<Props> {
     const dateStr = this.getDate()
     const {currentKitchen, fetch} = this.props
 
+    //TODO: should redirect if no kitchen
     if (currentKitchen) {
       fetch(PredictedOrderResource, {
         kitchen_id: currentKitchen.id, 

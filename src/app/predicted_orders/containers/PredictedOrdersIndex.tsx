@@ -70,6 +70,7 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
   dateStr = (date: Date) => moment(date).format(dateFormat)
 
   endpointParams = () => {
+    //TODO: should redirect if no kitchen
     const {currentKitchen} = this.props
     if (currentKitchen) {
       return {

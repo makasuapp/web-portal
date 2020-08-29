@@ -7,15 +7,20 @@ import moment from 'moment';
 
 import CreateView from 'app/common/containers/CreateView';
 import { PredictedOrderResource, dateFormat } from '../resource';
-import PredictedOrdersForm, {formName} from './PredictedOrdersForm';
+import PredictedOrdersForm, {formName, PredictedOrdersFormData} from './PredictedOrdersForm';
 import { Kitchen } from 'app/models/user';
+import { editPredictedOrders } from '../duck/action';
 
 interface StateProps {
   selectedDate?: string 
   currentKitchen?: Kitchen
 }
 
-type Props = RouteComponentProps & StateProps
+interface DispatchProps {
+  editPredictedOrders: (formData: PredictedOrdersFormData) => void
+}
+
+type Props = RouteComponentProps & StateProps & DispatchProps
 
 const PredictedOrdersCreate = (props: Props) => {
   const {currentKitchen} = props
@@ -27,6 +32,7 @@ const PredictedOrdersCreate = (props: Props) => {
   return <CreateView 
     resource={PredictedOrderResource} 
     Form={PredictedOrdersForm} 
+    handleCreate={props.editPredictedOrders}
     onCreate={() => {
       const {selectedDate} = props
       props.history.push({
@@ -51,4 +57,4 @@ const mapStateToProps = (state: ReduxState): StateProps => {
     currentKitchen: state.auth.currentKitchen
   }
 };
-export default connect(mapStateToProps, {})(PredictedOrdersCreate)
+export default connect(mapStateToProps, {editPredictedOrders})(PredictedOrdersCreate)
