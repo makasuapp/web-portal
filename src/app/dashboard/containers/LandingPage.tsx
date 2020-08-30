@@ -2,11 +2,10 @@ import React from 'react'
 import {ReduxState} from "reducers";
 import { connect } from 'react-redux';
 
-import UserDashboard from "../components/UserDashboard";
-import OwnerDashboard from "../components/OwnerDashboard";
 import {UserState, isOwner, Kitchen, User} from "app/models/user";
 import { setKitchen } from 'app/auth/duck/actions';
 import SelectKitchen from '../components/SelectKitchen';
+import { OwnerDashboard, UserDashboard } from '../components/Dashboards';
   
 interface StateProps {
   user: UserState
@@ -27,9 +26,9 @@ class LandingPage extends React.Component<Props> {
       return <SelectKitchen user={user} setKitchen={setKitchen} />
     } else {
       if (isOwner(user)) {
-        return <OwnerDashboard user={user} />
+        return <OwnerDashboard user={user} kitchen={currentKitchen} />
       } else {
-        return <UserDashboard user={user} />
+        return <UserDashboard user={user} kitchen={currentKitchen} />
       }
     }
   }

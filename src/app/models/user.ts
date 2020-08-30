@@ -15,6 +15,7 @@ export interface Organization {
   id: ID,
   name: string
   role: Role
+  //TODO(permissions): shouldn't be exposing this here, should just show the kitchens have access to instead
   kitchen_id?: ID
   kitchens: Kitchen[]
 }
@@ -22,6 +23,7 @@ export interface Organization {
 export interface Kitchen {
   id: ID
   name: string
+  access_link?: string
 }
 
 export const isDefined = (user: UserState) => user !== undefined && user !== null
