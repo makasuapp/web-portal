@@ -4,7 +4,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 type Props = RouteComponentProps
 
-export default class LaunchPage extends React.Component<Props> {
+export default class AppLaunchPage extends React.Component<Props> {
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
     console.log(`${values.kitchen} ${values.token}`)

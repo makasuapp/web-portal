@@ -14,14 +14,14 @@ import Login from './auth/containers/Login';
 import Signup from './auth/containers/Signup';
 import Reset from './auth/containers/Reset';
 import RequestReset from './auth/containers/RequestReset';
-import LaunchPage from './dashboard/containers/LaunchPage';
+import AppLaunchPage from './dashboard/containers/AppLaunchPage';
 
 export default class App extends Component {
   render () {
     return <Router>
       <Switch>
         <AppRoute path='/' exact component={LandingPage} />
-        <AppRoute path='/launch' exact component={LaunchPage} />
+        <AppRoute path='/auth' exact component={AppLaunchPage} />
 
         <AppRoute path='/orders' exact component={OrderIndex} 
           resourceNames={["recipe", "order"]} protection={ProtectionType.Authenticated} />
