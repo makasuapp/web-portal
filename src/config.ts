@@ -18,7 +18,9 @@ if (env === 'production' || env === 'development' || env === 'test') {
   env_specific_configs = ENV_VARS.production;
 }
 
-const DEFAULT_ENV_VARS = {};
+const DEFAULT_ENV_VARS = {
+  env
+};
 
 var CONFIG = Object.assign({}, DEFAULT_ENV_VARS, env_specific_configs);
 

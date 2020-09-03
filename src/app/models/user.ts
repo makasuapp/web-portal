@@ -1,9 +1,10 @@
 import { ID } from "app/common/duck/types"
 
-export type Role = "user" | "owner" 
+export type OrganizationRole = "user" | "owner" 
 
 export interface User {
   id: ID,
+  role?: "admin",
   first_name?: string,
   last_name?: string,
   email: string,
@@ -14,7 +15,7 @@ export interface User {
 export interface Organization {
   id: ID,
   name: string
-  role: Role
+  role: OrganizationRole
   //TODO(permissions): shouldn't be exposing this here, should just show the kitchens have access to instead
   kitchen_id?: ID
   kitchens: Kitchen[]
