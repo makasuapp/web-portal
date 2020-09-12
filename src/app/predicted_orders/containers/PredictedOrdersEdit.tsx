@@ -5,7 +5,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import moment from 'moment'
 
 import {fetch} from "../../common/duck/actions";
-import { PredictedOrderResource, dateFormat } from '../resource';
+import { PredictedOrderResource } from '../resource';
+import { paramsDateFormat } from 'app/common/DateHelper';
 import PredictedOrdersForm, { PredictedOrdersFormData } from './PredictedOrdersForm';
 import LoadingPage from 'app/common/components/LoadingPage';
 import {ReduxState} from "reducers";
@@ -68,7 +69,7 @@ class PredictedOrdersEdit extends Component<Props> {
   getDate = (): string => {
     const date = this.props.match.params.date
     if (date !== undefined) {
-      return moment(date, "y-M-D").format(dateFormat)
+      return moment(date, "y-M-D").format(paramsDateFormat)
     }
 
     throw Error("expected date")
@@ -97,7 +98,7 @@ class PredictedOrdersEdit extends Component<Props> {
           dateDisabled={true}
           initialValues={{
             kitchen_id: currentKitchen.id,
-            date_ms: moment(this.getDate(), dateFormat).valueOf(),
+            date_ms: moment(this.getDate(), paramsDateFormat).valueOf(),
             predicted_orders: predictedOrders.map((predictedOrder) => {
               return {
                 quantity: predictedOrder.quantity,

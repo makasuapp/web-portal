@@ -1,6 +1,7 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
 import styles from './DateRangeSelector.module.css'
+import { datepickerDateFormat } from 'app/common/DateHelper';
 
 interface Props {
   startDate: Date
@@ -20,6 +21,8 @@ const DateRangeSelector = ({
       selectsStart
       startDate={startDate}
       endDate={endDate}
+      showTimeSelect 
+      dateFormat={datepickerDateFormat}
     />
     <span className={styles.text}>To</span>
     <DatePicker
@@ -29,6 +32,8 @@ const DateRangeSelector = ({
       startDate={startDate}
       endDate={endDate}
       minDate={startDate}
+      showTimeSelect 
+      dateFormat={datepickerDateFormat}
     />
   </div>
 }

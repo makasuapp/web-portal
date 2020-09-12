@@ -3,16 +3,17 @@ import {RouteComponentProps} from 'react-router-dom'
 import { formValueSelector } from 'redux-form'
 import { ReduxState } from 'reducers';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import moment, {Moment} from 'moment';
 
 import CreateView from 'app/common/containers/CreateView';
-import { PredictedOrderResource, dateFormat } from '../resource';
+import { PredictedOrderResource } from '../resource';
+import { paramsDateFormat } from 'app/common/DateHelper';
 import PredictedOrdersForm, {formName, PredictedOrdersFormData} from './PredictedOrdersForm';
 import { Kitchen } from 'app/models/user';
 import { editPredictedOrders } from '../duck/action';
 
 interface StateProps {
-  selectedDate?: string 
+  selectedDate?: Moment
   currentKitchen?: Kitchen
 }
 
@@ -35,9 +36,12 @@ const PredictedOrdersCreate = (props: Props) => {
     handleCreate={props.editPredictedOrders}
     onCreate={() => {
       const {selectedDate} = props
+      const startDate = selectedDate?.startOf('day').format(paramsDateFormat)
+      const endDate = selectedDate?.endOf('day').format(paramsDateFormat)
+
       props.history.push({
         pathname: PredictedOrderResource.indexPath,
-        search: `?startDate=${selectedDate}&endDate=${selectedDate}`
+        search: `?startDate=${startDate}&endDate=${endDate}`
       })
     }}
     initialValues={{
@@ -50,7 +54,7 @@ const PredictedOrdersCreate = (props: Props) => {
 const selector = formValueSelector(formName)
 const mapStateToProps = (state: ReduxState): StateProps => {  
   const dateMs = selector(state, "date_ms")
-  const date = dateMs ? moment(parseInt(dateMs)).format(dateFormat) : undefined
+  const date = dateMs ? moment(parseInt(dateMs)) : undefined
 
   return {
     selectedDate: date,

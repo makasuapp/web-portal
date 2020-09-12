@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom'
-import moment from 'moment'
+import moment, {Moment} from 'moment'
 import queryString from 'query-string'
 
 import LoadingPage from 'app/common/components/LoadingPage';
 import {ReduxState} from "reducers";
 import { fetch } from 'app/common/duck/actions';
 import TopBar from 'app/common/components/TopBar'
-import {PredictedOrderResource, dateFormat} from '../resource';
+import {PredictedOrderResource} from '../resource';
+import {paramsDateFormat} from 'app/common/DateHelper';
 import PredictedOrderList from '../components/PredictedOrderList';
 import DateRangeSelector from '../components/DateRangeSelector';
 import { Resource, Params } from 'app/common/ResourceHelper';
@@ -28,21 +29,23 @@ interface StateProps {
 type Props = DispatchProps & StateProps & RouteComponentProps
 
 interface State {
-  startDate: Date,
-  endDate: Date
+  startDate: Moment,
+  endDate: Moment 
 }
 
-const today = new Date()
 class PredictedOrdersIndex extends React.Component<Props, State> {
-  state: State = {startDate: today, endDate: today}
+  state: State = {
+    startDate: moment().startOf('day'), 
+    endDate: moment().endOf('day')
+  }
 
-  //set date from query str
+  //set initial state from params, state is what's synced with server
   componentDidMount() {
     const values = queryString.parse(this.props.location.search)
     const {startDate, endDate} = values
 
-    const startDateObj = startDate ? moment(startDate, dateFormat).toDate() : this.state.startDate
-    const endDateObj = endDate ? moment(endDate, dateFormat).toDate() : this.state.endDate
+    const startDateObj = startDate ? moment(startDate, paramsDateFormat) : this.state.startDate
+    const endDateObj = endDate ? moment(endDate, paramsDateFormat) : this.state.endDate
 
     if (this.isDiffDateState(startDateObj, endDateObj)) {
       this.setState({startDate: startDateObj, endDate: endDateObj})
@@ -63,11 +66,11 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
     }
   }
 
-  isDiffDateState = (startDate: Date, endDate: Date) => 
-    this.state.startDate.getTime() !== startDate.getTime() ||
-      this.state.endDate.getTime() !== endDate.getTime()
+  isDiffDateState = (startDate: Moment, endDate: Moment) => 
+    this.state.startDate.valueOf() !== startDate.valueOf() ||
+      this.state.endDate.valueOf() !== endDate.valueOf()
 
-  dateStr = (date: Date) => moment(date).format(dateFormat)
+  dateStr = (date: Moment) => date.format(paramsDateFormat)
 
   endpointParams = () => {
     //TODO: should redirect if no kitchen
@@ -83,9 +86,10 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
     }
   }
 
-  setStartDate = (date: Date) => {
+  setStartDate = (dateObj: Date) => {
+    const date = moment(dateObj);
     this.setState({startDate: date})
-    if (this.state.endDate.getTime() < date.getTime()) {
+    if (this.state.endDate.valueOf() < date.valueOf()) {
       this.setState({endDate: date})
     }
   }
@@ -114,10 +118,10 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
       ]} />
       <h1>Predicted Orders</h1>
       <DateRangeSelector 
-        startDate={startDate}
-        endDate={endDate}
+        startDate={startDate.toDate()}
+        endDate={endDate.toDate()}
         onStartChange={this.setStartDate}
-        onEndChange={(date) => this.setState({endDate: date})}
+        onEndChange={(date) => this.setState({endDate: moment(date)})}
       />
       {list}
     </div>

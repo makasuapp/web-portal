@@ -11,6 +11,7 @@ import { RecipeResource } from 'app/recipes/resource';
 import OrderItemForm, { OrderItemFormData } from '../components/OrderItemForm';
 import formStyles from 'app/common/containers/Form.module.css'
 import { Kitchen } from 'app/models/user';
+import { datepickerDateFormat } from 'app/common/DateHelper';
 
 const formName = "orderForm"
 
@@ -77,7 +78,7 @@ class OrderForm extends React.Component<Props> {
           name="order.for_time" 
           customclasses={{field: formStyles.shortField}}
           showTimeSelect isRequired 
-          dateFormat="MM/d/yyyy h:mm aa" />
+          dateFormat={datepickerDateFormat} />
       : null}
 
       <h3>Customer Info</h3>

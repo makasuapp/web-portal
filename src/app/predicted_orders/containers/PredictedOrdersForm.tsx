@@ -10,6 +10,7 @@ import { Resource, Params } from 'app/common/ResourceHelper';
 import { RecipeResource } from 'app/recipes/resource';
 import PredictedOrderForm, {PredictedOrderFormData} from '../components/PredictedOrderForm';
 import { Kitchen } from 'app/models/user';
+import { datepickerDateFormat } from 'app/common/DateHelper';
 
 export const formName = "predictedOrderCreateForm"
 
@@ -58,7 +59,8 @@ class PredictedOrdersForm extends React.Component<Props> {
         label="Date"
         isRequired 
         disabled={dateDisabled}
-        dateFormat="MM/d/yyyy" />
+        showTimeSelect 
+        dateFormat={datepickerDateFormat} />
 
       <h3>Predicted Orders</h3>
       <FieldArray name="predicted_orders" recipes={recipes}

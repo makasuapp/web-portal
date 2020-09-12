@@ -2,10 +2,12 @@ import React, {ReactNode} from 'react';
 import { Link } from 'react-router-dom'
 import {FaEdit} from 'react-icons/fa';
 import classnames from 'classnames';
+import moment from 'moment';
 
 import {PredictedOrder} from 'app/models/predicted_order';
 import { ResourceRecord } from 'app/common/ResourceHelper';
 import styles from './PredictedOrderList.module.css';
+import { displayDateTimeFormat } from 'app/common/DateHelper';
 
 interface OuterProps {
   data?: ResourceRecord[]
@@ -22,7 +24,9 @@ const PredictedOrderList = ({data = []}: OuterProps) => {
       currentDate = order.date;
       list.push([
         <div key={order.date} className={styles.header}>
-          <div className={styles.headerText}>{order.date}</div>
+          <div className={styles.headerText}>
+            {moment(order.date).format(displayDateTimeFormat)}
+          </div>
           <Link 
             className={classnames("btn btn-primary", styles.editButton)}
             to={`/predicted_orders/${order.date}/edit`}>

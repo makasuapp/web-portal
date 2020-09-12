@@ -13,6 +13,7 @@ import IndexView from 'app/common/containers/IndexView';
 import { Params } from 'app/common/ResourceHelper';
 import TopBar from 'app/common/components/TopBar';
 import { Kitchen } from 'app/models/user';
+import { displayDateFormat } from 'app/common/DateHelper';
 
 interface DispatchProps {
   fetchOrders: (params?: Params) => void
@@ -43,7 +44,7 @@ class OrderIndex extends React.Component<Props> {
         </Link>
       ]} />
       <IndexView
-        headerOverride={`Orders for ${moment().format("M/D/y")}`}
+        headerOverride={`Orders for ${moment().format(displayDateFormat)}`}
         resource={OrderResource}
         fetchResources={this.props.fetchOrders}
         params={{kitchen_id: currentKitchen.id, all: true}}
