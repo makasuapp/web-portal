@@ -13,12 +13,14 @@ export interface ApiReducerState {
 export const ApiReducer = (state: ApiReducerState = {}, action: 
   ResourceActionTypes | SetKitchenAction | AuthSuccessAction): ApiReducerState => {
   //reset all the resources if we change kitchens or re-auth
-  if (action.type === SET_KITCHEN || action.type === AUTHENTICATION_SUCCESS) {
+  if (action.type === SET_KITCHEN || 
+    (action.type === AUTHENTICATION_SUCCESS && action.newAuth)) {
     return Object.entries(state).reduce((newState, [key, resourceState]) => {
       newState[key] = ResourceReducer(resourceState, resetResource(key))
       return newState
     }, {})
-    
+  } else if (action.type === AUTHENTICATION_SUCCESS) {
+    return state 
   } else if (action.meta && action.meta.resourceName) {
     const prevState = state[action.meta.resourceName]
     const newState = ResourceReducer(prevState, action)

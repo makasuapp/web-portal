@@ -15,11 +15,12 @@ const authRequest = (): AuthActionTypes => {
   }
 };
 
-const authSuccess = (user: User, token: Token): AuthActionTypes => {
+const authSuccess = (user: User, token: Token, newAuth: boolean = true): AuthActionTypes => {
   return {
     type: types.AUTHENTICATION_SUCCESS,
-    user: user,
-    token: token
+    user,
+    token,
+    newAuth
   }
 };
 
@@ -50,12 +51,13 @@ export const setKitchen = (kitchen: Kitchen) => {
   }
 }
 
-const _setUser = (response: UserResponse, dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+const _setUser = (response: UserResponse, dispatch: ThunkDispatch<{}, {}, AnyAction>, 
+  newAuth: boolean = true) => {
   const {token, user} = response;
   localStorage.setItem('token', token);
   localStorage.setItem('user', JSON.stringify(user));
 
-  dispatch(authSuccess(user, token))
+  dispatch(authSuccess(user, token, newAuth))
 }
 
 export const signup = (data: SignupRequestData) => {
@@ -127,7 +129,7 @@ export const verifyCredentials = async (store: Store) => {
     //assume this one is valid for the meantime
     try {
       const savedUser: User = JSON.parse(savedUserStr);
-      store.dispatch(authSuccess(savedUser, savedToken));
+      store.dispatch(authSuccess(savedUser, savedToken, false));
       if (savedKitchenStr !== null) {
         store.dispatch(_setKitchen(JSON.parse(savedKitchenStr)))
       }
@@ -141,7 +143,7 @@ export const verifyCredentials = async (store: Store) => {
         }
       }).then((response: UserResponse) => {
         //updated versions
-        _setUser(response, store.dispatch)
+        _setUser(response, store.dispatch, false)
         
         //TODO: if user doesn't have access anymore to kitchen, revoke kitchen and redirect to select
       }).catch((errors) => {

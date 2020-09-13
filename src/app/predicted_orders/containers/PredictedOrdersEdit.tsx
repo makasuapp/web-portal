@@ -67,9 +67,9 @@ class PredictedOrdersEdit extends Component<Props> {
   }
 
   getDate = (): string => {
-    const date = this.props.match.params.date
+    const {date} = this.props.match.params
     if (date !== undefined) {
-      return moment(date, "y-M-D").format(paramsDateFormat)
+      return date;
     }
 
     throw Error("expected date")

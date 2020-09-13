@@ -9,7 +9,8 @@ export const AUTHENTICATION_SUCCESS = "AUTHENTICATION_SUCCESS";
 export interface AuthSuccessAction {
   type: typeof AUTHENTICATION_SUCCESS,
   user: User,
-  token: Token
+  token: Token,
+  newAuth: boolean
 }
 
 export const RESET_SUCCESS = "RESET_SUCCESS";

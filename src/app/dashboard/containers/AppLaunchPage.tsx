@@ -7,7 +7,6 @@ type Props = RouteComponentProps
 export default class AppLaunchPage extends React.Component<Props> {
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
-    console.log(`${values.kitchen} ${values.token}`)
   }
 
   //TODO(app)
