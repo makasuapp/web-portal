@@ -1,7 +1,7 @@
 ## Setup
 
 ```
-  nvm use
+  nvm use 14
   yarn
 ```
 
