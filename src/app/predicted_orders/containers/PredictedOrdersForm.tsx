@@ -38,6 +38,7 @@ interface OuterProps {
 type Props = InjectedFormProps<PredictedOrdersFormData, OuterProps> & StateProps 
   & DispatchProps & OuterProps
 
+//TODO: be able to delete or change time?
 class PredictedOrdersForm extends React.Component<Props> {
   componentDidMount() {
     //TODO: should redirect if no kitchen
