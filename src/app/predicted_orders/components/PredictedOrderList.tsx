@@ -7,7 +7,7 @@ import moment from 'moment';
 import {PredictedOrder} from 'app/models/predicted_order';
 import { ResourceRecord } from 'app/common/ResourceHelper';
 import styles from './PredictedOrderList.module.css';
-import { displayDateTimeFormat } from 'app/common/DateHelper';
+import { displayDateTimeFormat, paramsDateFormat } from 'app/common/DateHelper';
 
 interface OuterProps {
   data?: ResourceRecord[]
@@ -29,7 +29,7 @@ const PredictedOrderList = ({data = []}: OuterProps) => {
           </div>
           <Link 
             className={classnames("btn btn-primary", styles.editButton)}
-            to={`/predicted_orders/${order.date}/edit`}>
+            to={`/predicted_orders/${moment(order.date).format(paramsDateFormat)}/edit`}>
               <FaEdit />
           </Link>
         </div>
