@@ -1,20 +1,20 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import moment, {Moment} from 'moment'
+import moment, { Moment } from 'moment'
 import queryString from 'query-string'
 
-import LoadingPage from 'app/common/components/LoadingPage';
-import {ReduxState} from "reducers";
-import { fetch } from 'app/common/duck/actions';
+import LoadingPage from 'app/common/components/LoadingPage'
+import { ReduxState } from 'reducers'
+import { fetch } from 'app/common/duck/actions'
 import TopBar from 'app/common/components/TopBar'
-import {PredictedOrderResource} from '../resource';
-import {paramsDateFormat} from 'app/common/DateHelper';
-import PredictedOrderList from '../components/PredictedOrderList';
-import DateRangeSelector from '../components/DateRangeSelector';
-import { Resource, Params } from 'app/common/ResourceHelper';
-import { PredictedOrder } from 'app/models/predicted_order';
-import { Kitchen } from 'app/models/user';
+import { PredictedOrderResource } from '../resource'
+import { paramsDateFormat } from 'app/common/DateHelper'
+import PredictedOrderList from '../components/PredictedOrderList'
+import DateRangeSelector from '../components/DateRangeSelector'
+import { Resource, Params } from 'app/common/ResourceHelper'
+import { PredictedOrder } from 'app/models/predicted_order'
+import { Kitchen } from 'app/models/user'
 
 interface DispatchProps {
   fetch: (resource: Resource, params?: Params) => void
@@ -22,33 +22,37 @@ interface DispatchProps {
 
 interface StateProps {
   isFetching: boolean
-  predictedOrders: PredictedOrder[] 
+  predictedOrders: PredictedOrder[]
   currentKitchen?: Kitchen
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps
 
 interface State {
-  startDate: Moment,
-  endDate: Moment 
+  startDate: Moment
+  endDate: Moment
 }
 
 class PredictedOrdersIndex extends React.Component<Props, State> {
   state: State = {
-    startDate: moment().startOf('day'), 
-    endDate: moment().endOf('day')
+    startDate: moment().startOf('day'),
+    endDate: moment().endOf('day'),
   }
 
   //set initial state from params, state is what's synced with server
   componentDidMount() {
     const values = queryString.parse(this.props.location.search)
-    const {startDate, endDate} = values
+    const { startDate, endDate } = values
 
-    const startDateObj = startDate ? moment(startDate, paramsDateFormat) : this.state.startDate
-    const endDateObj = endDate ? moment(endDate, paramsDateFormat) : this.state.endDate
+    const startDateObj = startDate
+      ? moment(startDate, paramsDateFormat)
+      : this.state.startDate
+    const endDateObj = endDate
+      ? moment(endDate, paramsDateFormat)
+      : this.state.endDate
 
     if (this.isDiffDateState(startDateObj, endDateObj)) {
-      this.setState({startDate: startDateObj, endDate: endDateObj})
+      this.setState({ startDate: startDateObj, endDate: endDateObj })
     } else {
       this.props.fetch(PredictedOrderResource, this.endpointParams())
     }
@@ -61,42 +65,44 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
 
       this.props.history.push({
         pathname: PredictedOrderResource.indexPath,
-        search: `?startDate=${this.dateStr(this.state.startDate)}&endDate=${this.dateStr(this.state.endDate)}`
+        search: `?startDate=${this.dateStr(
+          this.state.startDate
+        )}&endDate=${this.dateStr(this.state.endDate)}`,
       })
     }
   }
 
-  isDiffDateState = (startDate: Moment, endDate: Moment) => 
+  isDiffDateState = (startDate: Moment, endDate: Moment) =>
     this.state.startDate.valueOf() !== startDate.valueOf() ||
-      this.state.endDate.valueOf() !== endDate.valueOf()
+    this.state.endDate.valueOf() !== endDate.valueOf()
 
   dateStr = (date: Moment) => date.format(paramsDateFormat)
 
   endpointParams = () => {
     //TODO: should redirect if no kitchen
-    const {currentKitchen} = this.props
+    const { currentKitchen } = this.props
     if (currentKitchen) {
       return {
-        kitchen_id: currentKitchen.id, 
+        kitchen_id: currentKitchen.id,
         start: this.dateStr(this.state.startDate),
-        end: this.dateStr(this.state.endDate)
+        end: this.dateStr(this.state.endDate),
       }
     } else {
-      throw Error("no kitchen set")
+      throw Error('no kitchen set')
     }
   }
 
   setStartDate = (dateObj: Date) => {
-    const date = moment(dateObj);
-    this.setState({startDate: date})
+    const date = moment(dateObj)
+    this.setState({ startDate: date })
     if (this.state.endDate.valueOf() < date.valueOf()) {
-      this.setState({endDate: date})
+      this.setState({ endDate: date })
     }
   }
 
   render() {
-    const {startDate, endDate} = this.state
-    const {predictedOrders, isFetching} = this.props
+    const { startDate, endDate } = this.state
+    const { predictedOrders, isFetching } = this.props
 
     let list
     if (isFetching) {
@@ -107,24 +113,28 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
       list = <PredictedOrderList data={predictedOrders} />
     }
 
-    return <div>
-      <TopBar items={[
-        <Link 
-          key="new"
-          className={"btn btn-primary"}
-          to={"/predicted_orders/new"}>
-            Add Predicted Orders
-        </Link>
-      ]} />
-      <h1>Predicted Orders</h1>
-      <DateRangeSelector 
-        startDate={startDate.toDate()}
-        endDate={endDate.toDate()}
-        onStartChange={this.setStartDate}
-        onEndChange={(date) => this.setState({endDate: moment(date)})}
-      />
-      {list}
-    </div>
+    return (
+      <div>
+        <TopBar
+          items={[
+            <Link
+              key="new"
+              className={'btn btn-primary'}
+              to={'/predicted_orders/new'}>
+              Add Predicted Orders
+            </Link>,
+          ]}
+        />
+        <h1>Predicted Orders</h1>
+        <DateRangeSelector
+          startDate={startDate.toDate()}
+          endDate={endDate.toDate()}
+          onStartChange={this.setStartDate}
+          onEndChange={(date) => this.setState({ endDate: moment(date) })}
+        />
+        {list}
+      </div>
+    )
   }
 }
 
@@ -135,8 +145,8 @@ const mapStateToProps = (state: ReduxState): StateProps => {
   return {
     isFetching: resourceState.isFetching,
     predictedOrders,
-    currentKitchen: state.auth.currentKitchen
+    currentKitchen: state.auth.currentKitchen,
   }
-};
+}
 
-export default connect(mapStateToProps, {fetch})(PredictedOrdersIndex)
+export default connect(mapStateToProps, { fetch })(PredictedOrdersIndex)

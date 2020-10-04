@@ -1,14 +1,11 @@
-import * as types from './types';
-
-import {Token, UserState, Kitchen} from "app/models/user";
-
-import {AuthActionTypes} from "./types";
+import { Token, UserState, Kitchen } from 'app/models/user'
+import * as types from './types'
 
 export interface AuthState {
-  isAuthenticating: boolean,
-  currentUser: UserState,
-  currentKitchen?: Kitchen,
-  token: Token | null,
+  isAuthenticating: boolean
+  currentUser: UserState
+  currentKitchen?: Kitchen
+  token: Token | null
   errors: string[]
 }
 
@@ -17,30 +14,33 @@ const initialState: AuthState = {
   currentUser: null,
   currentKitchen: undefined,
   token: null,
-  errors: []
-};
+  errors: [],
+}
 
-const AuthReducer = (state = initialState, action: AuthActionTypes): AuthState => {
+const AuthReducer = (
+  state = initialState,
+  action: types.AuthActionTypes
+): AuthState => {
   switch (action.type) {
     case types.AUTHENTICATION_REQUEST:
       return {
         ...state,
-        isAuthenticating: true
-      };
+        isAuthenticating: true,
+      }
 
     case types.AUTHENTICATION_SUCCESS:
       return {
         ...state,
         isAuthenticating: false,
         currentUser: action.user,
-        token: action.token 
-      };
+        token: action.token,
+      }
 
     case types.RESET_SUCCESS:
       return {
         ...state,
         isAuthenticating: false,
-      };
+      }
 
     case types.AUTHENTICATION_FAILURE:
       return {
@@ -48,8 +48,8 @@ const AuthReducer = (state = initialState, action: AuthActionTypes): AuthState =
         currentUser: null,
         currentKitchen: undefined,
         token: null,
-        errors: action.errors || []
-      };
+        errors: action.errors || [],
+      }
 
     case types.LOGOUT:
       return {
@@ -57,18 +57,18 @@ const AuthReducer = (state = initialState, action: AuthActionTypes): AuthState =
         currentUser: null,
         currentKitchen: undefined,
         token: null,
-        errors: []
-      };
+        errors: [],
+      }
 
     case types.SET_KITCHEN:
       return {
         ...state,
-        currentKitchen: action.kitchen
+        currentKitchen: action.kitchen,
       }
 
     default:
       return state
   }
-};
+}
 
-export default AuthReducer;
+export default AuthReducer
