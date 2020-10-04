@@ -1,21 +1,21 @@
-import { InjectedFormProps, reduxForm } from "redux-form";
+import { InjectedFormProps, reduxForm } from 'redux-form'
 
-import React from "react";
-import { TextField } from "redux-form-fields-lib";
+import React from 'react'
+import { TextField } from 'redux-form-fields-lib'
 
 export interface RequestResetFormValues {
-  email: string;
+  email: string
 }
 
 interface OuterProps {
-  disabled?: boolean;
+  disabled?: boolean
 }
 
-type Props = OuterProps & InjectedFormProps<RequestResetFormValues, OuterProps>;
+type Props = OuterProps & InjectedFormProps<RequestResetFormValues, OuterProps>
 
 class RequestResetForm extends React.Component<Props> {
   render() {
-    const { handleSubmit, disabled } = this.props;
+    const { handleSubmit, disabled } = this.props
 
     return (
       <form onSubmit={handleSubmit}>
@@ -24,10 +24,10 @@ class RequestResetForm extends React.Component<Props> {
           Submit
         </button>
       </form>
-    );
+    )
   }
 }
 
 export default reduxForm<RequestResetFormValues, OuterProps>({
-  form: "request_reset",
-})(RequestResetForm);
+  form: 'request_reset',
+})(RequestResetForm)

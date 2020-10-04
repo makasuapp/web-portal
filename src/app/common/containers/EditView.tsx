@@ -1,14 +1,14 @@
-import React, {Component, ComponentType} from 'react';
-import { Resource, ResourceRecord } from 'app/common/ResourceHelper';
-import {edit, show} from "../../common/duck/actions";
+import React, { Component, ComponentType } from 'react'
+import { Resource, ResourceRecord } from 'app/common/ResourceHelper'
+import { edit, show } from '../../common/duck/actions'
 
 import { InjectedFormProps } from 'redux-form'
-import LoadingPage from 'app/common/components/LoadingPage';
-import {ReduxState} from "reducers";
-import { connect } from 'react-redux';
+import LoadingPage from 'app/common/components/LoadingPage'
+import { ReduxState } from 'reducers'
+import { connect } from 'react-redux'
 import styles from './Form.module.css'
-import { toast } from 'react-toastify';
-import { ID } from '../duck/types';
+import { toast } from 'react-toastify'
+import { ID } from '../duck/types'
 
 interface StateProps {
   isFetching: boolean
@@ -36,7 +36,7 @@ type Props = StateProps & DispatchProps & OuterProps
 
 class EditView extends Component<Props> {
   componentDidMount() {
-    const {datum, resource, id, show, fetchResource} = this.props
+    const { datum, resource, id, show, fetchResource } = this.props
     if (datum === undefined) {
       if (fetchResource !== undefined) {
         fetchResource(id)
@@ -47,10 +47,10 @@ class EditView extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    //TODO(generic): better way to detect succeeded in editing 
+    //TODO(generic): better way to detect succeeded in editing
     if (!this.props.isLoading && prevProps.isLoading) {
       if (this.props.error !== undefined) {
-        toast.error(this.props.error);
+        toast.error(this.props.error)
       } else {
         toast.success(`Successfully edited ${this.props.resource.name}`)
         this.props.onEdit()
@@ -59,7 +59,7 @@ class EditView extends Component<Props> {
   }
 
   handleSubmit = (form: any) => {
-    const {resource, id, handleEdit, edit} = this.props
+    const { resource, id, handleEdit, edit } = this.props
     if (handleEdit !== undefined) {
       handleEdit(form)
     } else {
@@ -68,18 +68,31 @@ class EditView extends Component<Props> {
   }
 
   render() {
-    const {isFetching, isLoading, resource, datum, Form, getInitialValues} = this.props
+    const {
+      isFetching,
+      isLoading,
+      resource,
+      datum,
+      Form,
+      getInitialValues,
+    } = this.props
 
     if (isFetching) {
       return <LoadingPage />
     } else if (datum === undefined) {
       return <div>Nothing to see here</div>
     } else {
-      return <div className={styles.form}>
-        <h1>Edit {resource.capital}</h1>
-        {isLoading ? <div>Processing...</div> : null}
-        <Form onSubmit={this.handleSubmit} disabled={isLoading} initialValues={getInitialValues(datum)} />
-      </div>
+      return (
+        <div className={styles.form}>
+          <h1>Edit {resource.capital}</h1>
+          {isLoading ? <div>Processing...</div> : null}
+          <Form
+            onSubmit={this.handleSubmit}
+            disabled={isLoading}
+            initialValues={getInitialValues(datum)}
+          />
+        </div>
+      )
     }
   }
 }
@@ -92,8 +105,8 @@ const mapStateToProps = (state: ReduxState, props: OuterProps): StateProps => {
     isLoading: resourceState.isLoading,
     isFetching: resourceState.isFetching,
     datum,
-    error: resourceState.error
+    error: resourceState.error,
   }
-};
+}
 
-export default connect(mapStateToProps, {edit, show})(EditView);
+export default connect(mapStateToProps, { edit, show })(EditView)

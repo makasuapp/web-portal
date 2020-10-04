@@ -1,13 +1,13 @@
 import { Route } from 'react-router-dom'
 
-import {ApiReducerState} from './duck/reducers'
-import Layout from "./components/Layout";
-import LoadingPage from './components/LoadingPage';
+import { ApiReducerState } from './duck/reducers'
+import Layout from './components/Layout'
+import LoadingPage from './components/LoadingPage'
 import React from 'react'
-import {ReduxState} from "reducers";
-import { connect } from 'react-redux';
-import { registerResource } from './duck/actions';
-import { isOwner, UserState } from 'app/models/user';
+import { ReduxState } from 'reducers'
+import { connect } from 'react-redux'
+import { registerResource } from './duck/actions'
+import { isOwner, UserState } from 'app/models/user'
 
 interface StateProps {
   resources: ApiReducerState
@@ -35,15 +35,20 @@ export enum ProtectionType {
 
 //should also do kitchen check here?
 //TODO(test)
-const AuthCheck = (pathDef: string, path: string, user: UserState, protection?: ProtectionType): boolean => {
+const AuthCheck = (
+  pathDef: string,
+  path: string,
+  user: UserState,
+  protection?: ProtectionType
+): boolean => {
   if (protection !== undefined) {
     if (user !== undefined) {
       switch (protection) {
         case ProtectionType.Authenticated:
-          return user !== null 
+          return user !== null
         case ProtectionType.Owner:
           return !!isOwner(user)
-      } 
+      }
     } else {
       //still loading, pass auth for now
       return true
@@ -55,7 +60,7 @@ const AuthCheck = (pathDef: string, path: string, user: UserState, protection?: 
 
 class AppRoute extends React.Component<Props> {
   componentDidMount() {
-    const {resourceNames, resources} = this.props
+    const { resourceNames, resources } = this.props
     if (resourceNames !== undefined) {
       resourceNames.forEach((name) => {
         if (resources[name] === undefined) {
@@ -66,8 +71,11 @@ class AppRoute extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const {resourceNames, resources} = this.props
-    if (resourceNames !== undefined && resourceNames !== prevProps.resourceNames) {
+    const { resourceNames, resources } = this.props
+    if (
+      resourceNames !== undefined &&
+      resourceNames !== prevProps.resourceNames
+    ) {
       resourceNames.forEach((name) => {
         if (resources[name] === undefined) {
           this.props.registerResource(name)
@@ -77,11 +85,14 @@ class AppRoute extends React.Component<Props> {
   }
 
   mkComponent(props) {
-    const {resourceNames, resources} = this.props
+    const { resourceNames, resources } = this.props
     const Component = this.props.component
 
     //need to register but hasn't registered
-    if (resourceNames !== undefined && resourceNames.filter((name) => resources[name] === undefined).length > 0) {
+    if (
+      resourceNames !== undefined &&
+      resourceNames.filter((name) => resources[name] === undefined).length > 0
+    ) {
       return <LoadingPage />
     } else {
       return <Component {...props} />
@@ -89,33 +100,48 @@ class AppRoute extends React.Component<Props> {
   }
 
   isAuthed(pathDef: string): boolean {
-    const {protection, user} = this.props
+    const { protection, user } = this.props
     return AuthCheck(pathDef, window.location.pathname, user, protection)
   }
 
   render() {
-    const {path, exact} = this.props
+    const { path, exact } = this.props
 
     if (path === undefined) {
-      return <Route render={props => (
-        <Layout {...props}>
-          {this.mkComponent(props)} 
-        </Layout>
-      )} />
+      return (
+        <Route
+          render={(props) => (
+            <Layout {...props}>{this.mkComponent(props)}</Layout>
+          )}
+        />
+      )
     }
 
     if (this.isAuthed(path)) {
-      return <Route path={path} exact={exact} render={props => (
-        <Layout {...props}>
-          {this.mkComponent(props)} 
-        </Layout>
-      )} />
+      return (
+        <Route
+          path={path}
+          exact={exact}
+          render={(props) => (
+            <Layout {...props}>{this.mkComponent(props)}</Layout>
+          )}
+        />
+      )
     } else {
-      return <Route path={path} exact={exact} render={props => (
-        <Layout {...props}>
-          <div>Unauthorized to view this page. If this is unexpected, try logging in with a different account or contact support.</div>
-        </Layout>
-      )} />
+      return (
+        <Route
+          path={path}
+          exact={exact}
+          render={(props) => (
+            <Layout {...props}>
+              <div>
+                Unauthorized to view this page. If this is unexpected, try
+                logging in with a different account or contact support.
+              </div>
+            </Layout>
+          )}
+        />
+      )
     }
   }
 }
@@ -123,8 +149,8 @@ class AppRoute extends React.Component<Props> {
 const mapStateToProps = (state: ReduxState) => {
   return {
     resources: state.api,
-    user: state.auth.currentUser
+    user: state.auth.currentUser,
   }
-};
+}
 
-export default connect(mapStateToProps, {registerResource})(AppRoute);
+export default connect(mapStateToProps, { registerResource })(AppRoute)

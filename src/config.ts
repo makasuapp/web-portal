@@ -7,21 +7,21 @@ const ENV_VARS = {
   },
   production: {
     API_SERVER_URL: 'https://api.makasu.co',
-  }
-};
+  },
+}
 
 const env = process.env.NODE_ENV
 let env_specific_configs
 if (env === 'production' || env === 'development' || env === 'test') {
-  env_specific_configs = ENV_VARS[env];
+  env_specific_configs = ENV_VARS[env]
 } else {
-  env_specific_configs = ENV_VARS.production;
+  env_specific_configs = ENV_VARS.production
 }
 
 const DEFAULT_ENV_VARS = {
-  env
-};
+  env,
+}
 
-var CONFIG = Object.assign({}, DEFAULT_ENV_VARS, env_specific_configs);
+const CONFIG = { ...DEFAULT_ENV_VARS, ...env_specific_configs}
 
-export {CONFIG as default};
+export { CONFIG as default }

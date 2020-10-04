@@ -1,3 +1,3 @@
-import { mkResource } from "app/common/ResourceHelper";
+import { mkResource } from 'app/common/ResourceHelper'
 
-export const OrderResource = mkResource("order")
+export const OrderResource = mkResource('order')

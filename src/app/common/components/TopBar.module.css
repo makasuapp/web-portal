@@ -3,6 +3,7 @@
   margin-bottom: 20px;
 }
 
-.topBar a, .topBar button {
+.topBar a,
+.topBar button {
   margin-left: 15px;
 }

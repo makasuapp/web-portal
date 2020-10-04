@@ -1,14 +1,14 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, { AxiosRequestConfig } from 'axios'
 
 import Config from 'config'
 
 interface APICallConfiguration {
-  path: string,
+  path: string
   method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'
-  data?: object,
-  apiPath?: string,
-  returnText?: boolean,
-  dataType?: 'json' | 'form',
+  data?: object
+  apiPath?: string
+  returnText?: boolean
+  dataType?: 'json' | 'form'
   onUploadProgress?: (progress: number) => void
 }
 
@@ -17,15 +17,15 @@ const apiCall = async (configuration: APICallConfiguration) => {
     path,
     method = 'GET',
     data = {},
-    apiPath = `${Config.API_SERVER_URL}/api`, 
+    apiPath = `${Config.API_SERVER_URL}/api`,
     dataType = 'json',
-    onUploadProgress
-  } = configuration;
+    onUploadProgress,
+  } = configuration
 
   const headers = _getHeaders(dataType)
-  //headers will get set on their own with the right boundary for form-data
+  // headers will get set on their own with the right boundary for form-data
   if (headers['Content-Type'] === 'multipart/form-data') {
-    delete headers['Content-Type'];
+    delete headers['Content-Type']
   }
 
   const configs: AxiosRequestConfig = {
@@ -36,7 +36,9 @@ const apiCall = async (configuration: APICallConfiguration) => {
 
   if (onUploadProgress !== undefined) {
     configs.onUploadProgress = (progressEvent) => {
-      const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+      const progress = Math.round(
+        (progressEvent.loaded * 100) / progressEvent.total
+      )
       onUploadProgress(progress)
     }
   }
@@ -52,19 +54,22 @@ const apiCall = async (configuration: APICallConfiguration) => {
 
     return response.data
   } catch (error) {
-    throw(error.response)
+    throw error.response
   }
-};
+}
 
 const _getHeaders = (dataType: 'json' | 'form') => {
-  const authToken = localStorage.token;
+  const authToken = localStorage.token
   return {
-    ...(authToken !== null && authToken !== undefined ? { Authorization: 'Bearer ' + authToken } : {}),
+    ...(authToken !== null && authToken !== undefined
+      ? { Authorization: `Bearer ${  authToken}` }
+      : {}),
     ...{
-      'Content-Type': dataType === 'json' ? 'application/json' : 'multipart/form-data',
+      'Content-Type':
+        dataType === 'json' ? 'application/json' : 'multipart/form-data',
       Accept: 'application/json',
     },
   }
-};
+}
 
-export default apiCall;
+export default apiCall
