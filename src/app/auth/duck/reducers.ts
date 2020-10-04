@@ -1,9 +1,6 @@
 import { Token, UserState, Kitchen } from 'app/models/user'
 import * as types from './types'
 
-
-import { AuthActionTypes } from './types'
-
 export interface AuthState {
   isAuthenticating: boolean
   currentUser: UserState
@@ -22,7 +19,7 @@ const initialState: AuthState = {
 
 const AuthReducer = (
   state = initialState,
-  action: AuthActionTypes
+  action: types.AuthActionTypes
 ): AuthState => {
   switch (action.type) {
     case types.AUTHENTICATION_REQUEST:

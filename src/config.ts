@@ -11,17 +11,17 @@ const ENV_VARS = {
 }
 
 const env = process.env.NODE_ENV
-let env_specific_configs
+let envSpecificConfigs
 if (env === 'production' || env === 'development' || env === 'test') {
-  env_specific_configs = ENV_VARS[env]
+  envSpecificConfigs = ENV_VARS[env]
 } else {
-  env_specific_configs = ENV_VARS.production
+  envSpecificConfigs = ENV_VARS.production
 }
 
 const DEFAULT_ENV_VARS = {
   env,
 }
 
-const CONFIG = { ...DEFAULT_ENV_VARS, ...env_specific_configs}
+const CONFIG = { ...DEFAULT_ENV_VARS, ...envSpecificConfigs }
 
 export { CONFIG as default }

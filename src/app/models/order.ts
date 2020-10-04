@@ -2,17 +2,6 @@ export type OrderType = 'delivery' | 'pickup'
 
 export type OrderState = 'new' | 'started' | 'done' | 'delivered'
 
-export interface Order {
-  id: number
-  order_id: string
-  order_type: OrderType
-  created_at: number
-  for_time?: number
-  state: OrderState
-  customer: Customer
-  items: OrderItem[]
-}
-
 export interface Customer {
   id: number
   email?: string
@@ -27,4 +16,15 @@ export interface OrderItem {
   quantity: number
   started_at?: number
   done_at?: number
+}
+
+export interface Order {
+  id: number
+  order_id: string
+  order_type: OrderType
+  created_at: number
+  for_time?: number
+  state: OrderState
+  customer: Customer
+  items: OrderItem[]
 }

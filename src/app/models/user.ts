@@ -1,15 +1,11 @@
-import { ID } from 'app/common/duck/types'
+import { ID } from 'app/common/ResourceHelper'
 
 export type OrganizationRole = 'user' | 'owner'
 
-export interface User {
+export interface Kitchen {
   id: ID
-  role?: 'admin'
-  first_name?: string
-  last_name?: string
-  email: string
-  phone_number?: string
-  organizations: Organization[]
+  name: string
+  access_link?: string
 }
 
 export interface Organization {
@@ -21,24 +17,14 @@ export interface Organization {
   kitchens: Kitchen[]
 }
 
-export interface Kitchen {
+export interface User {
   id: ID
-  name: string
-  access_link?: string
-}
-
-export const isDefined = (user: UserState) =>
-  user !== undefined && user !== null
-export const isOwner = (user: UserState) => {
-  if (isDefined(user)) {
-    // TODO(multi-org): check against organization
-    const organizations = user?.organizations.filter(
-      (org) => org.role === 'owner'
-    )
-    return organizations && organizations.length > 0
-  }
-
-  return false
+  role?: 'admin'
+  first_name?: string
+  last_name?: string
+  email: string
+  phone_number?: string
+  organizations: Organization[]
 }
 
 // undefined = initial state, null = unauthed
@@ -60,4 +46,18 @@ export interface SignupRequestData {
     password: string
     password_confirmation: string
   }
+}
+
+export const isDefined = (user: UserState) =>
+  user !== undefined && user !== null
+export const isOwner = (user: UserState) => {
+  if (isDefined(user)) {
+    // TODO(multi-org): check against organization
+    const organizations = user?.organizations.filter(
+      (org) => org.role === 'owner'
+    )
+    return organizations && organizations.length > 0
+  }
+
+  return false
 }

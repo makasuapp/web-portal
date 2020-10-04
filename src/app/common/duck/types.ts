@@ -1,6 +1,4 @@
-import { ResourceRecord } from '../ResourceHelper'
-
-export type ID = string | number
+import { ResourceRecord, ID } from '../ResourceHelper'
 
 export const REGISTER_RESOURCE = 'REGISTER_RESOURCE'
 interface RegisterResourceAction {

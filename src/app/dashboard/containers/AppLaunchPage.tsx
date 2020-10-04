@@ -9,7 +9,7 @@ export default class AppLaunchPage extends React.Component<Props> {
     // const values = queryString.parse(this.props.location.search);
   }
 
-  //TODO(app)
+  // TODO(app)
   render() {
     return (
       <div>

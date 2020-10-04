@@ -1,14 +1,13 @@
 import React, { Component, ComponentType } from 'react'
-import { Resource, ResourceRecord } from 'app/common/ResourceHelper'
-import { edit, show } from '../../common/duck/actions'
+import { ID, Resource, ResourceRecord } from 'app/common/ResourceHelper'
 
 import { InjectedFormProps } from 'redux-form'
 import LoadingPage from 'app/common/components/LoadingPage'
 import { ReduxState } from 'reducers'
 import { connect } from 'react-redux'
-import styles from './Form.module.css'
 import { toast } from 'react-toastify'
-import { ID } from '../duck/types'
+import styles from './Form.module.css'
+import { edit, show } from '../duck/actions'
 
 interface StateProps {
   isFetching: boolean
@@ -47,7 +46,7 @@ class EditView extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    //TODO(generic): better way to detect succeeded in editing
+    // TODO(generic): better way to detect succeeded in editing
     if (!this.props.isLoading && prevProps.isLoading) {
       if (this.props.error !== undefined) {
         toast.error(this.props.error)
@@ -79,21 +78,21 @@ class EditView extends Component<Props> {
 
     if (isFetching) {
       return <LoadingPage />
-    } else if (datum === undefined) {
-      return <div>Nothing to see here</div>
-    } else {
-      return (
-        <div className={styles.form}>
-          <h1>Edit {resource.capital}</h1>
-          {isLoading ? <div>Processing...</div> : null}
-          <Form
-            onSubmit={this.handleSubmit}
-            disabled={isLoading}
-            initialValues={getInitialValues(datum)}
-          />
-        </div>
-      )
     }
+    if (datum === undefined) {
+      return <div>Nothing to see here</div>
+    }
+    return (
+      <div className={styles.form}>
+        <h1>Edit {resource.capital}</h1>
+        {isLoading ? <div>Processing...</div> : null}
+        <Form
+          onSubmit={this.handleSubmit}
+          disabled={isLoading}
+          initialValues={getInitialValues(datum)}
+        />
+      </div>
+    )
   }
 }
 

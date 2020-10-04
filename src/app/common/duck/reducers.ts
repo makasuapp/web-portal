@@ -6,38 +6,8 @@ import {
 } from 'app/auth/duck/types'
 import * as types from './types'
 
-import { ResourceActionTypes } from './types'
-
 import { ResourceRecord } from '../ResourceHelper'
 import { resetResource } from './actions'
-
-export interface ApiReducerState {
-  [key: string]: ResourceReducerState
-}
-
-export const ApiReducer = (
-  state: ApiReducerState = {},
-  action: ResourceActionTypes | SetKitchenAction | AuthSuccessAction
-): ApiReducerState => {
-  // reset all the resources if we change kitchens or re-auth
-  if (
-    action.type === SET_KITCHEN ||
-    (action.type === AUTHENTICATION_SUCCESS && action.newAuth)
-  ) {
-    return Object.entries(state).reduce((newState, [key, resourceState]) => {
-      newState[key] = ResourceReducer(resourceState, resetResource(key))
-      return newState
-    }, {})
-  } if (action.type === AUTHENTICATION_SUCCESS) {
-    return state
-  } if (action.meta && action.meta.resourceName) {
-    const prevState = state[action.meta.resourceName]
-    const newState = ResourceReducer(prevState, action)
-    return { ...state, [action.meta.resourceName]: newState,}
-  } 
-    return state
-  
-}
 
 export interface ResourceReducerState {
   isLoading: boolean
@@ -59,7 +29,7 @@ const resourceInitialState: ResourceReducerState = {
 
 export const ResourceReducer = (
   state = resourceInitialState,
-  action: ResourceActionTypes
+  action: types.ResourceActionTypes
 ): ResourceReducerState => {
   switch (action.type) {
     case types.MAKE_API_CALL: {
@@ -96,7 +66,7 @@ export const ResourceReducer = (
     }
 
     case types.ADD_RESOURCE: {
-      const byId = { ...state.byId, [action.resource.id]: action.resource,}
+      const byId = { ...state.byId, [action.resource.id]: action.resource }
       return {
         ...state,
         isLoading: false,
@@ -114,7 +84,7 @@ export const ResourceReducer = (
       } else {
         data = state.data.concat(action.resource)
       }
-      const byId = { ...state.byId, [action.id]: action.resource,}
+      const byId = { ...state.byId, [action.id]: action.resource }
       return {
         ...state,
         isFetching: false,
@@ -145,4 +115,33 @@ export const ResourceReducer = (
     default:
       return state
   }
+}
+
+export interface ApiReducerState {
+  [key: string]: ResourceReducerState
+}
+
+export const ApiReducer = (
+  state: ApiReducerState = {},
+  action: types.ResourceActionTypes | SetKitchenAction | AuthSuccessAction
+): ApiReducerState => {
+  // reset all the resources if we change kitchens or re-auth
+  if (
+    action.type === SET_KITCHEN ||
+    (action.type === AUTHENTICATION_SUCCESS && action.newAuth)
+  ) {
+    return Object.entries(state).reduce((newState, [key, resourceState]) => {
+      newState[key] = ResourceReducer(resourceState, resetResource(key))
+      return newState
+    }, {})
+  }
+  if (action.type === AUTHENTICATION_SUCCESS) {
+    return state
+  }
+  if (action.meta && action.meta.resourceName) {
+    const prevState = state[action.meta.resourceName]
+    const newState = ResourceReducer(prevState, action)
+    return { ...state, [action.meta.resourceName]: newState }
+  }
+  return state
 }

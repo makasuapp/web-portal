@@ -35,7 +35,7 @@ export enum ProtectionType {
 
 //should also do kitchen check here?
 //TODO(test)
-const AuthCheck = (
+export const AuthCheck = (
   pathDef: string,
   path: string,
   user: UserState,

@@ -4,10 +4,10 @@ import { FaEdit } from 'react-icons/fa'
 import classnames from 'classnames'
 import moment from 'moment'
 
-import { PredictedOrder } from 'app/models/predicted_order';
-import { ResourceRecord } from 'app/common/ResourceHelper';
-import styles from './PredictedOrderList.module.css';
-import { displayDateTimeFormat, paramsDateFormat } from 'app/common/DateHelper';
+import { PredictedOrder } from 'app/models/predicted_order'
+import { ResourceRecord } from 'app/common/ResourceHelper'
+import styles from './PredictedOrderList.module.css'
+import { displayDateTimeFormat, paramsDateFormat } from 'app/common/DateHelper'
 
 interface OuterProps {
   data?: ResourceRecord[]
@@ -28,8 +28,10 @@ const PredictedOrderList = ({ data = [] }: OuterProps) => {
             {moment(order.date).format(displayDateTimeFormat)}
           </div>
           <Link
-            className={classnames("btn btn-primary", styles.editButton)}
-            to={`/predicted_orders/${moment(order.date).format(paramsDateFormat)}/edit`}>
+            className={classnames('btn btn-primary', styles.editButton)}
+            to={`/predicted_orders/${moment(order.date).format(
+              paramsDateFormat
+            )}/edit`}>
             <FaEdit />
           </Link>
         </div>,

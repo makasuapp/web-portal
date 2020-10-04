@@ -10,10 +10,12 @@
   "rules": {
     "no-restricted-globals": 0,
     "no-plusplus": 0,
+    "camelcase": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/member-delimiter-style": 0,
+    "@typescript-eslint/ban-types": 0,
     "prettier/prettier": 0,
     "class-methods-use-this": 0,
     "import/newline-after-import": 0,
@@ -24,6 +26,7 @@
       "@typescript-eslint/parser": [".ts"]
     },
     "import/resolver": {
+      "typescript": {}, // this loads <rootdir>/tsconfig.json to eslint
       "node": {
         "extensions": [".js", ".ts"]
       }

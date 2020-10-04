@@ -10,27 +10,29 @@ import {
 import { PredictedOrderResource } from '../resource'
 import { PredictedOrdersFormData } from '../containers/PredictedOrdersForm'
 
-export const editPredictedOrders = (formData: PredictedOrdersFormData) => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    dispatch(makeApiCall(PredictedOrderResource.name))
+export const editPredictedOrders = (formData: PredictedOrdersFormData) => (
+  dispatch: ThunkDispatch<{}, {}, AnyAction>
+) => {
+  dispatch(makeApiCall(PredictedOrderResource.name))
 
-    const data = mkFormData(formData)
+  const data = mkFormData(formData)
 
-    return apiCall({
-      path: '/predicted_orders/for_date',
-      method: 'POST',
-      data,
-      dataType: 'form',
+  return apiCall({
+    path: '/predicted_orders/for_date',
+    method: 'POST',
+    data,
+    dataType: 'form',
+  })
+    .then((response) => {
+      dispatch(replaceResources(PredictedOrderResource.name, response))
     })
-      .then((response) => {
-        dispatch(replaceResources(PredictedOrderResource.name, response))
-      })
-      .catch((error) => {
-        console.log(error)
-        dispatch(
-          apiCallError(
-            PredictedOrderResource.name,
-            'error editing predicted orders'
-          )
+    .catch((error) => {
+      console.log(error)
+      dispatch(
+        apiCallError(
+          PredictedOrderResource.name,
+          'error editing predicted orders'
         )
-      })
-  }
+      )
+    })
+}

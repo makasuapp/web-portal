@@ -12,6 +12,20 @@ interface APICallConfiguration {
   onUploadProgress?: (progress: number) => void
 }
 
+const _getHeaders = (dataType: 'json' | 'form'): object => {
+  const authToken = localStorage.token
+  return {
+    ...(authToken !== null && authToken !== undefined
+      ? { Authorization: `Bearer ${authToken}` }
+      : {}),
+    ...{
+      'Content-Type':
+        dataType === 'json' ? 'application/json' : 'multipart/form-data',
+      Accept: 'application/json',
+    },
+  }
+}
+
 const apiCall = async (configuration: APICallConfiguration) => {
   const {
     path,
@@ -55,20 +69,6 @@ const apiCall = async (configuration: APICallConfiguration) => {
     return response.data
   } catch (error) {
     throw error.response
-  }
-}
-
-const _getHeaders = (dataType: 'json' | 'form') => {
-  const authToken = localStorage.token
-  return {
-    ...(authToken !== null && authToken !== undefined
-      ? { Authorization: `Bearer ${  authToken}` }
-      : {}),
-    ...{
-      'Content-Type':
-        dataType === 'json' ? 'application/json' : 'multipart/form-data',
-      Accept: 'application/json',
-    },
   }
 }
 

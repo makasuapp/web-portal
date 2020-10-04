@@ -1,11 +1,14 @@
 import { RouteComponentProps } from 'react-router-dom'
-import { ID } from './duck/types'
+
+export type ID = string | number
 
 const pluralize = (name: string) => `${name}s`
 
-const capitalize = (name: string) => name.charAt(0).toUpperCase() + name.slice(1)
+const capitalize = (name: string) =>
+  name.charAt(0).toUpperCase() + name.slice(1)
 
-export const idFromUrl = (props: RouteComponentProps<{ id: string }>) => parseInt(props.match.params.id, 10)
+export const idFromUrl = (props: RouteComponentProps<{ id: string }>) =>
+  parseInt(props.match.params.id, 10)
 
 export interface ResourceRecord {
   id: ID
@@ -62,15 +65,6 @@ export const mkResource = (name: string, overrides: any = {}): Resource => {
 export const defaultError =
   'An error has occurred. Please try again or contact support'
 
-export const mkFormData = (formData: object) => {
-  const data = new FormData()
-  for (const key in formData) {
-    appendFormData(data, formData, key, key)
-  }
-
-  return data
-}
-
 const appendFormData = (
   data: FormData,
   formData: object,
@@ -79,10 +73,20 @@ const appendFormData = (
 ) => {
   const nested = formData[formDataKey]
   if (typeof nested === 'object' && !(nested instanceof File)) {
-    for (const nestedKey in nested) {
+    Object.keys(nested).forEach((nestedKey) => {
       appendFormData(data, nested, `${dataKey}[${nestedKey}]`, nestedKey)
-    }
+    })
   } else if (nested !== undefined) {
     data.append(dataKey, nested)
   }
+}
+
+export const mkFormData = (formData: object) => {
+  const data = new FormData()
+
+  Object.keys(formData).forEach((key) => {
+    appendFormData(data, formData, key, key)
+  })
+
+  return data
 }
