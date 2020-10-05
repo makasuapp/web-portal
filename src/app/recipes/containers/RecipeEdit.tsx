@@ -1,15 +1,13 @@
 import { idFromUrl } from 'app/common/ResourceHelper'
 import LoadingPage from 'app/common/components/LoadingPage'
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router-dom'
 import { Kitchen } from 'app/models/user'
 import { connect } from 'react-redux'
 import { ReduxState } from 'reducers'
-import RecipeCard from '../components/RecipeCard'
 import { useRecipe, useRecipes } from '../duck/actions'
-import TopBar from 'app/common/components/TopBar'
-import { RecipeResource } from '../resource'
 import ErrorPage from 'app/common/components/ErrorPage'
+import RecipeForm from './RecipeForm'
 
 interface Params {
   id: string
@@ -21,7 +19,7 @@ interface StateProps {
 
 type Props = RouteComponentProps<Params> & StateProps
 
-const RecipeShow = (props: Props) => {
+const RecipeEdit = (props: Props) => {
   const id = idFromUrl(props)
   const { currentKitchen } = props
 
@@ -32,24 +30,15 @@ const RecipeShow = (props: Props) => {
   if (!recipeData || !recipesData) return <LoadingPage />
 
   return (
-    <div>
-      <TopBar
-        items={[
-          <Link
-            key="edit"
-            to={RecipeResource.editPath(id)}
-            className="btn btn-primary">
-            Edit Recipe
-          </Link>,
-        ]}
-      />
-      <RecipeCard
-        recipes={recipesData.recipes}
-        recipe={recipeData.recipe}
-        recipeSteps={recipeData.recipe_steps}
-        ingredients={recipesData.ingredients}
-      />
-    </div>
+    <RecipeForm
+      initialValues={{
+        recipe: Object.assign({}, recipeData.recipe, {
+          recipe_steps: recipeData.recipe_steps,
+        }),
+      }}
+      recipes={recipesData.recipes}
+      ingredients={recipesData.ingredients}
+    />
   )
 }
 
@@ -59,4 +48,4 @@ const mapStateToProps = (state: ReduxState): StateProps => {
   }
 }
 
-export default connect(mapStateToProps, {})(RecipeShow)
+export default connect(mapStateToProps, {})(RecipeEdit)

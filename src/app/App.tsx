@@ -17,6 +17,8 @@ import RequestReset from './auth/containers/RequestReset'
 import AppLaunchPage from './dashboard/containers/AppLaunchPage'
 import RecipesIndex from './recipes/containers/RecipesIndex'
 import RecipeShow from './recipes/containers/RecipeShow'
+import RecipeEdit from './recipes/containers/RecipeEdit'
+import RecipeCreate from './recipes/containers/RecipeCreate'
 
 export default class App extends Component {
   render() {
@@ -67,14 +69,24 @@ export default class App extends Component {
             path="/recipes"
             exact
             component={RecipesIndex}
-            resourceNames={['recipe']}
+            protection={ProtectionType.Authenticated}
+          />
+          <AppRoute
+            path="/recipes/new"
+            exact
+            component={RecipeCreate}
             protection={ProtectionType.Authenticated}
           />
           <AppRoute
             path="/recipes/:id"
             exact
             component={RecipeShow}
-            resourceNames={['recipe']}
+            protection={ProtectionType.Authenticated}
+          />
+          <AppRoute
+            path="/recipes/:id/edit"
+            exact
+            component={RecipeEdit}
             protection={ProtectionType.Authenticated}
           />
 

@@ -1,15 +1,13 @@
 import React from 'react'
 
 import { Recipe } from 'app/models/recipe'
-import { ResourceRecord } from 'app/common/ResourceHelper'
 import RecipeItem from './RecipeItem'
 
 interface OuterProps {
-  data?: ResourceRecord[]
+  recipes: Recipe[]
 }
 
-const RecipeList = ({ data = [] }: OuterProps) => {
-  const recipes = data as Recipe[]
+const RecipeList = ({ recipes = [] }: OuterProps) => {
   const menuItems = recipes.filter((recipe) => recipe.publish)
   const prepRecipes = recipes.filter((recipe) => !recipe.publish)
 
