@@ -21,6 +21,7 @@ export const fetchOrders = (params?: Params) => (
   })
     .then((response) => {
       const { orders, recipes } = response
+      // TODO: moving recipes out of orders_controller soon, should move recipes to SWR instead
       dispatch(replaceResources(RecipeResource.name, recipes))
       dispatch(replaceResources(OrderResource.name, orders))
     })

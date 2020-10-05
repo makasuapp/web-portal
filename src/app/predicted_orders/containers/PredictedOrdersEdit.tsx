@@ -98,7 +98,7 @@ class PredictedOrdersEdit extends Component<Props> {
     } else {
       return (
         <div className={styles.form}>
-          <h1>Edit Predicted Orders</h1>
+          <h1>Edit Expected Orders</h1>
           {isLoading ? <div>Processing...</div> : null}
           <PredictedOrdersForm
             onSubmit={this.handleSubmit}

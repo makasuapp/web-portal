@@ -1,0 +1,11 @@
+.links {
+  display: flex;
+}
+
+.links a {
+  margin-right: 10px;
+}
+
+.card {
+  padding: 10px 0 15px;
+}

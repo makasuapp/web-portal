@@ -120,12 +120,12 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
             <Link
               key="new"
               className={'btn btn-primary'}
-              to={'/predicted_orders/new'}>
-              Add Predicted Orders
+              to={PredictedOrderResource.newPath}>
+              Add Expected Orders
             </Link>,
           ]}
         />
-        <h1>Predicted Orders</h1>
+        <h1>Expected Orders</h1>
         <DateRangeSelector
           startDate={startDate.toDate()}
           endDate={endDate.toDate()}

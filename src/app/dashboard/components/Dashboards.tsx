@@ -29,6 +29,9 @@ const Shared = (props: Props) => {
       <div>
         <Link to={'/orders'}>Orders</Link>
       </div>
+      <div>
+        <Link to={'/recipes'}>Recipes</Link>
+      </div>
     </>
   )
 }
@@ -38,7 +41,7 @@ export const OwnerDashboard = (props: Props) => {
     <div>
       <Shared {...props} />
       <div>
-        <Link to={'/predicted_orders'}>Predicted Orders</Link>
+        <Link to={'/predicted_orders'}>Expected Orders</Link>
       </div>
     </div>
   )

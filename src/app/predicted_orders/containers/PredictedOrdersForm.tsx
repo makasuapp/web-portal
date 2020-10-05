@@ -58,7 +58,7 @@ class PredictedOrdersForm extends React.Component<Props> {
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          Note: Predicted Orders set here overrides whatever existed for that
+          Note: Expected Orders set here overrides whatever existed for that
           date.
         </div>
         <div>
@@ -75,7 +75,7 @@ class PredictedOrdersForm extends React.Component<Props> {
           dateFormat={datepickerDateFormat}
         />
 
-        <h3>Predicted Orders</h3>
+        <h3>Expected Orders</h3>
         <FieldArray
           name="predicted_orders"
           recipes={recipes}

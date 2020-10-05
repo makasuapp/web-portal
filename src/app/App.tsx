@@ -15,6 +15,8 @@ import Signup from './auth/containers/Signup'
 import Reset from './auth/containers/Reset'
 import RequestReset from './auth/containers/RequestReset'
 import AppLaunchPage from './dashboard/containers/AppLaunchPage'
+import RecipesIndex from './recipes/containers/RecipesIndex'
+import RecipeShow from './recipes/containers/RecipeShow'
 
 export default class App extends Component {
   render() {
@@ -59,6 +61,21 @@ export default class App extends Component {
             component={PredictedOrdersEdit}
             resourceNames={['recipe', 'predicted_order']}
             protection={ProtectionType.Owner}
+          />
+
+          <AppRoute
+            path="/recipes"
+            exact
+            component={RecipesIndex}
+            resourceNames={['recipe']}
+            protection={ProtectionType.Authenticated}
+          />
+          <AppRoute
+            path="/recipes/:id"
+            exact
+            component={RecipeShow}
+            resourceNames={['recipe']}
+            protection={ProtectionType.Authenticated}
           />
 
           <AppRoute path="/login" exact component={Login} />

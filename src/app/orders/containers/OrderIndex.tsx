@@ -38,7 +38,10 @@ class OrderIndex extends React.Component<Props> {
       <div>
         <TopBar
           items={[
-            <Link key="new" className={'btn btn-primary'} to={'/orders/new'}>
+            <Link
+              key="new"
+              className={'btn btn-primary'}
+              to={OrderResource.newPath}>
               New Order
             </Link>,
           ]}

@@ -12,7 +12,7 @@ interface APICallConfiguration {
   onUploadProgress?: (progress: number) => void
 }
 
-const _getHeaders = (dataType: 'json' | 'form'): object => {
+export const getHeaders = (dataType: 'json' | 'form'): object => {
   const authToken = localStorage.token
   return {
     ...(authToken !== null && authToken !== undefined
@@ -36,7 +36,7 @@ const apiCall = async (configuration: APICallConfiguration) => {
     onUploadProgress,
   } = configuration
 
-  const headers = _getHeaders(dataType)
+  const headers = getHeaders(dataType)
   // headers will get set on their own with the right boundary for form-data
   if (headers['Content-Type'] === 'multipart/form-data') {
     delete headers['Content-Type']

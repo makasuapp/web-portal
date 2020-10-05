@@ -24,6 +24,11 @@ const PredictedOrderForm = ({
 
   return (
     <div>
+      <button
+        className={classnames('btn btn-secondary', styles.newBtn)}
+        onClick={() => fields.push({})}>
+        New Item
+      </button>
       {fields.map((item, index) => {
         const removeItem = () => {
           fields.remove(index)
@@ -57,14 +62,7 @@ const PredictedOrderForm = ({
           </div>
         )
       })}
-      <br />
-      <div>
-        <button className={'btn btn-secondary'} onClick={() => fields.push({})}>
-          Add Item
-        </button>
-        {submitFailed && error && <span>{error}</span>}
-      </div>
-      <br />
+      <div>{submitFailed && error && <span>{error}</span>}</div>
     </div>
   )
 }
