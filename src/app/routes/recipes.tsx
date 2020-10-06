@@ -1,10 +1,10 @@
 import React from 'react'
-import AppRoute, { ProtectionType } from 'app/common/AppRoute'
-import RecipesIndex from '../recipes/containers/RecipesIndex'
-import RecipeShow from '../recipes/containers/RecipeShow'
-import RecipeEdit from '../recipes/containers/RecipeEdit'
-import RecipeCreate from '../recipes/containers/RecipeCreate'
-import { RecipeResource } from 'app/recipes/resource'
+import AppRoute, { ProtectionType } from 'app/components/common/AppRoute'
+import RecipesIndex from '../components/recipes/containers/RecipesIndex'
+import RecipeShow from '../components/recipes/containers/RecipeShow'
+import RecipeEdit from '../components/recipes/containers/RecipeEdit'
+import RecipeCreate from '../components/recipes/containers/RecipeCreate'
+import { RecipeResource } from 'app/resources/RecipeResource'
 
 const RecipeRoutes = () => (
   <>

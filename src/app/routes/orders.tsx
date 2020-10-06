@@ -1,8 +1,8 @@
 import React from 'react'
-import AppRoute, { ProtectionType } from 'app/common/AppRoute'
-import OrderCreate from '../orders/containers/OrderCreate'
-import OrderIndex from '../orders/containers/OrderIndex'
-import { OrderResource } from 'app/orders/resource'
+import AppRoute, { ProtectionType } from 'app/components/common/AppRoute'
+import OrderCreate from '../components/orders/containers/OrderCreate'
+import OrderIndex from '../components/orders/containers/OrderIndex'
+import { OrderResource } from 'app/resources/OrderResource'
 
 const OrderRoutes = () => (
   <>

@@ -1,9 +1,9 @@
 import React from 'react'
-import AppRoute from 'app/common/AppRoute'
-import Login from '../auth/containers/Login'
-import Signup from '../auth/containers/Signup'
-import Reset from '../auth/containers/Reset'
-import RequestReset from '../auth/containers/RequestReset'
+import AppRoute from 'app/components/common/AppRoute'
+import Login from '../components/auth/containers/Login'
+import Signup from '../components/auth/containers/Signup'
+import Reset from '../components/auth/containers/Reset'
+import RequestReset from '../components/auth/containers/RequestReset'
 
 const AuthRoutes = () => (
   <>

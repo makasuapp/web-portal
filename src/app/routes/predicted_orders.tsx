@@ -1,9 +1,9 @@
 import React from 'react'
-import AppRoute, { ProtectionType } from 'app/common/AppRoute'
-import PredictedOrdersIndex from '../predicted_orders/containers/PredictedOrdersIndex'
-import PredictedOrdersCreate from '../predicted_orders/containers/PredictedOrdersCreate'
-import PredictedOrdersEdit from '../predicted_orders/containers/PredictedOrdersEdit'
-import { PredictedOrderResource } from 'app/predicted_orders/resource'
+import AppRoute, { ProtectionType } from 'app/components/common/AppRoute'
+import PredictedOrdersIndex from '../components/predicted_orders/containers/PredictedOrdersIndex'
+import PredictedOrdersCreate from '../components/predicted_orders/containers/PredictedOrdersCreate'
+import PredictedOrdersEdit from '../components/predicted_orders/containers/PredictedOrdersEdit'
+import { PredictedOrderResource } from 'app/resources/PredictedOrderResource'
 
 const PredictedOrderRoutes = () => (
   <>

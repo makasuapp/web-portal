@@ -1,15 +1,15 @@
 import React from 'react'
-import AppRoute, { ProtectionType } from 'app/common/AppRoute'
-import VendorCreate from '../vendors/containers/VendorCreate'
-import VendorIndex from '../vendors/containers/VendorIndex'
-import { VendorResource } from 'app/vendors/resource'
+import AppRoute, { ProtectionType } from 'app/components/common/AppRoute'
+import VendorCreate from '../components/vendors/containers/VendorCreate'
+import VendorsIndex from '../components/vendors/containers/VendorsIndex'
+import { VendorResource } from 'app/resources/VendorResource'
 
 const VendorRoutes = () => (
   <>
     <AppRoute
       path={VendorResource.indexPath}
       exact
-      component={VendorIndex}
+      component={VendorsIndex}
       protection={ProtectionType.Authenticated}
     />
     <AppRoute

@@ -3,7 +3,7 @@ import './App.css'
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import Routes from './routes'
-import AppRoute from 'app/common/AppRoute'
+import AppRoute from 'app/components/common/AppRoute'
 import NotFound from '../NotFound'
 
 export default class App extends Component {
