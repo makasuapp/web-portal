@@ -1,4 +1,4 @@
-import { ID } from 'app/common/ResourceHelper'
+import { ID } from 'app/resources/ResourceHelper'
 
 export type OrganizationRole = 'user' | 'owner'
 

@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/react'
 import App from './app/App'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import reducers from './reducers'
-import { verifyCredentials } from './app/auth/duck/actions'
+import { verifyCredentials } from './app/components/auth/duck/actions'
 import Config from './config'
 
 if (Config.env === 'production') {

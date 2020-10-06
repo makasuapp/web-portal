@@ -1,7 +1,7 @@
 import { reducer as FormReducer } from 'redux-form'
 import { combineReducers } from 'redux'
-import { ApiReducer } from './app/common/duck/reducers'
-import AuthReducer from './app/auth/duck/reducers'
+import { ApiReducer } from './app/components/common/reduxForm/duck/reducers'
+import AuthReducer from './app/components/auth/duck/reducers'
 
 const reducers = combineReducers({
   api: ApiReducer,

@@ -1,0 +1,50 @@
+import LoadingPage from 'app/components/common/LoadingPage'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Kitchen } from 'app/models/user'
+import { connect } from 'react-redux'
+import { ReduxState } from 'reducers'
+import { useRecipes } from '../actions'
+import TopBar from 'app/components/common/TopBar'
+import { RecipeResource } from '../../../resources/RecipeResource'
+import RecipeList from '../components/RecipeList'
+import ErrorPage from 'app/components/common/ErrorPage'
+
+interface StateProps {
+  currentKitchen?: Kitchen
+}
+
+type Props = StateProps
+
+const RecipesIndex = (props: Props) => {
+  const { currentKitchen } = props
+
+  const { recipesData, recipesError } = useRecipes(currentKitchen)
+
+  if (recipesError) return <ErrorPage />
+  if (!recipesData) return <LoadingPage />
+
+  return (
+    <div>
+      <TopBar
+        items={[
+          <Link
+            key="edit"
+            to={RecipeResource.newPath}
+            className="btn btn-primary">
+            New Recipe
+          </Link>,
+        ]}
+      />
+      <RecipeList recipes={recipesData.recipes} />
+    </div>
+  )
+}
+
+const mapStateToProps = (state: ReduxState): StateProps => {
+  return {
+    currentKitchen: state.auth.currentKitchen,
+  }
+}
+
+export default connect(mapStateToProps, {})(RecipesIndex)
