@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { ReduxState } from 'reducers'
 import { useRecipe, useRecipes } from '../duck/actions'
 import ErrorPage from 'app/common/components/ErrorPage'
-import RecipeForm from './RecipeForm'
+import RecipeForm from '../components/RecipeForm'
 
 interface Params {
   id: string
@@ -31,10 +31,12 @@ const RecipeEdit = (props: Props) => {
 
   return (
     <RecipeForm
-      initialValues={{
-        recipe: Object.assign({}, recipeData.recipe, {
-          recipe_steps: recipeData.recipe_steps,
-        }),
+      initialValues={Object.assign({}, recipeData.recipe, {
+        recipe_steps: recipeData.recipe_steps,
+      })}
+      handleSubmit={(values, actions) => {
+        console.log(values)
+        actions.setSubmitting(false)
       }}
       recipes={recipesData.recipes}
       ingredients={recipesData.ingredients}

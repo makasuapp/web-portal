@@ -1,5 +1,6 @@
 import React from 'react'
-import { Ingredient, Recipe, StepInput } from 'app/models/recipe'
+import { Recipe, StepInput } from 'app/models/recipe'
+import { Ingredient } from 'app/models/ingredient'
 
 interface Props {
   stepInput: StepInput

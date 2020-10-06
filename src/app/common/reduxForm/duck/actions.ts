@@ -10,7 +10,7 @@ import {
   mkFormData,
   Params,
   ID,
-} from '../ResourceHelper'
+} from '../../ResourceHelper'
 
 export const makeApiCall = (
   resourceName: string

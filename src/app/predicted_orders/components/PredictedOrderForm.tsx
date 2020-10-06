@@ -4,7 +4,7 @@ import { SelectField, TextField } from 'redux-form-fields-lib'
 import classnames from 'classnames'
 
 import { Recipe } from 'app/models/recipe'
-import formStyles from 'app/common/containers/Form.module.css'
+import formStyles from 'app/common/reduxForm/containers/Form.module.css'
 import styles from './PredictedOrderForm.module.css'
 
 export interface PredictedOrderFormData {

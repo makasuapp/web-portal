@@ -1,7 +1,8 @@
-import { Ingredient, Recipe, RecipeStep } from 'app/models/recipe'
+import { Recipe, RecipeStep } from 'app/models/recipe'
 import React from 'react'
 import StepInputItem from './StepInputItem'
 import styles from './RecipeCard.module.css'
+import { Ingredient } from 'app/models/ingredient'
 
 interface Props {
   recipe: Recipe
@@ -34,7 +35,7 @@ const RecipeCard = ({ recipe, recipes, recipeSteps, ingredients }: Props) => {
       {recipeSteps.map((recipeStep) => (
         <div key={recipeStep.id} className={styles.step}>
           <div>
-            {recipeStep.number} {recipeStep.instruction}
+            {recipeStep.number}. {recipeStep.instruction}
           </div>
           <div>Ingredients:</div>
           {recipeStep.inputs.map((input) => (

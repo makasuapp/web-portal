@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import moment from 'moment'
 
-import { fetch } from '../../common/duck/actions'
+import { fetch } from '../../common/reduxForm/duck/actions'
 import { PredictedOrderResource } from '../resource'
 import { paramsDateFormat } from 'app/common/DateHelper'
 import PredictedOrdersForm, {
@@ -12,7 +12,7 @@ import PredictedOrdersForm, {
 } from './PredictedOrdersForm'
 import LoadingPage from 'app/common/components/LoadingPage'
 import { ReduxState } from 'reducers'
-import styles from 'app/common/containers/Form.module.css'
+import styles from 'app/common/reduxForm/containers/Form.module.css'
 import { PredictedOrder } from 'app/models/predicted_order'
 import { Resource, Params } from 'app/common/ResourceHelper'
 import { editPredictedOrders } from '../duck/action'

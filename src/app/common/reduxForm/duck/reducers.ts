@@ -6,7 +6,7 @@ import {
 } from 'app/auth/duck/types'
 import * as types from './types'
 
-import { ResourceRecord } from '../ResourceHelper'
+import { ResourceRecord } from '../../ResourceHelper'
 import { resetResource } from './actions'
 
 export interface ResourceReducerState {

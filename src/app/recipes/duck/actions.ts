@@ -1,7 +1,19 @@
 import useSWR from 'swr'
 import { fetcher } from 'app/utils/fetcher'
 import { Kitchen } from 'app/models/user'
+import { Recipe, RecipeStep } from 'app/models/recipe'
+import { Ingredient } from 'app/models/ingredient'
 import { RecipeResource } from '../resource'
+
+interface RecipesResponse {
+  recipes: Recipe[]
+  ingredients: Ingredient[]
+}
+
+interface RecipeResponse {
+  recipe: Recipe
+  recipe_steps: RecipeStep[]
+}
 
 export const recipeUrl = (id: number, currentKitchen: Kitchen) =>
   RecipeResource.showUrl(id, { kitchen_id: currentKitchen.id })
@@ -12,7 +24,7 @@ export const useRecipe = (id: number, currentKitchen?: Kitchen) => {
     fetcher
   )
 
-  const recipeData = data
+  const recipeData: RecipeResponse = data
   const recipeError = error
   const mutateRecipe = mutate
 
@@ -31,7 +43,7 @@ export const useRecipes = (currentKitchen?: Kitchen) => {
     fetcher
   )
 
-  const recipesData = data
+  const recipesData: RecipesResponse = data
   const recipesError = error
   const mutateRecipes = mutate
 

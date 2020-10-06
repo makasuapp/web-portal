@@ -2,6 +2,10 @@ import React from 'react'
 import { User, Kitchen } from 'app/models/user'
 import { Link } from 'react-router-dom'
 import styles from './Dashboards.module.css'
+import { VendorResource } from 'app/vendors/resource'
+import { RecipeResource } from 'app/recipes/resource'
+import { OrderResource } from 'app/orders/resource'
+import { PredictedOrderResource } from 'app/predicted_orders/resource'
 
 interface Props {
   user: User
@@ -27,10 +31,13 @@ const Shared = (props: Props) => {
       ) : null}
       <br />
       <div>
-        <Link to={'/orders'}>Orders</Link>
+        <Link to={OrderResource.indexPath}>Orders</Link>
       </div>
       <div>
-        <Link to={'/recipes'}>Recipes</Link>
+        <Link to={RecipeResource.indexPath}>Recipes</Link>
+      </div>
+      <div>
+        <Link to={VendorResource.indexPath}>Vendors</Link>
       </div>
     </>
   )
@@ -41,7 +48,7 @@ export const OwnerDashboard = (props: Props) => {
     <div>
       <Shared {...props} />
       <div>
-        <Link to={'/predicted_orders'}>Expected Orders</Link>
+        <Link to={PredictedOrderResource.indexPath}>Expected Orders</Link>
       </div>
     </div>
   )

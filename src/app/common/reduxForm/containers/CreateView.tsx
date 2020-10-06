@@ -2,7 +2,7 @@ import React, { Component, ComponentType } from 'react'
 
 import { InjectedFormProps } from 'redux-form'
 import { ReduxState } from 'reducers'
-import { Resource } from '../ResourceHelper'
+import { Resource } from '../../ResourceHelper'
 import { connect } from 'react-redux'
 import { create } from '../duck/actions'
 import styles from './Form.module.css'

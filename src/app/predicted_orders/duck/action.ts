@@ -6,7 +6,7 @@ import {
   replaceResources,
   makeApiCall,
   apiCallError,
-} from '../../common/duck/actions'
+} from '../../common/reduxForm/duck/actions'
 import { PredictedOrderResource } from '../resource'
 import { PredictedOrdersFormData } from '../containers/PredictedOrdersForm'
 

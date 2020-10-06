@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 
-import { ResourceRecord } from '../ResourceHelper'
+import { ResourceRecord } from '../../ResourceHelper'
 
 interface Props {
   data?: ResourceRecord[]

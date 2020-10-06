@@ -4,7 +4,7 @@ import { FieldArray, InjectedFormProps, reduxForm } from 'redux-form'
 import { ReduxState } from 'reducers'
 import { connect } from 'react-redux'
 
-import { fetch } from 'app/common/duck/actions'
+import { fetch } from 'app/common/reduxForm/duck/actions'
 import { Recipe } from 'app/models/recipe'
 import { Resource, Params } from 'app/common/ResourceHelper'
 import { RecipeResource } from 'app/recipes/resource'

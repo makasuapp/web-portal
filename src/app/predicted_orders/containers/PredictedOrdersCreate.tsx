@@ -5,7 +5,7 @@ import { ReduxState } from 'reducers'
 import { connect } from 'react-redux'
 import moment, { Moment } from 'moment'
 
-import CreateView from 'app/common/containers/CreateView'
+import CreateView from 'app/common/reduxForm/containers/CreateView'
 import { PredictedOrderResource } from '../resource'
 import { paramsDateFormat } from 'app/common/DateHelper'
 import PredictedOrdersForm, {

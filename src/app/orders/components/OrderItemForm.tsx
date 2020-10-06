@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 import { Recipe } from 'app/models/recipe'
 import styles from './OrderItemForm.module.css'
-import formStyles from 'app/common/containers/Form.module.css'
+import formStyles from 'app/common/reduxForm/containers/Form.module.css'
 
 export interface OrderItemFormData {
   quantity: string

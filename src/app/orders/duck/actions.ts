@@ -7,7 +7,7 @@ import {
   fetchCall,
   replaceResources,
   fetchCallError,
-} from '../../common/duck/actions'
+} from '../../common/reduxForm/duck/actions'
 import { OrderResource } from '../resource'
 
 export const fetchOrders = (params?: Params) => (

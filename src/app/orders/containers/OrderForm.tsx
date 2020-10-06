@@ -11,10 +11,10 @@ import { connect } from 'react-redux'
 
 import { Recipe } from 'app/models/recipe'
 import { Resource, Params } from 'app/common/ResourceHelper'
-import { fetch } from 'app/common/duck/actions'
+import { fetch } from 'app/common/reduxForm/duck/actions'
 import { RecipeResource } from 'app/recipes/resource'
 import OrderItemForm, { OrderItemFormData } from '../components/OrderItemForm'
-import formStyles from 'app/common/containers/Form.module.css'
+import formStyles from 'app/common/reduxForm/containers/Form.module.css'
 import { Kitchen } from 'app/models/user'
 import { datepickerDateFormat } from 'app/common/DateHelper'
 

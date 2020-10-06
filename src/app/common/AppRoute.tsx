@@ -1,12 +1,12 @@
 import { Route } from 'react-router-dom'
 
-import { ApiReducerState } from './duck/reducers'
+import { ApiReducerState } from './reduxForm/duck/reducers'
 import Layout from './components/Layout'
 import LoadingPage from './components/LoadingPage'
 import React from 'react'
 import { ReduxState } from 'reducers'
 import { connect } from 'react-redux'
-import { registerResource } from './duck/actions'
+import { registerResource } from './reduxForm/duck/actions'
 import { isOwner, UserState } from 'app/models/user'
 
 interface StateProps {

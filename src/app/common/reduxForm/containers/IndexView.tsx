@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Resource, ResourceRecord, Params } from '../ResourceHelper'
+import { Resource, ResourceRecord, Params } from '../../ResourceHelper'
 
 import LoadingPage from 'app/common/components/LoadingPage'
 import { ReduxState } from 'reducers'

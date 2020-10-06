@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { ReduxState } from 'reducers'
 import { useRecipes } from '../duck/actions'
 import ErrorPage from 'app/common/components/ErrorPage'
-import RecipeForm from './RecipeForm'
+import RecipeForm from '../components/RecipeForm'
 
 interface StateProps {
   currentKitchen?: Kitchen
@@ -25,6 +25,10 @@ const RecipeCreate = (props: Props) => {
     <RecipeForm
       recipes={recipesData.recipes}
       ingredients={recipesData.ingredients}
+      handleSubmit={(values, actions) => {
+        console.log(values)
+        actions.setSubmitting(false)
+      }}
     />
   )
 }

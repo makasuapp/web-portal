@@ -6,7 +6,7 @@ import queryString from 'query-string'
 
 import LoadingPage from 'app/common/components/LoadingPage'
 import { ReduxState } from 'reducers'
-import { fetch } from 'app/common/duck/actions'
+import { fetch } from 'app/common/reduxForm/duck/actions'
 import TopBar from 'app/common/components/TopBar'
 import { PredictedOrderResource } from '../resource'
 import { paramsDateFormat } from 'app/common/DateHelper'

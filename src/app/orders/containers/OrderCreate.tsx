@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { reset } from 'redux-form'
 
-import CreateView from 'app/common/containers/CreateView'
+import CreateView from 'app/common/reduxForm/containers/CreateView'
 import OrderForm, { OrderFormData } from './OrderForm'
 import { OrderResource } from '../resource'
 import { ReduxState } from 'reducers'

@@ -1,4 +1,4 @@
-import { ResourceRecord, ID } from '../ResourceHelper'
+import { ResourceRecord, ID } from '../../ResourceHelper'
 
 export const REGISTER_RESOURCE = 'REGISTER_RESOURCE'
 interface RegisterResourceAction {
