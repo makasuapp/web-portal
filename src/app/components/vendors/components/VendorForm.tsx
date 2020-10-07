@@ -1,6 +1,7 @@
 import React from 'react'
-import { Form, Formik, FormikHelpers } from 'formik'
+import { Formik, FormikHelpers } from 'formik'
 import { TextField } from 'app/components/common/form/TextField'
+import FormikForm from 'app/components/common/form/Form'
 
 export interface VendorFormValues {
   name?: string
@@ -16,10 +17,11 @@ interface OuterProps {
 const VendorForm = (props: OuterProps) => {
   const { handleSubmit } = props
 
+  //TODO(form): schema validation
   return (
     <Formik initialValues={{}} onSubmit={handleSubmit}>
       {({ isSubmitting }) => (
-        <Form>
+        <FormikForm>
           <TextField name="name" isRequired label="Vendor Name" />
 
           <button
@@ -28,7 +30,7 @@ const VendorForm = (props: OuterProps) => {
             disabled={isSubmitting}>
             Submit
           </button>
-        </Form>
+        </FormikForm>
       )}
     </Formik>
   )

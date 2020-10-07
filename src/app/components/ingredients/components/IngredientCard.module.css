@@ -1,0 +1,13 @@
+.card {
+  padding: 15px 20px;
+  margin: 10px;
+  display: inline-block;
+  background: #fff;
+  border-radius: 5px;
+  height: 140px;
+  vertical-align: top;
+}
+
+.header {
+  font-weight: bold;
+}

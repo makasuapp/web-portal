@@ -3,10 +3,11 @@ import AppRoute, { ProtectionType } from 'app/components/common/AppRoute'
 import PredictedOrdersIndex from '../components/predicted_orders/containers/PredictedOrdersIndex'
 import PredictedOrdersCreate from '../components/predicted_orders/containers/PredictedOrdersCreate'
 import PredictedOrdersEdit from '../components/predicted_orders/containers/PredictedOrdersEdit'
+import { Switch } from 'react-router-dom'
 import { PredictedOrderResource } from 'app/resources/PredictedOrderResource'
 
-const PredictedOrderRoutes = () => (
-  <>
+const PredictedOrdersRoutes = () => (
+  <Switch>
     <AppRoute
       path={PredictedOrderResource.indexPath}
       exact
@@ -28,7 +29,7 @@ const PredictedOrderRoutes = () => (
       resourceNames={['recipe', 'predicted_order']}
       protection={ProtectionType.Owner}
     />
-  </>
+  </Switch>
 )
 
-export default PredictedOrderRoutes
+export default PredictedOrdersRoutes

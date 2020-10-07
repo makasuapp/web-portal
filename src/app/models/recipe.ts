@@ -38,6 +38,7 @@ export interface Recipe {
   publish: boolean
   unit?: string
   output_qty: number
+  current_price_cents?: number
   volume_weight_ratio?: number
   step_ids: number[]
 }

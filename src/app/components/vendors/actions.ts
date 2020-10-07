@@ -13,10 +13,12 @@ export const useVendors = (currentKitchen?: Kitchen) => {
   )
 
   const vendorData: Vendor[] = data
+  const vendorError = error
+  const mutateVendor = mutate
 
   return {
     vendorData,
-    error,
-    mutate,
+    vendorError,
+    mutateVendor,
   }
 }

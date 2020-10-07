@@ -6,6 +6,7 @@ import { VendorResource } from 'app/resources/VendorResource'
 import { RecipeResource } from 'app/resources/RecipeResource'
 import { OrderResource } from 'app/resources/OrderResource'
 import { PredictedOrderResource } from 'app/resources/PredictedOrderResource'
+import { IngredientResource } from 'app/resources/IngredientResource'
 
 interface Props {
   user: User
@@ -32,6 +33,9 @@ const Shared = (props: Props) => {
       <br />
       <div>
         <Link to={OrderResource.indexPath}>Orders</Link>
+      </div>
+      <div>
+        <Link to={IngredientResource.indexPath}>Ingredients</Link>
       </div>
       <div>
         <Link to={RecipeResource.indexPath}>Recipes</Link>

@@ -4,10 +4,11 @@ import RecipesIndex from '../components/recipes/containers/RecipesIndex'
 import RecipeShow from '../components/recipes/containers/RecipeShow'
 import RecipeEdit from '../components/recipes/containers/RecipeEdit'
 import RecipeCreate from '../components/recipes/containers/RecipeCreate'
+import { Switch } from 'react-router-dom'
 import { RecipeResource } from 'app/resources/RecipeResource'
 
 const RecipeRoutes = () => (
-  <>
+  <Switch>
     <AppRoute
       path={RecipeResource.indexPath}
       exact
@@ -32,7 +33,7 @@ const RecipeRoutes = () => (
       component={RecipeEdit}
       protection={ProtectionType.Authenticated}
     />
-  </>
+  </Switch>
 )
 
 export default RecipeRoutes

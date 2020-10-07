@@ -10,17 +10,18 @@ export interface TextFieldProps {
 }
 
 export function TextField(props: TextFieldProps & WrappedFieldProps) {
-  const { type, name, placeholder, customclasses, isDisabled } = props
+  const { type, name, placeholder, customclasses = {}, isDisabled } = props
 
   return (
-    <Field type={type || 'text'} name={name} placeholder={placeholder}>
+    <Field name={name} placehoder={placeholder}>
       {({ field, form, meta }) => (
         <WrappedField {...props} meta={meta}>
           <input
-            className={customclasses?.input || 'form-control'}
+            className={customclasses.input || 'form-control'}
             placeholder={placeholder}
             name={name}
-            type={type}
+            type={type || 'text'}
+            defaultChecked={!!meta.initialValue}
             disabled={isDisabled}
             {...field}
           />

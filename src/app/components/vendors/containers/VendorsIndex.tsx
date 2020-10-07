@@ -18,9 +18,9 @@ type Props = StateProps
 const VendorsIndex = (props: Props) => {
   const { currentKitchen } = props
 
-  const { vendorData, error } = useVendors(currentKitchen)
+  const { vendorData, vendorError } = useVendors(currentKitchen)
 
-  if (error) return <ErrorPage />
+  if (vendorError) return <ErrorPage />
   if (!vendorData) return <LoadingPage />
 
   return (
