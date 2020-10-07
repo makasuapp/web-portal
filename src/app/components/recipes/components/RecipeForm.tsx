@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Yup from 'yup'
 import { Recipe, StepInputType } from 'app/models/recipe'
 import { FieldArray, Formik, FormikHelpers, useFormikContext } from 'formik'
 import { TextField } from 'app/components/common/form/TextField'
@@ -30,6 +31,30 @@ export interface RecipeFormValues {
     }[]
   }[]
 }
+
+const RecipeSchema = Yup.object().shape({
+  name: Yup.string().required('Required'),
+  publish: Yup.boolean(),
+  output_qty: Yup.number().required('Required'),
+  current_price: Yup.number(),
+  unit: Yup.string(),
+  gram_per_tbsp: Yup.number(),
+  recipe_steps: Yup.array().of(
+    Yup.object().shape({
+      instruction: Yup.string().required('Required'),
+      max_before_min: Yup.number(),
+      min_before_min: Yup.number(),
+      inputs: Yup.array().of(
+        Yup.object().shape({
+          inputable_type: Yup.string().required('Required'),
+          inputable_id: Yup.number().required('Required'),
+          quantity: Yup.number().required('Required'),
+          unit: Yup.string(),
+        })
+      ),
+    })
+  ),
+})
 
 interface OuterProps {
   recipes: Recipe[]
@@ -137,15 +162,17 @@ const InputableIdField = ({
   }
 }
 
+const emptyRecipeStep = { inputs: [] }
+
 const RecipeForm = (props: OuterProps) => {
   const { initialValues, handleSubmit, recipes, ingredients } = props
 
-  //TODO(form): schema validation
-  //TODO: verify there is inputable_id of inputable_type
-  //TODO: only show units that make sense for recipe
+  //TODO(form): verify there is inputable_id of inputable_type
+  //TODO(form): only show units that make sense for recipe
   return (
     <Formik
-      initialValues={initialValues || { recipe_steps: [] }}
+      initialValues={initialValues || { recipe_steps: [emptyRecipeStep] }}
+      validationSchema={RecipeSchema}
       onSubmit={handleSubmit}>
       {({ isSubmitting, values }) => (
         <FormikForm>
@@ -257,7 +284,7 @@ const RecipeForm = (props: OuterProps) => {
                       ))}
                   </div>
                   <AddItemButton
-                    onClick={() => push({ inputs: [] })}
+                    onClick={() => push(emptyRecipeStep)}
                     text="New Step"
                   />
                 </>

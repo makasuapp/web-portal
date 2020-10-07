@@ -44,7 +44,7 @@ export const allUnits = ([] as (VolumeUnit | WeightUnit)[])
   .concat(Object.values(volumeUnits))
 
 const UnitConverter = {
-  //volumeWeightRatio is g / mL
+  // volumeWeightRatio is g / mL
   getVolumeWeightRatio: (gramsPerTbsp?: number) =>
     gramsPerTbsp && gramsPerTbsp / TBSP_PER_ML,
   gramsPerTbsp: (volumeWeightRatio?: number) =>
