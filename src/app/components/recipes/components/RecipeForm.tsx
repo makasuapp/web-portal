@@ -166,6 +166,24 @@ const emptyRecipeStep = { inputs: [] }
 
 const RecipeForm = (props: OuterProps) => {
   const { initialValues, handleSubmit, recipes, ingredients } = props
+  const alphabeticalRecipes = recipes.sort((a, b) => {
+    if (a.name < b.name) {
+      return -1
+    }
+    if (a.name > b.name) {
+      return 1
+    }
+    return 0
+  })
+  const alphabeticalIngredients = ingredients.sort((a, b) => {
+    if (a.name < b.name) {
+      return -1
+    }
+    if (a.name > b.name) {
+      return 1
+    }
+    return 0
+  })
 
   //TODO(form): verify there is inputable_id of inputable_type
   //TODO(form): only show units that make sense for recipe
@@ -246,8 +264,10 @@ const RecipeForm = (props: OuterProps) => {
                                               <InputableIdField
                                                 recipeStepIndex={index}
                                                 inputIndex={inputIndex}
-                                                recipes={recipes}
-                                                ingredients={ingredients}
+                                                recipes={alphabeticalRecipes}
+                                                ingredients={
+                                                  alphabeticalIngredients
+                                                }
                                               />
                                             </div>
                                             <div className={styles.qtyWithUnit}>
