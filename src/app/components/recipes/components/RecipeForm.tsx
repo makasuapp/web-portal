@@ -245,6 +245,20 @@ const RecipeForm = (props: OuterProps) => {
                                                 removeInput(inputIndex)
                                               }
                                             />
+                                            <div className={styles.qtyWithUnit}>
+                                              <TextField
+                                                name={`recipe_steps.${index}.inputs.${inputIndex}.quantity`}
+                                                isRequired
+                                                label="Quantity"
+                                              />
+                                              <SelectField
+                                                name={`recipe_steps.${index}.inputs.${inputIndex}.unit`}
+                                                label="Unit"
+                                                options={UnitConverter.unitOptions(
+                                                  allUnits
+                                                )}
+                                              />
+                                            </div>
                                             <div className={styles.inputType}>
                                               <SelectField
                                                 name={`recipe_steps.${index}.inputs.${inputIndex}.inputable_type`}
@@ -268,20 +282,6 @@ const RecipeForm = (props: OuterProps) => {
                                                 ingredients={
                                                   alphabeticalIngredients
                                                 }
-                                              />
-                                            </div>
-                                            <div className={styles.qtyWithUnit}>
-                                              <TextField
-                                                name={`recipe_steps.${index}.inputs.${inputIndex}.quantity`}
-                                                isRequired
-                                                label="Quantity"
-                                              />
-                                              <SelectField
-                                                name={`recipe_steps.${index}.inputs.${inputIndex}.unit`}
-                                                label="Unit"
-                                                options={UnitConverter.unitOptions(
-                                                  allUnits
-                                                )}
                                               />
                                             </div>
                                           </div>
