@@ -36,6 +36,12 @@ const RecipeShow = (props: Props) => {
       <TopBar
         items={[
           <Link
+            key="new"
+            to={RecipeResource.newPath}
+            className="btn btn-secondary">
+            New Recipe
+          </Link>,
+          <Link
             key="edit"
             to={RecipeResource.editPath(id)}
             className="btn btn-primary">

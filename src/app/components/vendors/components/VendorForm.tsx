@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Yup from 'yup'
 import { Formik, FormikHelpers } from 'formik'
 import { TextField } from 'app/components/common/form/TextField'
 import FormikForm from 'app/components/common/form/Form'
@@ -6,6 +7,10 @@ import FormikForm from 'app/components/common/form/Form'
 export interface VendorFormValues {
   name?: string
 }
+
+const VendorSchema = Yup.object().shape({
+  name: Yup.string().required('Required'),
+})
 
 interface OuterProps {
   handleSubmit: (
@@ -17,9 +22,11 @@ interface OuterProps {
 const VendorForm = (props: OuterProps) => {
   const { handleSubmit } = props
 
-  //TODO(form): schema validation
   return (
-    <Formik initialValues={{}} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={{}}
+      onSubmit={handleSubmit}
+      validationSchema={VendorSchema}>
       {({ isSubmitting }) => (
         <FormikForm>
           <TextField name="name" isRequired label="Vendor Name" />

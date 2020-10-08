@@ -1,5 +1,3 @@
-const TBSP_PER_ML = 14.787
-
 export interface WeightUnit {
   short: string
   long: string
@@ -46,9 +44,11 @@ export const allUnits = ([] as (VolumeUnit | WeightUnit)[])
 const UnitConverter = {
   // volumeWeightRatio is g / mL
   getVolumeWeightRatio: (gramsPerTbsp?: number) =>
-    gramsPerTbsp && gramsPerTbsp / TBSP_PER_ML,
+    gramsPerTbsp && gramsPerTbsp / volumeUnits.tbsp.toML,
+  // rounded since this is generally for display
   gramsPerTbsp: (volumeWeightRatio?: number) =>
-    volumeWeightRatio && volumeWeightRatio * TBSP_PER_ML,
+    volumeWeightRatio &&
+    Math.round(volumeWeightRatio * volumeUnits.tbsp.toML * 100) / 100,
   unitOptions: (units: (WeightUnit | VolumeUnit)[]) =>
     units.map((unit) => ({ value: unit.short, label: unit.long })),
 }
