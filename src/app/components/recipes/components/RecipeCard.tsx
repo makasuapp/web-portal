@@ -32,6 +32,10 @@ const RecipeCard = ({ recipe, recipes, recipeSteps, ingredients }: Props) => {
   return (
     <div>
       <h1>{recipe.name}</h1>
+      <div>
+        Makes: {recipe.output_qty} {recipe.unit}
+      </div>
+      <div>Steps:</div>
       {recipeSteps
         .sort((a, b) => a.number - b.number)
         .map((recipeStep) => (
