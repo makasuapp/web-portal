@@ -101,9 +101,11 @@ export const resetResource = (
   },
 })
 
-export const fetch = (resource: Resource, params?: Params) => (
-  dispatch: ThunkDispatch<{}, {}, AnyAction>
-) => {
+export const fetch = (
+  resource: Resource,
+  params?: Params,
+  responseKey?: string
+) => (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch(fetchCall(resource.name))
 
   return apiCall({
@@ -111,7 +113,11 @@ export const fetch = (resource: Resource, params?: Params) => (
     method: 'GET',
   })
     .then((response) => {
-      dispatch(replaceResources(resource.name, response))
+      if (responseKey) {
+        dispatch(replaceResources(resource.name, response[responseKey]))
+      } else {
+        dispatch(replaceResources(resource.name, response))
+      }
     })
     .catch((error) => {
       console.log(error)

@@ -48,7 +48,11 @@ class PredictedOrdersForm extends React.Component<Props> {
     //TODO: should redirect if no kitchen
     const { currentKitchen, hasFetchedRecipes } = this.props
     if (currentKitchen && !hasFetchedRecipes) {
-      this.props.fetch(RecipeResource, { kitchen_id: currentKitchen.id })
+      this.props.fetch(
+        RecipeResource,
+        { kitchen_id: currentKitchen.id },
+        'recipes'
+      )
     }
   }
 
