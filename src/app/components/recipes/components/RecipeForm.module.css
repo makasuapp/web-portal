@@ -11,11 +11,11 @@
   display: flex;
 }
 
-.qtyWithUnit div:first-child {
+.qtyWithUnit > div:first-child {
   flex-grow: 2;
 }
 
-.qtyWithUnit div:last-child {
+.qtyWithUnit > div:last-child {
   flex-grow: 1;
 }
 
@@ -23,11 +23,11 @@
   display: flex;
 }
 
-.inputType div:first-child {
+.inputType > div:first-child {
   flex-grow: 1;
 }
 
-.inputType div:last-child {
+.inputType > div:last-child {
   flex-grow: 3;
 }
 

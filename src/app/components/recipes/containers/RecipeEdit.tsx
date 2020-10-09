@@ -44,14 +44,16 @@ const RecipeEdit = (props: Props) => {
         current_price:
           recipe.current_price_cents && recipe.current_price_cents / 100.0,
         gram_per_tbsp: UnitConverter.gramsPerTbsp(recipe.volume_weight_ratio),
-        recipe_steps: recipe_steps.map((recipeStep) =>
-          Object.assign({}, recipeStep, {
-            min_before_min:
-              recipeStep.min_before_sec && recipeStep.min_before_sec / 60.0,
-            max_before_min:
-              recipeStep.max_before_sec && recipeStep.max_before_sec / 60.0,
-          })
-        ),
+        recipe_steps: recipe_steps
+          .map((recipeStep) =>
+            Object.assign({}, recipeStep, {
+              min_before_min:
+                recipeStep.min_before_sec && recipeStep.min_before_sec / 60.0,
+              max_before_min:
+                recipeStep.max_before_sec && recipeStep.max_before_sec / 60.0,
+            })
+          )
+          .sort((a, b) => a.number - b.number),
       })}
       handleSubmit={(values, actions) => {
         const data = {

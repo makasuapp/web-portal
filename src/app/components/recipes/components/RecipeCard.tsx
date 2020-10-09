@@ -32,22 +32,24 @@ const RecipeCard = ({ recipe, recipes, recipeSteps, ingredients }: Props) => {
   return (
     <div>
       <h1>{recipe.name}</h1>
-      {recipeSteps.map((recipeStep) => (
-        <div key={recipeStep.id} className={styles.step}>
-          <div>
-            {recipeStep.number}. {recipeStep.instruction}
+      {recipeSteps
+        .sort((a, b) => a.number - b.number)
+        .map((recipeStep) => (
+          <div key={recipeStep.id} className={styles.step}>
+            <div>
+              {recipeStep.number}. {recipeStep.instruction}
+            </div>
+            <div>Ingredients:</div>
+            {recipeStep.inputs.map((input) => (
+              <StepInputItem
+                key={input.id}
+                stepInput={input}
+                recipesMap={recipesMap}
+                ingredientsMap={ingredientsMap}
+              />
+            ))}
           </div>
-          <div>Ingredients:</div>
-          {recipeStep.inputs.map((input) => (
-            <StepInputItem
-              key={input.id}
-              stepInput={input}
-              recipesMap={recipesMap}
-              ingredientsMap={ingredientsMap}
-            />
-          ))}
-        </div>
-      ))}
+        ))}
     </div>
   )
 }
