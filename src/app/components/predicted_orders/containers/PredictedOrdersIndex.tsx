@@ -4,6 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom'
 import moment, { Moment } from 'moment'
 import queryString from 'query-string'
 
+import apiCall from 'app/utils/apiCall'
 import LoadingPage from 'app/components/common/LoadingPage'
 import { ReduxState } from 'reducers'
 import { fetch } from 'app/components/common/reduxForm/duck/actions'
@@ -12,9 +13,10 @@ import { PredictedOrderResource } from '../../../resources/PredictedOrderResourc
 import { paramsDateFormat } from 'app/utils/DateHelper'
 import PredictedOrderList from '../components/PredictedOrderList'
 import DateRangeSelector from '../components/DateRangeSelector'
-import { Resource, Params } from 'app/resources/ResourceHelper'
+import { Resource, Params, defaultError } from 'app/resources/ResourceHelper'
 import { PredictedOrder } from 'app/models/predicted_order'
 import { Kitchen } from 'app/models/user'
+import { toast } from 'react-toastify'
 
 interface DispatchProps {
   fetch: (resource: Resource, params?: Params) => void
@@ -31,12 +33,14 @@ type Props = DispatchProps & StateProps & RouteComponentProps
 interface State {
   startDate: Moment
   endDate: Moment
+  generatingShopping: boolean
 }
 
 class PredictedOrdersIndex extends React.Component<Props, State> {
   state: State = {
     startDate: moment().startOf('day'),
     endDate: moment().endOf('day'),
+    generatingShopping: false,
   }
 
   //set initial state from params, state is what's synced with server
@@ -88,6 +92,7 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
         end: this.dateStr(this.state.endDate),
       }
     } else {
+      toast.error(defaultError)
       throw Error('no kitchen set')
     }
   }
@@ -100,8 +105,27 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
     }
   }
 
+  async generateShopping() {
+    this.setState({ generatingShopping: true }, () => {})
+
+    try {
+      await apiCall({
+        path: '/op_days/generate_procurements',
+        method: 'POST',
+        data: this.endpointParams(),
+      })
+
+      toast.success('Shopping List Made!')
+    } catch (err) {
+      console.log(err)
+      toast.error(defaultError)
+    }
+
+    this.setState({ generatingShopping: false })
+  }
+
   render() {
-    const { startDate, endDate } = this.state
+    const { startDate, endDate, generatingShopping } = this.state
     const { predictedOrders, isFetching } = this.props
 
     let list
@@ -123,6 +147,13 @@ class PredictedOrdersIndex extends React.Component<Props, State> {
               to={PredictedOrderResource.newPath}>
               Add Expected Orders
             </Link>,
+            <button
+              key="shop"
+              className="btn btn-secondary"
+              disabled={generatingShopping}
+              onClick={this.generateShopping.bind(this)}>
+              Generate Shopping List
+            </button>,
           ]}
         />
         <h1>Expected Orders</h1>
