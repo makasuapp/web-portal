@@ -8,9 +8,9 @@ import { Ingredient } from 'app/models/ingredient'
 import { CheckboxField } from 'app/components/common/form/CheckboxField'
 import FormikForm from 'app/components/common/form/Form'
 import { SelectField } from 'app/components/common/form/SelectField'
-import UnitConverter, { allUnits } from 'app/utils/UnitConverter'
 import AddItemButton from 'app/components/common/form/AddItemButton'
 import styles from './RecipeForm.module.css'
+import { UnitField } from 'app/components/common/form/UnitField'
 
 export interface RecipeFormValues {
   name?: string
@@ -96,11 +96,7 @@ const MenuItemToggledFields = () => {
       <>
         <div className={styles.qtyWithUnit}>
           <TextField name="output_qty" label="Serving Size" isRequired />
-          <SelectField
-            name="unit"
-            label="Serving Unit"
-            options={UnitConverter.unitOptions(allUnits)}
-          />
+          <UnitField name="unit" label="Serving Unit" />
         </div>
         <TextField
           name="gram_per_tbsp"
@@ -251,16 +247,8 @@ const RecipeForm = (props: OuterProps) => {
                                                 isRequired
                                                 label="Quantity"
                                               />
-                                              <SelectField
+                                              <UnitField
                                                 name={`recipe_steps.${index}.inputs.${inputIndex}.unit`}
-                                                label="Unit"
-                                                options={[
-                                                  { value: '', label: '' },
-                                                ].concat(
-                                                  UnitConverter.unitOptions(
-                                                    allUnits
-                                                  )
-                                                )}
                                               />
                                             </div>
                                             <div className={styles.inputType}>
