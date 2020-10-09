@@ -29,12 +29,19 @@ const VendorCreate = (props: Props) => {
           kitchen_id: currentKitchen.id,
         }
 
-        create(VendorResource, data, (resp) => {
-          //TODO(swr): mutate vendors to be resp
-          props.history.push(VendorResource.indexPath)
-          toast.success('Successfully created vendor')
-          actions.setSubmitting(false)
-        })
+        create(VendorResource, data)
+          .then((resp) => {
+            //TODO(swr): mutate recipe to be resp
+            props.history.push(VendorResource.indexPath)
+            toast.success('Successfully created vendor')
+            actions.setSubmitting(false)
+          })
+          .catch((err) => {
+            toast.error(
+              'An error occurred saving this vendor. Please try again or contact support'
+            )
+            actions.setSubmitting(false)
+          })
       }}
     />
   )

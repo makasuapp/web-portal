@@ -254,8 +254,12 @@ const RecipeForm = (props: OuterProps) => {
                                               <SelectField
                                                 name={`recipe_steps.${index}.inputs.${inputIndex}.unit`}
                                                 label="Unit"
-                                                options={UnitConverter.unitOptions(
-                                                  allUnits
+                                                options={[
+                                                  { value: '', label: '' },
+                                                ].concat(
+                                                  UnitConverter.unitOptions(
+                                                    allUnits
+                                                  )
                                                 )}
                                               />
                                             </div>

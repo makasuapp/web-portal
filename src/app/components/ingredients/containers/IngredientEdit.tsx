@@ -62,12 +62,19 @@ const IngredientCreate = (props: Props) => {
           kitchen_id: currentKitchen.id,
         }
 
-        edit(id, IngredientResource, data, (resp) => {
-          //TODO(swr): mutate ingredients to be resp
-          props.history.push(IngredientResource.indexPath)
-          toast.success('Successfully edited ingredient')
-          actions.setSubmitting(false)
-        })
+        edit(id, IngredientResource, data)
+          .then((resp) => {
+            //TODO(swr): mutate recipe to be resp
+            props.history.push(IngredientResource.indexPath)
+            toast.success('Successfully edited ingredient')
+            actions.setSubmitting(false)
+          })
+          .catch((err) => {
+            toast.error(
+              'An error occurred saving this ingredient. Please try again or contact support'
+            )
+            actions.setSubmitting(false)
+          })
       }}
     />
   )

@@ -80,12 +80,19 @@ const RecipeEdit = (props: Props) => {
           kitchen_id: currentKitchen.id,
         }
 
-        edit(id, RecipeResource, data, (resp) => {
-          //TODO(swr): mutate recipe to be resp
-          props.history.push(RecipeResource.showPath(resp.recipe.id))
-          toast.success('Successfully edited recipe')
-          actions.setSubmitting(false)
-        })
+        edit(id, RecipeResource, data)
+          .then((resp) => {
+            //TODO(swr): mutate recipe to be resp
+            props.history.push(RecipeResource.showPath(resp.recipe.id))
+            toast.success('Successfully edited recipe')
+            actions.setSubmitting(false)
+          })
+          .catch((err) => {
+            toast.error(
+              "An error occurred saving this recipe. Please check that all requird fields are set and you aren't converting between weight/volume without a ratio set"
+            )
+            actions.setSubmitting(false)
+          })
       }}
       recipes={recipesData.recipes}
       ingredients={recipesData.ingredients}
