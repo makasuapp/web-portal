@@ -14,6 +14,15 @@ export interface ResourceRecord {
   id: ID
 }
 
+export const resourcesToMap = (
+  resources: any[],
+  key = 'id'
+): { [id: number]: any } =>
+  resources.reduce((map, resource) => {
+    map[resource[key]] = resource
+    return map
+  }, {})
+
 export type Params = { [key: string]: any }
 export const paramStr = (params?: Params): string =>
   params && Object.keys(params).length > 0

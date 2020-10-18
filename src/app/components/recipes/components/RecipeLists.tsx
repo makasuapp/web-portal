@@ -1,28 +1,25 @@
 import React from 'react'
 
 import { Recipe } from 'app/models/recipe'
-import RecipeItem from './RecipeItem'
 
 interface OuterProps {
   recipes: Recipe[]
+  item: (recipe: Recipe) => React.ReactNode
 }
 
-const RecipeList = ({ recipes = [] }: OuterProps) => {
+const RecipeLists = ({ recipes = [], item }: OuterProps) => {
   const menuItems = recipes.filter((recipe) => recipe.publish)
   const prepRecipes = recipes.filter((recipe) => !recipe.publish)
 
   return (
     <div>
       <h2>Menu Items</h2>
-      {menuItems.map((recipe) => (
-        <RecipeItem recipe={recipe} key={recipe.id} />
-      ))}
+      {menuItems.map((recipe) => item(recipe))}
+      <br />
       <h2>Prep Recipes</h2>
-      {prepRecipes.map((recipe) => (
-        <RecipeItem recipe={recipe} key={recipe.id} />
-      ))}
+      {prepRecipes.map((recipe) => item(recipe))}
     </div>
   )
 }
 
-export default RecipeList
+export default RecipeLists

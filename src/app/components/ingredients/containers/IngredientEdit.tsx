@@ -24,21 +24,21 @@ interface StateProps {
 
 type Props = StateProps & RouteComponentProps<Params>
 
-const IngredientCreate = (props: Props) => {
+const IngredientEdit = (props: Props) => {
   const id = idFromUrl(props)
   const { currentKitchen } = props
 
-  const { ingredientData, ingredientError } = useIngredients(currentKitchen)
+  const { ingredientsData, ingredientsError } = useIngredients(currentKitchen)
   const { vendorData, vendorError } = useVendors(currentKitchen)
 
-  if (vendorError || ingredientError) return <ErrorPage />
-  if (!ingredientData || !vendorData) return <LoadingPage />
+  if (vendorError || ingredientsError) return <ErrorPage />
+  if (!ingredientsData || !vendorData) return <LoadingPage />
 
   if (!currentKitchen) {
     return <div>No kitchen found</div>
   }
 
-  const ingredient = ingredientData.filter((i) => i.id === id)[0]
+  const ingredient = ingredientsData.filter((i) => i.id === id)[0]
   if (!ingredient) {
     return <div>No ingredient found</div>
   }
@@ -86,4 +86,4 @@ const mapStateToProps = (state: ReduxState): StateProps => {
   }
 }
 
-export default connect(mapStateToProps, {})(IngredientCreate)
+export default connect(mapStateToProps, {})(IngredientEdit)

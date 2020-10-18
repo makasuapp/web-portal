@@ -204,9 +204,9 @@ const RecipeForm = (props: OuterProps) => {
                   <div>
                     {values.recipe_steps.length > 0 &&
                       values.recipe_steps.map((recipe_step, index) => (
-                        <div>
-                          <h4 className={styles.stepHeader}>{index + 1}.</h4>
+                        <div key={`step-${index}`}>
                           <DeleteItemButton onClick={() => remove(index)} />
+                          <h4 className={styles.stepHeader}>{index + 1}.</h4>
                           <TextField
                             name={`recipe_steps.${index}.instruction`}
                             isRequired
@@ -231,16 +231,16 @@ const RecipeForm = (props: OuterProps) => {
                                       0 &&
                                       values.recipe_steps[index].inputs.map(
                                         (input, inputIndex) => (
-                                          <div>
-                                            <h4>
-                                              Step {index + 1} Input{' '}
-                                              {inputIndex + 1}
-                                            </h4>
+                                          <div key={`input-${inputIndex}`}>
                                             <DeleteItemButton
                                               onClick={() =>
                                                 removeInput(inputIndex)
                                               }
                                             />
+                                            <h4>
+                                              Step {index + 1} Input{' '}
+                                              {inputIndex + 1}
+                                            </h4>
                                             <div className={styles.qtyWithUnit}>
                                               <TextField
                                                 name={`recipe_steps.${index}.inputs.${inputIndex}.quantity`}

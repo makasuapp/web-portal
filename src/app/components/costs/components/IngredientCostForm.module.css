@@ -1,0 +1,20 @@
+.dollarSign {
+  margin-right: 5px;
+  line-height: 32px;
+}
+
+.dollarInput {
+  display: flex;
+}
+
+.qtyWithUnit {
+  display: flex;
+}
+
+.qtyWithUnit > div:first-child {
+  flex-grow: 2;
+}
+
+.qtyWithUnit > div:last-child {
+  flex-grow: 1;
+}
