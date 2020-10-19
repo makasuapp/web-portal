@@ -5,6 +5,7 @@ import IngredientsIndex from '../components/ingredients/containers/IngredientsIn
 import IngredientEdit from 'app/components/ingredients/containers/IngredientEdit'
 import { Switch } from 'react-router-dom'
 import { IngredientResource } from 'app/resources/IngredientResource'
+import IngredientCostCreate from 'app/components/costs/containers/IngredientCostCreate'
 
 const IngredientsRoutes = () => (
   <Switch>
@@ -18,6 +19,12 @@ const IngredientsRoutes = () => (
       path={IngredientResource.newPath}
       exact
       component={IngredientCreate}
+      protection={ProtectionType.Owner}
+    />
+    <AppRoute
+      path="/ingredients/:id/cost"
+      exact
+      component={IngredientCostCreate}
       protection={ProtectionType.Owner}
     />
     <AppRoute

@@ -43,8 +43,7 @@
 }
 
 .trashContainer {
-  display: flex;
-  flex-direction: row-reverse;
+  float: right;
 }
 
 .trash {

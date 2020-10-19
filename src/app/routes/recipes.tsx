@@ -6,6 +6,8 @@ import RecipeEdit from '../components/recipes/containers/RecipeEdit'
 import RecipeCreate from '../components/recipes/containers/RecipeCreate'
 import { Switch } from 'react-router-dom'
 import { RecipeResource } from 'app/resources/RecipeResource'
+import RecipesCostIndex from 'app/components/costs/containers/RecipesCostIndex'
+import RecipeCostShow from 'app/components/costs/containers/RecipeCostShow'
 
 const RecipeRoutes = () => (
   <Switch>
@@ -22,6 +24,12 @@ const RecipeRoutes = () => (
       protection={ProtectionType.Authenticated}
     />
     <AppRoute
+      path="/recipes/cost"
+      exact
+      component={RecipesCostIndex}
+      protection={ProtectionType.Owner}
+    />
+    <AppRoute
       path="/recipes/:id"
       exact
       component={RecipeShow}
@@ -32,6 +40,12 @@ const RecipeRoutes = () => (
       exact
       component={RecipeEdit}
       protection={ProtectionType.Authenticated}
+    />
+    <AppRoute
+      path="/recipes/:id/cost"
+      exact
+      component={RecipeCostShow}
+      protection={ProtectionType.Owner}
     />
   </Switch>
 )

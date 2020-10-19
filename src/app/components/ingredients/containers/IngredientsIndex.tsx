@@ -11,6 +11,7 @@ import ErrorPage from 'app/components/common/ErrorPage'
 import { useVendors } from 'app/components/vendors/actions'
 import { Vendor } from 'app/models/vendor'
 import IngredientCard from '../components/IngredientCard'
+import { resourcesToMap } from 'app/resources/ResourceHelper'
 
 interface StateProps {
   currentKitchen?: Kitchen
@@ -21,19 +22,13 @@ type Props = StateProps
 const IngredientsIndex = (props: Props) => {
   const { currentKitchen } = props
 
-  const { ingredientData, ingredientError } = useIngredients(currentKitchen)
+  const { ingredientsData, ingredientsError } = useIngredients(currentKitchen)
   const { vendorData, vendorError } = useVendors(currentKitchen)
 
-  if (vendorError || ingredientError) return <ErrorPage />
-  if (!ingredientData || !vendorData) return <LoadingPage />
+  if (vendorError || ingredientsError) return <ErrorPage />
+  if (!ingredientsData || !vendorData) return <LoadingPage />
 
-  const vendorsMap: { [key: number]: Vendor } = vendorData.reduce(
-    (map, vendor) => {
-      map[vendor.id] = vendor
-      return map
-    },
-    {}
-  )
+  const vendorsMap: { [key: number]: Vendor } = resourcesToMap(vendorData)
 
   return (
     <div>
@@ -48,7 +43,7 @@ const IngredientsIndex = (props: Props) => {
         ]}
       />
       <h1>Ingredients</h1>
-      {ingredientData.map((ingredient) => (
+      {ingredientsData.map((ingredient) => (
         <IngredientCard
           key={ingredient.id}
           ingredient={ingredient}

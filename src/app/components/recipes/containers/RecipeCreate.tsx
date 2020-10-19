@@ -68,7 +68,7 @@ const RecipeCreate = (props: Props) => {
           })
           .catch((err) => {
             toast.error(
-              "An error occurred saving this recipe. Please check that all requird fields are set and you aren't converting between weight/volume without a ratio set"
+              "An error occurred saving this recipe. Please check that all required fields are set and you aren't converting between weight/volume without a ratio set"
             )
             actions.setSubmitting(false)
           })

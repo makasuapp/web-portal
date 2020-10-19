@@ -3,6 +3,7 @@ import React from 'react'
 import StepInputItem from './StepInputItem'
 import styles from './RecipeCard.module.css'
 import { Ingredient } from 'app/models/ingredient'
+import { resourcesToMap } from 'app/resources/ResourceHelper'
 
 interface Props {
   recipe: Recipe
@@ -12,20 +13,10 @@ interface Props {
 }
 
 const RecipeCard = ({ recipe, recipes, recipeSteps, ingredients }: Props) => {
-  const ingredientsMap: { [key: number]: Ingredient } = ingredients.reduce(
-    (map, ingredient) => {
-      map[ingredient.id] = ingredient
-      return map
-    },
-    {}
+  const ingredientsMap: { [key: number]: Ingredient } = resourcesToMap(
+    ingredients
   )
-  const recipesMap: { [key: number]: Recipe } = recipes.reduce(
-    (map, recipe) => {
-      map[recipe.id] = recipe
-      return map
-    },
-    {}
-  )
+  const recipesMap: { [key: number]: Recipe } = resourcesToMap(recipes)
 
   //TODO: aggregate the ingredients at the top
 
