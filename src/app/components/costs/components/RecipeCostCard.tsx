@@ -21,7 +21,9 @@ const RecipeCostCard = ({ recipe, recipeSteps, calculator }: Props) => {
     recipeSteps
   )
   //TODO: aggregate inputs that are the same
-  const inputs = recipe.step_ids.flatMap((id) => recipeStepsMap[id].inputs)
+  const inputs = recipe.step_ids
+    .map((id) => recipeStepsMap[id].inputs)
+    .reduce((a, b) => a.concat(b), [])
 
   return (
     <div>
@@ -32,28 +34,41 @@ const RecipeCostCard = ({ recipe, recipeSteps, calculator }: Props) => {
       {displayCost ? <div>Cost: {displayCost}</div> : null}
       <div>Ingredients:</div>
       {inputs.map((input) => {
-        //TODO(recipe_cost): put total cost given that qty
-
         if (input.inputable_type === 'Recipe') {
           //not the best to use map from calculator
           const inputRecipe = calculator.recipesMap[input.inputable_id]
           return (
             <div key={`recipe-${input.id}`}>
               {UnitConverter.qtyToDisplay(input.quantity, input.unit)}{' '}
-              <RecipeCostItem recipe={inputRecipe} calculator={calculator} />
+              <RecipeCostItem
+                recipe={inputRecipe}
+                calculator={calculator}
+                asInput={input}
+              />
             </div>
           )
         } else if (input.inputable_type === 'Ingredient') {
-          const ingredientCost = calculator.costForInput(input)
-          const price =
-            ingredientCost !== undefined
-              ? `${UnitConverter.centsToDisplay(
-                  ingredientCost.price_cents
-                )} / ${UnitConverter.qtyToDisplay(
-                  ingredientCost.got_qty,
-                  ingredientCost.got_unit
-                )}`
-              : 'price not set'
+          const ingredientCost = calculator.ingredientCostForInput(input)
+          let price = 'price not set'
+          if (ingredientCost !== undefined) {
+            //not the best to use map from calculator
+            const ingredient = calculator.ingredientsMap[input.inputable_id]
+            const costOfInput = calculator.costOfInput(
+              input,
+              ingredientCost.price_cents,
+              ingredientCost.got_qty,
+              ingredientCost.got_unit,
+              ingredient.volume_weight_ratio
+            )
+            price = `${UnitConverter.centsToDisplay(
+              costOfInput
+            )} (${UnitConverter.centsToDisplay(
+              ingredientCost.price_cents
+            )} / ${UnitConverter.qtyToDisplay(
+              ingredientCost.got_qty,
+              ingredientCost.got_unit
+            )})`
+          }
 
           return (
             <div key={`ingredient-${input.id}`}>

@@ -79,8 +79,8 @@ const UnitConverter = {
   },
   convert: (
     inputQty: number,
-    inputUnit: string | undefined,
-    outputUnit: string | undefined,
+    inputUnit?: string | undefined,
+    outputUnit?: string | undefined,
     volumeWeightRatio?: number | undefined
   ): number => {
     const err = `Can't convert between these units. input=${inputUnit}, output=${outputUnit}, volume_weight_ratio=${volumeWeightRatio}`

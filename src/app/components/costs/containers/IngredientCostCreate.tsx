@@ -55,6 +55,9 @@ const IngredientCostCreate = (props: Props) => {
 
         createCost(data)
           .then((resp) => {
+            //TODO: not great, the toast gets lost
+            //also there's a bit of a lag before it sees updated versions
+            //would be better if this mutated
             toast.success('Successfully set cost')
             props.history.goBack()
             actions.setSubmitting(false)

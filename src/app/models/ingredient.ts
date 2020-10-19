@@ -9,6 +9,6 @@ export interface IngredientCost {
   id: number
   ingredient_id: number
   got_qty: number
-  got_unit: string
+  got_unit?: string
   price_cents: number
 }
