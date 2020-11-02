@@ -45,15 +45,44 @@ const RecipeEdit = (props: Props) => {
           recipe.current_price_cents && recipe.current_price_cents / 100.0,
         gram_per_tbsp: UnitConverter.gramsPerTbsp(recipe.volume_weight_ratio),
         recipe_steps: recipe_steps
-          .map((recipeStep) =>
-            Object.assign({}, recipeStep, {
-              min_before_min:
-                recipeStep.min_before_sec && recipeStep.min_before_sec / 60.0,
-              max_before_min:
-                recipeStep.max_before_sec && recipeStep.max_before_sec / 60.0,
-            })
+          //go in reverse chronological first to reduce min/max
+          .sort((a, b) => b.number - a.number)
+          .reduce(
+            (
+              obj: {
+                prevMinBeforeSec: number
+                prevMaxBeforeSec: number
+                recipeSteps: any[]
+              },
+              recipeStep,
+              index
+            ) => {
+              const newRecipeStep = Object.assign({}, recipeStep, {
+                number: index + 1,
+                min_before_min: recipeStep.min_before_sec
+                  ? (recipeStep.min_before_sec - obj.prevMinBeforeSec) / 60.0
+                  : undefined,
+                max_before_min: recipeStep.max_before_sec
+                  ? (recipeStep.max_before_sec - obj.prevMaxBeforeSec) / 60.0
+                  : undefined,
+              })
+              const prevMinBeforeSec = recipeStep.min_before_sec || 0
+              const prevMaxBeforeSec = recipeStep.max_before_sec || 0
+
+              return {
+                prevMinBeforeSec,
+                prevMaxBeforeSec,
+                recipeSteps: obj.recipeSteps.concat(newRecipeStep),
+              }
+            },
+            {
+              prevMinBeforeSec: 0,
+              prevMaxBeforeSec: 0,
+              recipeSteps: [],
+            }
           )
-          .sort((a, b) => a.number - b.number),
+          .recipeSteps //sort back in chronological
+          .sort((a, b) => b.number - a.number),
       })}
       handleSubmit={(values, actions) => {
         const data = {
@@ -65,17 +94,46 @@ const RecipeEdit = (props: Props) => {
               values.gram_per_tbsp
             ),
             gram_per_tbsp: undefined,
-            recipe_steps: values.recipe_steps.map((recipeStep, index) =>
-              Object.assign({}, recipeStep, {
-                number: index + 1,
-                min_before_min: undefined,
-                min_before_sec:
-                  recipeStep.min_before_min && recipeStep.min_before_min * 60,
-                max_before_min: undefined,
-                max_before_sec:
-                  recipeStep.max_before_min && recipeStep.max_before_min * 60,
+            recipe_steps: values.recipe_steps
+              .map((recipeStep, index) => {
+                return Object.assign({}, recipeStep, { number: index + 1 })
               })
-            ),
+              //go in reverse chronological first to reduce min/max
+              .sort((a, b) => b.number - a.number)
+              .reduce(
+                (
+                  obj: {
+                    prevMinBeforeSec: number
+                    prevMaxBeforeSec: number
+                    recipeSteps: any[]
+                  },
+                  recipeStep
+                ) => {
+                  const prevMinBeforeSec =
+                    obj.prevMinBeforeSec + (recipeStep.min_before_min || 0) * 60
+                  const prevMaxBeforeSec =
+                    obj.prevMaxBeforeSec + (recipeStep.max_before_min || 0) * 60
+                  const newRecipeStep = Object.assign({}, recipeStep, {
+                    min_before_min: undefined,
+                    min_before_sec:
+                      prevMinBeforeSec > 0 ? prevMinBeforeSec : undefined,
+                    max_before_min: undefined,
+                    max_before_sec:
+                      prevMaxBeforeSec > 0 ? prevMaxBeforeSec : undefined,
+                  })
+
+                  return {
+                    prevMinBeforeSec,
+                    prevMaxBeforeSec,
+                    recipeSteps: obj.recipeSteps.concat(newRecipeStep),
+                  }
+                },
+                {
+                  prevMinBeforeSec: 0,
+                  prevMaxBeforeSec: 0,
+                  recipeSteps: [],
+                }
+              ).recipeSteps,
           }),
           kitchen_id: currentKitchen.id,
         }

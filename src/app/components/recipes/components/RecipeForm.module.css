@@ -42,3 +42,18 @@
 .stepHeader {
   margin-top: 20px;
 }
+
+.doThisInput {
+  max-width: 220px;
+  display: flex;
+  margin-right: 5px;
+}
+
+.doThisText {
+  min-width: 150px;
+}
+
+.doThisLine {
+  display: flex;
+  line-height: 32px;
+}

@@ -212,14 +212,28 @@ const RecipeForm = (props: OuterProps) => {
                             isRequired
                             label="Instruction"
                           />
-                          <TextField
-                            name={`recipe_steps.${index}.max_before_min`}
-                            label="Do this step at most X minutes in advance"
-                          />
-                          <TextField
-                            name={`recipe_steps.${index}.min_before_min`}
-                            label="Do this step at least X minutes in advance"
-                          />
+                          <div className={styles.doThisLine}>
+                            <TextField
+                              name={`recipe_steps.${index}.max_before_min`}
+                              pretext="Do this step at most"
+                              customclasses={{
+                                pretext: styles.doThisText,
+                                inputWrapper: styles.doThisInput,
+                              }}
+                            />
+                            minutes before the next step
+                          </div>
+                          <div className={styles.doThisLine}>
+                            <TextField
+                              name={`recipe_steps.${index}.min_before_min`}
+                              pretext="Do this step at least"
+                              customclasses={{
+                                pretext: styles.doThisText,
+                                inputWrapper: styles.doThisInput,
+                              }}
+                            />
+                            minutes before the next step
+                          </div>
                           <FieldArray name={`recipe_steps.${index}.inputs`}>
                             {(props) => {
                               const pushInput = props.push
