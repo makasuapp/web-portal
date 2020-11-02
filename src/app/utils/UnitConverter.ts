@@ -52,7 +52,7 @@ const UnitConverter = {
     volumeWeightRatio &&
     Math.round(volumeWeightRatio * volumeUnits.tbsp.toML * 100) / 100,
   centsToDisplay: (cents: number | undefined) =>
-    cents ? `$${(cents / 100.0).toFixed(2)}` : undefined,
+    cents !== undefined ? `$${(cents / 100.0).toFixed(2)}` : undefined,
   unitOptions: (units: (WeightUnit | VolumeUnit)[]) =>
     units.map((unit) => ({ value: unit.short, label: unit.long })),
   getVolume: (unit: string | undefined): VolumeUnit | undefined =>

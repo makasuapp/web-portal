@@ -11,4 +11,5 @@ export interface IngredientCost {
   got_qty: number
   got_unit?: string
   price_cents: number
+  updated_at_sec: number
 }
